@@ -13,9 +13,8 @@ entity/model → data models i.e attribute definition for the input to backend <
 repository → creating data object & saving them to  database or in memory logic <br/>
 @Repository → it tells that the function will contain the logic of the DB layer<br/><br/>
 </p>
-<p>There are annotations used in spring</p>
 
-<p>Endpoints here </p>
+<h3>Endpoints here </h3>
 a. GET endpoint  
   
     @GetMapping("/employee/{eid}")
@@ -51,7 +50,7 @@ d. DELETE endpoint
         return employeeService.deleteEmployee(employeeID);
     }
 
-<p>Api here </p>
+<h3>Api here </h3>
 1. GET - localhost:9000/allemployee  to get all employee  <br/>
 2. POST - localhost:9000/regemployee  to register a new employee <br/>
 
