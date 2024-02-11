@@ -12,12 +12,17 @@ import java.util.List;
 public interface Bookrepository extends JpaRepository<Book , Integer> {
 
     // saving a book
-    // here all the save , finsAll() , findById() are all implemented by JPARepository
+
+
+    /**
+     *  here all the save , finsAll() , findById() are all implemented by JPARepository
+     *
+     */
 
     /**
      *
-     * So what should we do if we need some custom SQL queries insted of inbuilt ?
-     * we hae @Query() annotation , through which we can write our custom query
+     * So what should we do if we need some custom SQL queries instead of inbuilt ?
+     * we have @Query() annotation , through which we can write our custom query
      * @Query() - we can write the query in 2 form JPQL & native
      *
      */
