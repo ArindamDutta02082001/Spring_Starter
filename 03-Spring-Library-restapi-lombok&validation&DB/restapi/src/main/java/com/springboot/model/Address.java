@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.ToString;
 
 /**
- * Adress with multiple field
+ * Address with multiple field
  */
 @ToString
 public class Address {

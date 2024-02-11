@@ -25,8 +25,10 @@ import java.util.List;
 
 /**
  * @Restcontroller - used to tell that the function contains rest endpoints
+ * @RequestMapping("/home") - used just to add a common prefix over the endpoint url
  */
 @RestController
+@RequestMapping("/home")
 public class EmployeeController {
 
     @Autowired
