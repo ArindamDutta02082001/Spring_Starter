@@ -16,7 +16,6 @@ public interface Bookrepository extends JpaRepository<Book , Integer> {
 
     /**
      *  here all the save , finsAll() , findById() are all implemented by JPARepository
-     *
      */
 
     /**
