@@ -14,11 +14,13 @@ import org.springframework.stereotype.Component;
  *  the springboot will create a singleton object of that class upon application start
  *  2. the object that is created by the springboot for the @Component annotation class is called as a bean
  */
+
 @Component
 class IOC
 {
 
     private String name ;
+
     Logger logger = LoggerFactory.getLogger(IOC.class);
     public void IOCFunction()
     {
@@ -30,13 +32,14 @@ class IOC
         logger.info("default contructor");
     }
 
-    IOC(@Value("${name}") String name )
+    IOC( @Value("${name}") String name )
     {
         this.name=name;
         logger.info("param contructor "+name);
     }
 
 }
+
 @Component
 public class InversionOfControl {
 
@@ -48,9 +51,10 @@ public class InversionOfControl {
 
 
     /**
-     * when we ue @Bean over a function , that function is created and stored in the bean
+     * when we ue @Bean over a function , that function is created and stored in the IOC Container
      * when the springboot application starts
      */
+
     @Bean
     public void inverseFuncton ()
     {

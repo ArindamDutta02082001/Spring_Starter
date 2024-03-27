@@ -17,7 +17,9 @@ public class DemoSpringApplication {
 	 * @Value is used to provide default value to the variable or
 	 * 					to bring the value form	application.properties file
 	 */
-	@Value("${name}")							// name variable is present in application.properties file
+
+	// name variable is present in application.properties file
+	@Value("${name}")
 	public void setDirectory(String value) {
 		this.name = value;
 	}
@@ -27,11 +29,14 @@ public class DemoSpringApplication {
 	 * @Autowire tell that use the singleton object that you created already present in bean and dont create a
 	 * new object
 	 */
+
 	@Autowired
 	InversionOfControl ic ;
+
 	/**
 	 * Logger --> used to show error , trace , warn , debug , info messages
 	 */
+	
 	Logger logger = LoggerFactory.getLogger(DemoSpringApplication.class);
 
 	public static void main(String[] args) {

@@ -1,6 +1,8 @@
 package com.example.bookmanagement.model;
 
 
+import com.example.bookmanagement.model.enums.Cateogory;
+import com.example.bookmanagement.model.enums.Language;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,7 +38,7 @@ public class Book {
     private String authorName;
     private String publisherName;
     private String pages;
-    @Enumerated(value = EnumType.ORDINAL)
+    @Enumerated(value = EnumType.STRING)
     private Cateogory bookCateogory;
     @Enumerated()
     private Language language;
@@ -44,6 +46,7 @@ public class Book {
     private Date createdOn;
     @UpdateTimestamp
     private Date updatedOn;
-   public Book()
+    Book()
     {}
+
 }

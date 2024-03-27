@@ -1,19 +1,13 @@
 package com.example.bookmanagement.dto;
 
-import com.example.bookmanagement.model.Cateogory;
-import com.example.bookmanagement.model.Language;
-import jakarta.persistence.*;
+import com.example.bookmanagement.model.enums.Cateogory;
+import com.example.bookmanagement.model.enums.Language;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 @Getter
 @Setter
@@ -34,3 +28,14 @@ public class Bookdto {
   @NotEmpty
     private Language language;
 }
+
+
+//payload :
+//        {
+//        "name": "Example Book",
+//        "authorName": "John Doe",
+//        "publisherName": "Publisher ABC",
+//        "pages": "300",
+//        "bookCateogory": "MATH",
+//        "language": "ENGLISH"
+//        }
