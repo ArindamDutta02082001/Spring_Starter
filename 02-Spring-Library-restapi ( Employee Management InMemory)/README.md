@@ -127,4 +127,12 @@ d. DELETE endpoint
         Employee :89847878-490e-478f-93ef-352dc5285333 deleted
       </code>
     </pre>
-    
+
+# Properties used
+<pre>
+<code>
+        String db_url = "jdbc:mysql://localhost:3306/employee_db?createDatabaseIfNotExist=true";
+        String db_username = "root";
+        String db_password = "admin";
+</code>
+</pre>

@@ -16,7 +16,6 @@ import com.springboot.model.Address;
  */
 @Getter
 @Setter
-@Component
 public class Employeedto {
 
 

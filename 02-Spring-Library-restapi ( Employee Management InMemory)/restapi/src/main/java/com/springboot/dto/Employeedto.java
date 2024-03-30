@@ -11,7 +11,7 @@ import com.springboot.model.Address;
  * to create a new Employee
  *
  */
-@Component
+
 @Getter
 @Setter
 public class Employeedto {

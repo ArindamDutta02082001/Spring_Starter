@@ -1,7 +1,7 @@
 package com.springboot.model;
 
 /**
- * Adress with multiple field
+ * Address with multiple field
  */
 public class Address {
     public String address;

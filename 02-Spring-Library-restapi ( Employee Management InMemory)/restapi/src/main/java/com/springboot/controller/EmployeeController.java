@@ -25,15 +25,13 @@ import java.util.List;
 
 /**
  * @Restcontroller - used to tell that the function contains rest endpoints
- * @RequestMapping("/home") - used just to add a common prefix over the endpoint url
+ * @RequestMapping("/api/v1") - used just to add a common prefix over the endpoint url
  */
 
 @RestController
 @RequestMapping("/api/v1")
 public class EmployeeController {
 
-    @Autowired
-    EmployeeRepository employeeRepository;
 
     @Autowired
     EmployeeService employeeService;
@@ -42,14 +40,14 @@ public class EmployeeController {
     @GetMapping("/allemployee")
     public List<Employee> getAllEmployee()
     {
-        return employeeRepository.getAllEmployee();
+        return employeeService.getAllEmployee();
     }
 
     @GetMapping("/employee/{eid}")
     public Employee getEmployee(@PathVariable("eid") String employeeID)
     {
         System.out.println("ok");
-        return employeeRepository.getEmployee(employeeID);
+        return employeeService.getEmployee(employeeID);
     }
 
 
@@ -61,7 +59,6 @@ public class EmployeeController {
 
         // the below functionality should be kept in service file
         Employee newEmployee = employeeService.createEmployee(request);
-        employeeRepository.saveEmployee(newEmployee);
 
     return newEmployee;
 
@@ -80,11 +77,6 @@ public class EmployeeController {
     public String deleteEmployee(@RequestParam("eid") String employeeID)
     {
         // delete logic is moved to service file
-//        if(employeeRepository.removeEmployee(employeeID) == true)
-//            return "Employee :"+employeeID+" deleted";
-//        else
-//            return "not found";
-
         return employeeService.deleteEmployee(employeeID);
     }
 
