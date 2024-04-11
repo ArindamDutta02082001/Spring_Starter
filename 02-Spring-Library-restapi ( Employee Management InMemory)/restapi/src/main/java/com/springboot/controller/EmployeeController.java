@@ -36,21 +36,38 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
+    // getting a individual employee
+    @GetMapping("/employee/{eid}")
+    public Employee getEmployee(@PathVariable("eid") String employeeID)
+    {
+        System.out.println("EmployeeId is passed by Path Variable");
+        return employeeService.getEmployee(employeeID);
+    }
 
+//    // here I am taking the employeeID by requestBody
+//    @GetMapping("/employee")
+//    public Employee getEmployeee(@RequestBody String employeeID)
+//    {
+//        System.out.println("EmployeeId is passed by Request Body");
+//        return employeeService.getEmployee(employeeID);
+//    }
+//
+//    //  here I am taking the employeeID by Query Parameter
+//    @GetMapping("/employee")
+//    public Employee getEmployeeee(@RequestParam("eid") String employeeID)
+//    {
+//        System.out.println("EmployeeId is passed by Request Body");
+//        return employeeService.getEmployee(employeeID);
+//    }
+
+    // getting a list of employee
     @GetMapping("/allemployee")
     public List<Employee> getAllEmployee()
     {
         return employeeService.getAllEmployee();
     }
 
-    @GetMapping("/employee/{eid}")
-    public Employee getEmployee(@PathVariable("eid") String employeeID)
-    {
-        System.out.println("ok");
-        return employeeService.getEmployee(employeeID);
-    }
-
-
+    // to save a new employee
     @PostMapping("/regemployee")                                                // POST
     public Employee registerEmployee(@RequestBody Employeedto request)
     {
@@ -64,6 +81,7 @@ public class EmployeeController {
 
     }
 
+    // to update an existing employee
     @PutMapping("/updemployee/{eid}")
     public Employee updateEmployee (@RequestBody UpdateEmployeedto request , @PathVariable("eid") String employeeID)
     {
@@ -71,8 +89,7 @@ public class EmployeeController {
         return employeeService.updateEmployee(request, employeeID);
     }
 
-    // here we are accepting the employeeid through query param
-    // local
+    // to delete an employee
     @DeleteMapping("/delemployee")
     public String deleteEmployee(@RequestParam("eid") String employeeID)
     {

@@ -36,18 +36,36 @@ public class EmployeeController {
     EmployeeService employeeService;
 
 
-    @GetMapping("/allemployee")
-    public List<Employee> getAllEmployee() throws SQLException, JsonProcessingException {
-        return employeeService.getAllEmployee();
-    }
-
+    // getting a individual employee
     @GetMapping("/employee/{eid}")
     public Employee getEmployee(@PathVariable("eid") String employeeID) throws SQLException, JsonProcessingException {
         System.out.println("ok");
         return employeeService.getEmployee(employeeID);
     }
 
+    //    // here I am taking the employeeID by requestBody
+//    @GetMapping("/employee")
+//    public Employee getEmployeee(@RequestBody String employeeID)
+//    {
+//        System.out.println("EmployeeId is passed by Request Body");
+//        return employeeService.getEmployee(employeeID);
+//    }
+//
+//    //  here I am taking the employeeID by Query Parameter
+//    @GetMapping("/employee")
+//    public Employee getEmployeeee(@RequestParam("eid") String employeeID)
+//    {
+//        System.out.println("EmployeeId is passed by Request Body");
+//        return employeeService.getEmployee(employeeID);
+//    }
 
+    // getting a list of employee
+    @GetMapping("/allemployee")
+    public List<Employee> getAllEmployee() throws SQLException, JsonProcessingException {
+        return employeeService.getAllEmployee();
+    }
+
+    // to save a new employee
     @PostMapping("/regemployee")                                                // POST
     public Employee registerEmployee(@RequestBody Employeedto request) throws SQLException, JsonProcessingException {
 
@@ -57,14 +75,15 @@ public class EmployeeController {
 
     }
 
+
+    // to update an existing employee
     @PutMapping("/updemployee/{eid}")
     public String updateEmployee (@RequestBody UpdateEmployeedto request , @PathVariable("eid") String employeeID) throws SQLException, JsonProcessingException {
         // the update logic is moved to service file
         return employeeService.updateEmployee(employeeID , request);
     }
 
-    // here we are accepting the employeeid through query param
-    // local
+    // to delete an employee
     @DeleteMapping("/delemployee")
     public String deleteEmployee(@RequestParam("eid") String employeeID) throws SQLException {
         // delete logic is moved to service file

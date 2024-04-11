@@ -17,11 +17,29 @@ repository → creating data object & saving them to  database or in memory logi
 <h3>Endpoints here </h3>
 a. GET endpoint
 
+    // here I am taking the employeeID by path parameter    
     @GetMapping("/api/v1/employee/{eid}")
     public Employee getEmployee(@PathVariable("eid") String employeeID)
     {
         return employeeRepository.getEmployee(employeeID);
     }
+
+    // here I am taking the employeeID by requestBody
+    @GetMapping("/employee")
+    public Employee getEmployeee(@RequestBody String employeeID)
+    {
+        System.out.println("EmployeeId is passed by Request Body");
+        return employeeService.getEmployee(employeeID);
+    }
+
+    //  here I am taking the employeeID by Query Parameter
+    @GetMapping("/employee")
+    public Employee getEmployeeee(@RequestParam("eid") String employeeID)
+    {
+        System.out.println("EmployeeId is passed by Request Body");
+        return employeeService.getEmployee(employeeID);
+    }
+
 
 b. POST endpoint
 
@@ -51,8 +69,8 @@ d. DELETE endpoint
     }
 
 <h3>Api here </h3>
-1. GET - localhost:9000/api/v1/allemployee  to get all employee  <br/>
-2. POST - localhost:9000/api/v1/regemployee  to register a new employee <br/>
+1. GET - `localhost:9000/api/v1/allemployee`  to get all employee  <br/>
+2. POST - `localhost:9000/api/v1/regemployee`  to register a new employee <br/>
 
    payload :
    {
@@ -84,7 +102,7 @@ d. DELETE endpoint
    "department": "Computer Science"
    }
 
-3. PUT - localhost:9000/api/v1/updemployee/{ unique ID of employee }  to update an employee with ID
+3. PUT - `localhost:9000/api/v1/updemployee/{ unique ID of employee }`  to update an employee with ID
 
 <pre>
   <code>
@@ -121,16 +139,14 @@ d. DELETE endpoint
 </pre>
 
 
-5. DELETE  -  localhost:9000/api/v1/delemployee?eid={ unique ID of employee }  to delete the employee with ID
+5. DELETE  -  `localhost:9000/api/v1/delemployee?eid={ unique ID of employee }`  to delete the employee with ID
     <pre>
       <code>
         Employee :89847878-490e-478f-93ef-352dc5285333 deleted
       </code>
     </pre>
 
-<h3>Lombok and Validation in Spring Boot</h3>
-
-## Lombok Dependency
+## Lombok & Validation Dependency
 
 ### Installation
 

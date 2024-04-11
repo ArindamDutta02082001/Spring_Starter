@@ -11,6 +11,8 @@
         <option value="$PROJECT_DIR$/03-Spring-Library-restapi-lombok&amp;validation&amp;DB/restapi/pom.xml" />
         <option value="$PROJECT_DIR$/03-Spring-Library-restapi-lombok&amp;validation&amp;JDBC ( Employee Management JDBC)/restapi/pom.xml" />
         <option value="$PROJECT_DIR$/02-Spring-Library-restapi ( Employee Management InMemory)/restapi/pom.xml" />
+        <option value="$PROJECT_DIR$/04-Spring-book-management ( JPA-Hibernate )/book-management/pom.xml" />
+        <option value="$PROJECT_DIR$/Online-library-management-system (project 1)/online-library-management-system/pom.xml" />
       </list>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
