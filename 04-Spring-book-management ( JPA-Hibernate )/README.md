@@ -174,7 +174,7 @@ spring.datasource.url=jdbc:mysql://localhost:3306/library?createDatabaseIfNotExi
 spring.datasource.username = root
 spring.datasource.password = admin
 
-#spring.jpa.show-sql=true
+spring.jpa.show-sql=true
 
 # none validate  update  create create-drop
 spring.jpa.hibernate.ddl-auto=update

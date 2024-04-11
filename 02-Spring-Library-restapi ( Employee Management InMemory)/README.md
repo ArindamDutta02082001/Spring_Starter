@@ -20,6 +20,8 @@ repository → creating data object & saving them to  database or in memory logi
 1. GET - `localhost:9000/api/v1/allemployee`  to get all employee  <br/>
 2. POST - `localhost:9000/api/v1/regemployee`  to register a new employee <br/>
 
+<pre>
+  <code>
     payload :
     {
 	"efname": "Arindam" ,
@@ -49,6 +51,8 @@ repository → creating data object & saving them to  database or in memory logi
     "mobile": "9620922432",
     "department": "Computer Science"
     }
+  </code>
+</pre>
 
 3. PUT -` localhost:9000/api/v1/updemployee/{ unique ID of employee }`  to update an employee with ID
 

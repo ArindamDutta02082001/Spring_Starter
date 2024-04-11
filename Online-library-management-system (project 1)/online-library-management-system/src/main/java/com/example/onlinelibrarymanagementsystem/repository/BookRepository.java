@@ -23,7 +23,11 @@ public interface BookRepository extends JpaRepository<Book , Integer> {
 
     // search a book by individual functions
     List<Book> findByName(String searchValue);
+
     List<Book> findByGenre(Genre searchValue);
+
+
+
 
     @Query()
 

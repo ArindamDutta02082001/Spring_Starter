@@ -14,7 +14,7 @@ repository → creating data object & saving them to  database or in memory logi
 @Repository → it tells that the function will contain the logic of the DB layer<br/><br/>
 </p>
 
-<h3>Endpoints here </h3>
+## Endpoints here
 a. GET endpoint
 
     // here I am taking the employeeID by path parameter    
@@ -72,6 +72,8 @@ d. DELETE endpoint
 1. GET - `localhost:9000/api/v1/allemployee`  to get all employee  <br/>
 2. POST - `localhost:9000/api/v1/regemployee`  to register a new employee <br/>
 
+<pre>
+  <code>
    payload :
    {
    "efname": "Arindam" ,
@@ -101,6 +103,8 @@ d. DELETE endpoint
    "mobile": "9620922432",
    "department": "Computer Science"
    }
+  </code>
+</pre>
 
 3. PUT - `localhost:9000/api/v1/updemployee/{ unique ID of employee }`  to update an employee with ID
 
@@ -139,7 +143,7 @@ d. DELETE endpoint
 </pre>
 
 
-5. DELETE  -  `localhost:9000/api/v1/delemployee?eid={ unique ID of employee }`  to delete the employee with ID
+4. DELETE  -  `localhost:9000/api/v1/delemployee?eid={ unique ID of employee }`  to delete the employee with ID
     <pre>
       <code>
         Employee :89847878-490e-478f-93ef-352dc5285333 deleted
