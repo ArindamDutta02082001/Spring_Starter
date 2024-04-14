@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Join -  it makes the attribute to act as a foreign key for another table
+ * @JoinColumn -  it makes the attribute to act as a foreign key for another table
  *          and creates a column in current table of the primary key of the other table
  */
 @Entity
@@ -45,13 +45,6 @@ public class Book {
     // Book --> Author
     // N : 1
 
-    // in Book.java
-    // @ManyToOne
-
-    // in Author.java
-    //  @OneToMany(mappedBy = "author")
-
-//    @JsonBackReference
     @JsonIgnoreProperties({"bookList"})
     @ManyToOne
     @JoinColumn
@@ -61,12 +54,6 @@ public class Book {
     // Book --> Student
     // N : 1
 
-    // in Book.java
-    // @ManyToOne
-
-    // in Student.java
-    //  @OneToMany(mappedBy = "student")
-
     @ManyToOne
     @JoinColumn
     private Student my_student;
@@ -75,11 +62,6 @@ public class Book {
     // Book --> Transaction
     // 1 book can have : N transactions
 
-    // in Book.java
-    // @ManyToOne
-
-    // in Transaction.java
-    //  @OneToMany(mappedBy = "my_book_transaction")
     @OneToMany(mappedBy = "my_book_transaction")
     private List<Transaction> transactionList ;
 

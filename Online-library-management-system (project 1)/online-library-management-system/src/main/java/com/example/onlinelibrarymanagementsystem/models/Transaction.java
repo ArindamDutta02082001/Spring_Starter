@@ -48,12 +48,6 @@ public class Transaction {
     // Transaction --> Book
     // N transaction can be performed for : 1 Book
 
-    // in Transaction.java
-    // @ManyToOne
-
-    // in Book.java
-    // @OneToMany(mappedBy = "my_book_transaction")
-
     @ManyToOne
     @JoinColumn
     private Book my_book_transaction;
@@ -62,11 +56,6 @@ public class Transaction {
     // Transaction --> Student
     // N transaction can be performed by : 1 Student
 
-    // in Transaction.java
-    // @ManyToOne
-
-    // in Book.java
-    // @OneToMany(mappedBy = "my_student_transaction")
     @ManyToOne
     @JoinColumn
     private Student my_student_transaction;

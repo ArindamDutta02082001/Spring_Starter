@@ -16,7 +16,7 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
-    // creating a new Student Java Object
+    // creating a new Student Object from the student DTO using builder
     private Student createStudent(CreateStudentDto studentDto)
     {
         return  Student.builder()

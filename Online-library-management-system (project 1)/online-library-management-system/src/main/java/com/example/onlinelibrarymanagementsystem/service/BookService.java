@@ -25,7 +25,11 @@ public class BookService {
     @Autowired
     AuthorService authorService;
 
-    // creating a new Book Java Object
+    @Autowired
+    AuthorRepositiry authorRepositiry;
+
+
+    // creating a new Book Object from Book DTO using builder
     private Book createBook(CreateBookDto bookDto)
     {
         return  Book.builder()
@@ -41,16 +45,16 @@ public class BookService {
         Book newBook = createBook(bookDto);
 
         ///////////// to fill the author attribute in the object created ////////////
-        Author author = authorService.getAuthorByEmail(bookDto.getEmail());
+        Author author = authorService.getAuthorByEmail(bookDto.getAuthor().getEmail());
         if(author == null )
         {
-            CreateAuthorDto authorDto = new CreateAuthorDto(bookDto.getEmail() , bookDto.getAuthorName() , bookDto.getCountry());
+            CreateAuthorDto authorDto = new CreateAuthorDto(bookDto.getAuthor().getEmail() , bookDto.getAuthor().getAuthorName() , bookDto.getAuthor().getCountry());
             author = authorService.saveAuthor(authorDto);
         }
 
         newBook.setAuthored_by(author);
-
         bookRepository.save(newBook);
+
         return newBook;
     }
 
@@ -81,21 +85,50 @@ public class BookService {
     // to update a book upon a PUT call     to-do
     public Book updateNewBook( CreateBookDto request , Integer bookId )
     {
-        Book book = createBook(request);
-        book.setId(bookId);
+        // method 1 -
+        Book newBook = bookRepository.findById(bookId).orElse(null);
+
+        if(newBook == null)
+            return null;
+
 
         // if author exists well and good if not create a new author and link its id
-        Author author = authorService.getAuthorByEmail(request.getEmail());
+        Author author = authorService.getAuthorByEmail(request.getAuthor().getEmail());
         if( author == null )
         {
-            CreateAuthorDto createAuthorDto = new CreateAuthorDto(request.getEmail(), request.getAuthorName(), request.getCountry());
-            authorService.saveAuthor(createAuthorDto);
-            author = authorService.getAuthorByEmail(request.getEmail());
+           CreateAuthorDto authorDto = new CreateAuthorDto(request.getAuthor().getEmail() , request.getAuthor().getAuthorName() , request.getAuthor().getCountry());
+           authorService.saveAuthor(authorDto);
+            author = authorService.getAuthorByEmail(request.getAuthor().getEmail());
         }
 
-        bookRepository.updateBook(request.getName(), request.getGenre(),request.getPages() , bookId);
+        newBook.setAuthored_by(author);
+        bookRepository.save(newBook);
 
-        return book;
+        return newBook;
+
+        // Method 2 - without using save() | by custom query
+
+//        Book book = createBook(request);
+//        book.setId(bookId);
+//
+//        // if author exists well and good if not create a new author and link its id
+//        Author author = authorService.getAuthorByEmail(request.getAuthor().getEmail());
+//        if( author == null )
+//        {
+//            CreateAuthorDto createAuthorDto = new CreateAuthorDto(request.getAuthor().getEmail(), request.getAuthor().getAuthorName(), request.getAuthor().getCountry());
+//            authorService.saveAuthor(createAuthorDto);
+//            author = authorService.getAuthorByEmail(request.getAuthor().getEmail());
+//        }
+//        else
+//        {
+//            // update the particular author
+//            Author newAuthor = new Author(author.getId(), request.getAuthor().getEmail(), request.getAuthor().getAuthorName(), request.getAuthor().getCountry(),author.getAddedOn(),author.getBookList());
+//            authorRepositiry.save(newAuthor);
+//        }
+//
+//        bookRepository.updateBook(request.getName(), request.getGenre(),request.getPages() , bookId, author.getId());
+//        return book;
+
     }
 
     /* ******************** to implement search functionality *********************** */

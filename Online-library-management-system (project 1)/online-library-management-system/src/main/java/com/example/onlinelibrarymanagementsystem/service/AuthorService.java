@@ -15,7 +15,7 @@ public class AuthorService {
     AuthorRepositiry authorRepositiry;
 
     // creating a new Author Java Object
-    private Author createAuthor(CreateAuthorDto authorDto)
+    public Author createAuthor(CreateAuthorDto authorDto)
     {
         return  Author.builder()
                 .authorName(authorDto.getAuthorName())

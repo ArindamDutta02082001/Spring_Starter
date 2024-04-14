@@ -37,12 +37,6 @@ public class Student {
     // Book --> Student
     // N : 1
 
-    // in Book.java
-    // @ManyToOne
-
-    // in Student.java
-    //  @OneToMany(mappedBy = "my_student")
-
     @OneToMany(mappedBy = "my_student")
     private List<Book> bookList;
 
@@ -50,11 +44,6 @@ public class Student {
     // Book --> Transaction
     // 1 : N
 
-    // in Book.java
-    // @ManyToOne
-
-    // in Transaction.java
-    //  @OneToMany(mappedBy = "my_student_transaction")
     @OneToMany(mappedBy = "my_student_transaction")
     private  List<Transaction> transactionList ;
 

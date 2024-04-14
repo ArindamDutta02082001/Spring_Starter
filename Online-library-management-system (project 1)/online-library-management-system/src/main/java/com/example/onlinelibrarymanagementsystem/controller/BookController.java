@@ -54,13 +54,14 @@ public class BookController {
         return bookService.updateNewBook(request,bookId);
     }
 
-    /* *********************************  implemented search functionality **************************** */
     // to search a book by its id
     @GetMapping("/book/{bookid}")
     public Book getBookById(@PathVariable("bookid") Integer bookId)
     {
         return bookService.getBookById(bookId);
     }
+
+    /* *********************************  implemented search functionality **************************** */
 
     // to search  a book based on author , title , genre
 
