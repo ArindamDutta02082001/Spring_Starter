@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/student")
 public class StudentController {
 
     // student
@@ -21,13 +22,13 @@ public class StudentController {
 
     @Autowired
     StudentService studentService;
-    @PostMapping("/student")
+    @PostMapping("/regstudent")
     public Student createAndSaveStudent(@RequestBody @Valid CreateStudentDto  createStudentDto)
     {
         return studentService.saveStudent(createStudentDto);
     }
 
-    @GetMapping("/students")
+    @GetMapping("/allstudent")
     public List<Student> getAllStudent()
     {
         return studentService.getAllStudent();
@@ -39,10 +40,11 @@ public class StudentController {
         return studentService.getStudentById(studentId);
     }
 
-    @DeleteMapping("/student")
-    public Student deleteStudentById(@RequestParam("sid") Integer studentId)
+    @DeleteMapping("/delstudent")
+    public String deleteStudentById(@RequestParam("sid") Integer studentId)
     {
-        return studentService.deleteStudentId(studentId);
+                studentService.deleteStudentId(studentId);
+        return "student deleted";
     }
 
     @PutMapping("/student")

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/book")
 public class BookController {
 
     @Autowired
@@ -29,7 +30,7 @@ public class BookController {
     }
 
     // to get the list of all books
-    @GetMapping("/book")
+    @GetMapping("/allbook")
     public List<Book> getBooks()
     {
         return bookService.getAllBooks();
@@ -38,7 +39,7 @@ public class BookController {
 
 
     // to delete a book
-    @DeleteMapping("/book")
+    @DeleteMapping("/delbook")
     public Book deleteBookById(@RequestParam("bid") Integer bookId)
     {
         Book book = bookService.getBookById(bookId);
@@ -48,7 +49,7 @@ public class BookController {
 
 
     // to update a book by its id
-    @PutMapping("/book")
+    @PutMapping("/updatebook")
     public Book updateBookById( @RequestBody CreateBookDto request , @RequestParam("bid") Integer bookId)
     {
         return bookService.updateNewBook(request,bookId);

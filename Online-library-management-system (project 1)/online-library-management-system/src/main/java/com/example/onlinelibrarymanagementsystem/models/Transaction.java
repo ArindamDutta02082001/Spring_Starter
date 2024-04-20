@@ -2,6 +2,9 @@ package com.example.onlinelibrarymanagementsystem.models;
 
 import com.example.onlinelibrarymanagementsystem.models.enums.TransactionStatus;
 import com.example.onlinelibrarymanagementsystem.models.enums.TransactionType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,8 +26,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class Transaction {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     private int id;
 
     private String externalTxnId;
@@ -48,24 +52,26 @@ public class Transaction {
     // Transaction --> Book
     // N transaction can be performed for : 1 Book
 
+
+    @JsonIgnoreProperties({"books_in_trans_table", "bookList_S","bookList_A","authored_by" ,"students_in_trans_table", "my_student","transactionList_B","transactionList_S" })
     @ManyToOne
     @JoinColumn
-    private Book my_book_transaction;
+    private Book books_in_trans_table;
 
     // linking Transaction Entity to Student Entity
     // Transaction --> Student
     // N transaction can be performed by : 1 Student
 
+
+    @JsonIgnoreProperties({"books_in_trans_table", "bookList_S","bookList_A","authored_by" ,"students_in_trans_table", "my_student","transactionList_B","transactionList_S" })
     @ManyToOne
     @JoinColumn
-    private Student my_student_transaction;
+    private Student students_in_trans_table;
 
 
-    Transaction()
+    public Transaction()
     {
-
     }
-
 
 
 }

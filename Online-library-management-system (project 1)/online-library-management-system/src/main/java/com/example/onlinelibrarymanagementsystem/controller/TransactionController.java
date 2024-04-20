@@ -1,11 +1,11 @@
 package com.example.onlinelibrarymanagementsystem.controller;
 
+import com.example.onlinelibrarymanagementsystem.models.Transaction;
 import com.example.onlinelibrarymanagementsystem.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/transaction")
@@ -13,6 +13,13 @@ public class TransactionController {
 
     @Autowired
     TransactionService transactionService;
+
+    // get all transaction upon a GET call
+    @GetMapping("/")
+    public List<Transaction> allTransactions()
+    {
+        return transactionService.getAllTransactionfromDB();
+    }
 
     // initiate a transaction to order books
     @PostMapping("/issue")
@@ -22,8 +29,8 @@ public class TransactionController {
 
     // initiate a transaction to return books
     @PostMapping("/return")
-    public String returnTxn(@RequestParam("bookId") int bookId, @RequestParam("studentId") int studentId) throws Exception {
-        return transactionService.returnTxn(bookId, studentId);
+    public String returnTxn(@RequestParam("name") String bookname, @RequestParam("studentId") int studentId) throws Exception {
+        return transactionService.returnTxn(bookname, studentId);
     }
     /**
      * Issuance

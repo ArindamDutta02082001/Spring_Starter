@@ -8,4 +8,5 @@ public interface StudentRepository extends JpaRepository<Student , Integer> {
 
     // save , findById , findAllById , deleteById bla bla are implemented
 
+
 }

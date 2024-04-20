@@ -127,7 +127,7 @@ payload :
 
 ## Lombok & Validation Dependency
 
-### Installation
+### Lombok Dependency Installation
 
 To use Lombok in your Spring Boot project, add the Lombok dependency to your pom.xml
 
@@ -138,9 +138,7 @@ To use Lombok in your Spring Boot project, add the Lombok dependency to your pom
 - `@Builder`: Provides a builder pattern for easier object instantiation.
 - `@AllArgsConstructor`: Generates a constructor with arguments for all fields in the class.
 
-## Validation Dependency
-
-## Installation
+### Validation Dependency Installation
 
 To enable validation in your Spring Boot project, add the Validation dependency to your `pom.xml`:
 
@@ -154,12 +152,11 @@ To enable validation in your Spring Boot project, add the Validation dependency 
 - `@Size(min = 2,max = 20,message = "min 2 and max 20 characters are allowed !!")`:
 max and min characters in a String dto parameter
 
+<pre>
+<code>
 we have to make @Valid in the endpoint parameter | if in the incoming body any of the validation is
 not found we get **400 BAD REQUEST**
 
-
-<pre>
-<code>
 @PostMapping("/regemployee")
 public Employee registerEmployee(@RequestBody @Valid Employeedto request) throws SQLException {
 //code 
@@ -167,7 +164,7 @@ public Employee registerEmployee(@RequestBody @Valid Employeedto request) throws
 </code>
 </pre>
 
-# Properties used
+## Properties used
 <pre>
 <code>
 spring.datasource.url=jdbc:mysql://localhost:3306/library?createDatabaseIfNotExist=true

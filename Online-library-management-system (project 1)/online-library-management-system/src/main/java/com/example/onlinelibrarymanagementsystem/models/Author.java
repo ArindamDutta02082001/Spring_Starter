@@ -1,5 +1,6 @@
 package com.example.onlinelibrarymanagementsystem.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -32,7 +33,7 @@ public class Author {
     @CreationTimestamp
     private Date addedOn;
 
-    // Bi-linking Book table to author table
+    // Linking Book table to author table
     // Book --> Author
     // N : 1
 
@@ -42,10 +43,10 @@ public class Author {
     // in Author.java
     //  @OneToMany(mappedBy = "author")
 
-//  @JsonManagedReference
-    @JsonIgnoreProperties({"authored_by"})
+
+    @JsonIgnoreProperties({"books_in_trans_table", "bookList_S","bookList_A","authored_by" ,"students_in_trans_table", "my_student","transactionList_B","transactionList_S" })
     @OneToMany(mappedBy = "authored_by")
-    private List<Book> bookList;
+    private List<Book> bookList_A;
 
 
 }

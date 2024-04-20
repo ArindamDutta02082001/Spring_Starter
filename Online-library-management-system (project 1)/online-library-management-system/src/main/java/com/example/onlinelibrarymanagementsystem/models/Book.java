@@ -4,6 +4,7 @@ import com.example.onlinelibrarymanagementsystem.models.enums.Genre;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -45,7 +46,8 @@ public class Book {
     // Book --> Author
     // N : 1
 
-    @JsonIgnoreProperties({"bookList"})
+
+    @JsonIgnoreProperties({"books_in_trans_table", "bookList_S","bookList_A","authored_by" ,"students_in_trans_table", "my_student","transactionList_B","transactionList_S" })
     @ManyToOne
     @JoinColumn
     private Author authored_by;
@@ -54,6 +56,7 @@ public class Book {
     // Book --> Student
     // N : 1
 
+    @JsonIgnoreProperties({"books_in_trans_table", "bookList_S","bookList_A","authored_by" ,"students_in_trans_table", "my_student","transactionList_B","transactionList_S" })
     @ManyToOne
     @JoinColumn
     private Student my_student;
@@ -62,8 +65,9 @@ public class Book {
     // Book --> Transaction
     // 1 book can have : N transactions
 
-    @OneToMany(mappedBy = "my_book_transaction")
-    private List<Transaction> transactionList ;
+    @JsonIgnoreProperties({"books_in_trans_table", "bookList_S","bookList_A","authored_by" ,"students_in_trans_table", "my_student","transactionList_B","transactionList_S" })
+    @OneToMany(mappedBy = "books_in_trans_table")
+    private List<Transaction> transactionList_B ;
 
 
 }

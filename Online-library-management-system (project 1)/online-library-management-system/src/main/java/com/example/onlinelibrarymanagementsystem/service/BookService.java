@@ -82,6 +82,8 @@ public class BookService {
         return book;
     }
 
+
+
     // to update a book upon a PUT call     to-do
     public Book updateNewBook( CreateBookDto request , Integer bookId )
     {
@@ -148,23 +150,6 @@ public class BookService {
         allowedOperatorsMap.put("genre", Arrays.asList("="));
         allowedOperatorsMap.put("id", Arrays.asList("="));
     }
-//
-//
-//    public boolean validate(){
-//
-//        if(!allowedKeys.contains(this.searchKey)){
-//            return false;
-//        }
-//
-//
-//        List<String> validOperators = allowedOperatorsMap.get(this.searchKey);
-//        if(!validOperators.contains(this.operator)){
-//            return false;
-//        }
-//
-//        return true;
-//    }
-
 
     public List<Book> search(SearchBookdto searchBookRequest) throws Exception {
 //        boolean isValidRequest = searchBookRequest.validate();
@@ -190,5 +175,22 @@ public class BookService {
 
 
     }
+
+    //
+//
+//    public boolean validate(){
+//
+//        if(!allowedKeys.contains(this.searchKey)){
+//            return false;
+//        }
+//
+//
+//        List<String> validOperators = allowedOperatorsMap.get(this.searchKey);
+//        if(!validOperators.contains(this.operator)){
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
 }
