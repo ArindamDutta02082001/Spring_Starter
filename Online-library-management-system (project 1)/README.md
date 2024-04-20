@@ -6,17 +6,16 @@ It is a online library management system , where
 Author , Book , Student , Transaction
 
 ## Database tables
-1. Author Table
-   ![img.png](images/img.png)
-<br/>
+1. Author Table  <br/>
+   ![img.png](images/img.png)   <br/>
    ![img_5.png](images/img_5.png)
-2. Book Table
-   ![img_1.png](images/img_1.png)<br/>
+2. Book Table  <br/>
+   ![img_1.png](images/img_1.png) <br/>
    ![img_6.png](images/img_6.png)
-3. Student Table
+4. Student Table  <br/>
    ![img_2.png](images/img_2.png)<br/>
    ![img_8.png](images/img_8.png)
-4. Transaction table
+5. Transaction table  <br/>
    ![img_3.png](images/img_3.png)<br/>
    ![img_7.png](images/img_7.png)
 
@@ -27,7 +26,8 @@ Author , Book , Student , Transaction
 4. A Admin is free to do any no of issue and return Transaction for a student [ student : transacio :: 1 : M ]
 
 ## Database Schema
-![img_4.png](img_4.png)
+
+![img_4.png](images/img_4.png)
 
 
 ## App functionality
