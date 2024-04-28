@@ -7,9 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class DemoSpringApplication {
+
+	/**
+	 * @Autowired tell that use the singleton object that you created already present in bean and dont create a
+	 * new object
+	 */
+
+//	@Autowired
+//	String inverseFunction;
+//
+	@Autowired
+	IOCDILogic ic;
+
 	private static String name;
 
 	/**
@@ -26,23 +39,31 @@ public class DemoSpringApplication {
 
 
 	/**
-	 * @Autowire tell that use the singleton object that you created already present in bean and dont create a
-	 * new object
-	 */
-
-	@Autowired
-	InversionOfControl ic ;
-
-	/**
 	 * Logger --> used to show error , trace , warn , debug , info messages
 	 */
-	
 	Logger logger = LoggerFactory.getLogger(DemoSpringApplication.class);
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoSpringApplication.class, args);
+
+		ApplicationContext apc = SpringApplication.run(DemoSpringApplication.class, args);
+
+		// this will show all the beans in the IOCDILogic Container
+		for(String s : apc.getBeanDefinitionNames())
+		{
+			System.out.println("Beans are : "+s);
+		}
 		System.out.println("Server Started at 9000 ");
 
+		// to access then @Bean
+		// .getBean is used here as we are accessing the non-static object from static function
+		DemoSpringApplication app = apc.getBean(DemoSpringApplication.class);
+//		System.out.println("Bean function called: " + app.inverseFunction);
+
+		// to access the @Component
+		// .getBean is used here as we are accessing the non-static object from static function
+		app.ic.IOCFunction();
+
 	}
+
 
 }

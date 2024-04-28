@@ -1,0 +1,4 @@
+1. covering notes once
+2. in 04 project add @MAnytoOne / @OneToOne as it is very normal
+3. junit labelling
+4. upload postman payload
