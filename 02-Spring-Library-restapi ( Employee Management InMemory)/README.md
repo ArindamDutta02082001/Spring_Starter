@@ -1,30 +1,29 @@
 # This is a rest api demo
-
-<p>We follow the MVC model </p>
-<p> controller  → service → repository → model<br/><br/>
-controller → in this folder we will have the api endpoints , and service logic function are called here 
-when endpoints are hit<br/>
-@Restcontroller → the http endpoints are written under this function | it tells that the function
-will contain http rest endpoints<br/><br/>
-dto → this contains the request model to accept the http request <br/><br/>
-service → the logic of backend after getting data in backend from endpoint | triggered when endpoint is hit <br/>
-@Service → it tells that the function will contain the service logic of the rest endpoints <br/><br/>
-entity/model → data models i.e attribute definition for the input to backend <br/><br/>
-repository → creating data object & saving them to  database or in memory logic <br/>
-@Repository → it tells that the function will contain the logic of the DB layer<br/><br/>
-</p>
+We follow the MVC model
+>FLOW  → controller  → service → repository → model
 
 
-## Api here
+1. **controller** → in this folder we will have the api endpoints , and service logic function are called here
+   when endpoints are hit<br/>
+   @RestController → the http endpoints are written under this function | it tells that the function
+   will contain http rest endpoints
+2. **dto** → helps in conversion from JSON data from **UI ←→ Java Object**  | This contains the request model to accept the http request JSON data from the UI <br/>
+3. **service / DAO / BO** → the logic of backend after getting data in backend from endpoint | triggered when endpoint is hit <br/>
+   @Service → it tells that the function will contain the service logic of the rest endpoints
+4. **entity/model** → helps in conversion from **Java Object ←→ Database Schema / Tables** | It is a data models or objects i.e attribute definition for the database or schema <br/>
+5. **repository** → creating data object & saving them to  database or in memory logic <br/>
+   @Repository → it tells that the function will contain the logic of the DB layer<br/><br/>
+
+
+### Api here
 
 1. GET - `localhost:9000/api/v1/allemployee`  to get all employee  <br/>
 2. POST - `localhost:9000/api/v1/regemployee`  to register a new employee <br/>
 
 <pre>
-  <code>
     payload :
     {
-	"efname": "Arindam" ,
+    "efname": "Arindam" ,
     "elname": "Dutta" ,
     "address" :{
         "address":"Bhedia , West Bengal" ,
@@ -51,13 +50,11 @@ repository → creating data object & saving them to  database or in memory logi
     "mobile": "9620922432",
     "department": "Computer Science"
     }
-  </code>
 </pre>
 
 3. PUT -` localhost:9000/api/v1/updemployee/{ unique ID of employee }`  to update an employee with ID
 
 <pre>
-  <code>
     payload :
 {
     "efname": "Arindam",
@@ -87,28 +84,25 @@ repository → creating data object & saving them to  database or in memory logi
     "efname": "Arindam",
     "mobile": "9620922432"
 }
-  </code>
 </pre>
 
- 
-5. DELETE  -  `localhost:9000/api/v1/delemployee?eid={ unique ID of employee }`  to delete the employee with ID
-    <pre>
-      <code>
-        Employee :89847878-490e-478f-93ef-352dc5285333 deleted
-      </code>
-    </pre>
 
-## RestController`s code here :
+5. DELETE  -  `localhost:9000/api/v1/delemployee?eid={ unique ID of employee }`  to delete the employee with ID
+
+        Employee :89847878-490e-478f-93ef-352dc5285333 deleted
+
+
+### RestController`s code here :
 a. GET endpoint
 
-    // here I am taking the employeeID by path parameter    
+    // employeeID passed by path parameter    
     @GetMapping("/api/v1/employee/{eid}")
     public Employee getEmployee(@PathVariable("eid") String employeeID)
     {
         return employeeRepository.getEmployee(employeeID);
     }
 
-    // here I am taking the employeeID by requestBody
+    // employeeID passed by requestBody
     @GetMapping("/employee")
     public Employee getEmployeee(@RequestBody String employeeID)
     {
@@ -116,7 +110,7 @@ a. GET endpoint
         return employeeService.getEmployee(employeeID);
     }
 
-    //  here I am taking the employeeID by Query Parameter
+    // employeeID passed by Query Parameter
     @GetMapping("/employee")
     public Employee getEmployeeee(@RequestParam("eid") String employeeID)
     {
@@ -152,11 +146,12 @@ d. DELETE endpoint
         return employeeService.deleteEmployee(employeeID);
     }
 
-## Properties used
+### Status codes
+link : [all codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
+### application.properties file
 <pre>
-<code>
         String db_url = "jdbc:mysql://localhost:3306/employee_db?createDatabaseIfNotExist=true";
         String db_username = "root";
         String db_password = "admin";
-</code>
 </pre>

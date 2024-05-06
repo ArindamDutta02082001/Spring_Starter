@@ -1,207 +1,231 @@
+# Spring boot basics
 
-# Online Library Management
-It is a online library management system , where
-<br/>
-<br/>
-## Tables present
-Author , Book , Student , Transaction
-
-## Database tables
-1. Author Table  <br/>
-   ![img.png](images/img.png)   <br/>
-   ![img_5.png](images/img_5.png)
-2. Book Table  <br/>
-   ![img_1.png](images/img_1.png) <br/>
-   ![img_6.png](images/img_6.png)
-4. Student Table  <br/>
-   ![img_2.png](images/img_2.png)<br/>
-   ![img_8.png](images/img_8.png)
-5. Transaction table  <br/>
-   ![img_3.png](images/img_3.png)<br/>
-   ![img_7.png](images/img_7.png)
-
-## Important Relations among tables
-1. A Author can write many Books & A Book can be written by one author [ Author : Book :: 1 : N ]
-2. A Student can borrow many books & A Book can be borrowed by one Student ( Here it is assumed only one copy of a book exist in library else same name ka boht books store ho rha tha and findBookByName mei list return ho ra tha, so one book can be taken by only one student ) [ Student : Book :: 1 : M ]
-3. A Book can have many transactions associated to it [ Book : Transaction :: 1 : M ]
-4. A Admin is free to do any no of issue and return Transaction for a student [ student : transacio :: 1 : M ]
-
-## Database Schema
-
-![img_4.png](images/img_4.png)
-
-
-## App functionality
-- Admin can create a Book with its details like name , id , author details
-- Admin can create 2 type of txn for a student <br/>
-    * Issue Txn
-        *       1. To start the issue txn we take the book name and student id
-                2. Then we are checking whether book is available or not or that student exists or if the book is occupied
-                    ( If not then the book and student has to be created from the other endpoints )
-                3. If validation success ! then create a txn with pending status
-                4. Assign the book to that particular student i.e update book table and set student_id = student passed in the url [ student that tries to book the book ]
-                5. Update the txn accordingly with status as SUCCESS or FAILED if any exception occured
-
-    * Return Txn
-        *       1. To start the return txn we take the book name and student id
-                2. Then we are checking whether book is available or not or that student exists or if that book is genuinely taken by that stuent
-                3. If validation success ! then create a txn with pending status
-                4. Un-assign the book to that particular student i.e update book table and set student_id = null to deallocate
-                5. Update the txn accordingly with status as SUCCESS or FAILED if any exception occured
-
-## APIs
-1. Book
-* Create a new Book - `localhost:9000/book/regbook`
-* Get a book by id - `localhost:9000/book/book/1`
-* Get all books - `localhost:9000/book/allbook`
-* Search a book by "name", "author_name", "genre", "pages", "id" - `localhost:9000/book/search`
- <pre><code>
-payload :
-{
-    "searchKey" : "genre",
-    "searchValue" : "FICTION",
-    "operator" : "="
-}
-</code></pre>
-* Update a book by id - `localhost:9000/book/updatebook?bid=1 ( cannot update as it is a foreign key table )`
-* Delete a book by id - `localhost:9000/book/delbook?bid=2 ( cannot delete as it is a foreign key table )`
-2. Author
-* Create a new author - `localhost:9000/author/regauthor`
-* Get all author - `localhost:9000/author/allauthor`
-3. Student
-* Creating a new student - `localhost:9000/student/regstudent`
-* Get a student by id - `localhost:9000/student/student/1`
-* Get all student - `localhost:9000/student/allstudent`
-* Delete a student by id - `localhost:9000/student/delstudent?sid=1`
-4. Transaction
-* Get all transactions - `localhost:9000/transaction/`
-* Start a issue transaction - `localhost:9000/transaction/issue?name=Booknew2&studentId=1`
-* Start a return transaction - `localhost:9000/transaction/return?name=Booknew2&studentId=1`
-
-## Payloads and response of apis
- <pre>
- <code>
- payload and response :
-
- New Book 
- payload :
- {
-    "name": "Booknew1",
-    "genre" : "FICTION",
-    "pages" : 5225,
-    "author" : 
-    {
-    "email" : "arindamdutta@mail.com",
-    "authorName" : "Arindam Kr. Dutta" ,
-    "country" : "INDIA"
-    }
-}
-
-response :
-{
-    "id": 1,
-    "name": "Booknew1",
-    "genre": "FICTION",
-    "pages": 5225,
-    "createdOn": "2024-04-20T10:42:35.981+00:00",
-    "updatedOn": "2024-04-20T10:42:35.981+00:00",
-    "authored_by": {
-        "id": 1,
-        "email": "arindamdutta@mail.com",
-        "authorName": "Arindam Kr. Dutta",
-        "country": "INDIA",
-        "addedOn": "2024-04-20T10:42:35.962+00:00"
-    },
-    "my_student": null,
-    "transactionList_B": null
-}
-
-Update Book
-payload :
-{
-	"name": "Booknew1",
-    "genre" : "FICTION",
-    "pages" : 50505,
-    "author" : 
-    {
-    "email" : "arindamkrdutta@mail.com",
-    "authorName" : "Arindam Kumar. Dutta" ,
-    "country" : "INDIA"
-    }
-
-}
-response :
-{
-    "id": 1,
-    "name": "Booknew1",
-    "genre": "FICTION",
-    "pages": 5225,
-    "createdOn": "2024-04-20T10:59:19.049+00:00",
-    "updatedOn": "2024-04-20T10:59:21.242+00:00",
-    "authored_by": {
-        "id": 2,
-        "email": "arindamkrdutta@mail.com",
-        "authorName": "Arindam Kumar. Dutta",
-        "country": "INDIA",
-        "addedOn": "2024-04-20T10:59:21.213+00:00"
-    },
-    "my_student": null,
-    "transactionList_B": []
-}
-
-New Student
-payload :
-
-{
-    "name" :"Author Akamai",
-    "contact": "8962340776"
-}
-
-response :
-{
-    "id": 1,
-    "name": "Author Akamai",
-    "contact": "8962340776",
-    "createdOn": "2024-04-20T10:56:04.457+00:00",
-    "updatedOn": "2024-04-20T10:56:04.457+00:00",
-    "bookList_S": null,
-    "transactionList_S": null
-}
-
-New Author 
-payload :
-{
-   "authorName" : "Arindam",
-    "email" : "arindam@mail.com",
-    "country" : "INDIA" 
-}
-
-response :
-{
-    "id": 1,
-    "email": "arindam@mail.com",
-    "authorName": "Arindam",
-    "country": "INDIA",
-    "addedOn": "2024-04-20T05:50:00.685+00:00",
-    "bookList": null
-}
-
-Payloads of issue & return txn is not needed
-
- </code>
- </pre>
-
-## Properties used
+### Default starter code
+Default initial code in **DemoSpringAplication.java** we will have a
 <pre>
-<code>
-spring.datasource.url=jdbc:mysql://localhost:3306/online-library?createDatabaseIfNotExist=true
-         #online-library-management db is created inside tables are there
-spring.datasource.username= root
+@SpringBootApplication
+or
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@ComponentScan
+public class DemoSpringAplication
+{
+public static void main(String[] args)
+{
+SpringApplication.run(ClassName.class, args);
+}
+}
+</pre>
+- **@SpringBootApplication** is an annotation that is the gist of other annotations include
+  @SpringBootConfiguration , @EnableAutoConfiguration , @ComponentScan
+  which scans the entire application for the beans and other things
+- **SpringApplication** provides a convenient way to bootstrap a Spring application and run it by
+  the run(). It returns all the beans in the IOC Container
+
+### Necessary dependencies
+how to add dependency → go to https://start.spring.io/ , add dependencies
+<br/></br>Necessary dependencies to be added
+* Dev tools → to autostart the server after code changes | we have to change in settings
+* Spring Web → to embed a tomcat server in the project
+* H2 database → to embed the default storage in spring boot
+* SQL manager/driver , Oracle driver , JDBC → for the sql and jdbc connection
+* JUNIT → for execution of the junit test cases
+* spring-data-jpa → for using the Hibernate & Jpa in project
+
+### Logger
+- logger is just like System.out.print () . but gives the details of when & what class is logged .
+  logger can be of different types error , warn , info, debug , trace ( less priority ) .
+  <br/></br>in a class file ,
+<pre>
+public class LoggingController 
+{
+static Logger logger = LoggerFactory.getLogger(LoggingController.class)
+
+public static void main( String args[] )
+    {
+        logger.trace("A TRACE Message");
+        logger.debug("A DEBUG Message");
+        logger.info("An INFO Message");
+        logger.warn("A WARN Message");
+        logger.error("An ERROR Message");
+    }
+}
+</pre>
+- in the **application.properties** , we can choose to show only info , error , debug , warn
+  logging.level.root = info / error / debug / warn
+
+### Properties of spring boot
+#### Inversion of Control
+- passing the authority to make an object of a class to spring during the initial component scan
+  phase , and the user dont create an object of the class.
+  or , the object lifecycle is managed by the spring boot this is called Inversion of Control
+  <br/></br>**@Component**
+1. @Component annotation written over the class , the springboot will create a
+   singleton object of that class upon application start and stores them in IOC container
+2. the object that is created by the springboot for the @Component annotation class is called as a
+   bean
+3. default constructor is called during bean creation
+>IOC Container / Application context → a RAM region where all the beans i.e object of the class are stored
+by spring boot
+4. we can see all the beans in the IOC container / Application context :
+
+<pre>
+public static void main(String[] args)
+{
+ApplicationContext apc = SpringApplication.run(ClassName.class, args);
+for ( String s : apc )
+{ 
+System.out.println(“Beans are : ” + s ); // all beans }
+}</pre>
+
+<br/></br>
+
+#### Dependency Injection
+- Any bean ( i.e object ) created by spring boot can be used anywhere anytime required
+- DI is implemented by @Autowired and @Bean
+  <br/></br>**@Autowired**
+1. @Autowired tell that use the singleton object that you created already present in bean and don't create
+   a new object , please use that object here
+2. @Autowired is not allowed inside function instead we have @Bean ( which creates object of function return type )
+3. kitna bar kahi par bhi @Autowired kr lo of the same class , The same bean ( i.e object ) is referred to
+
+<pre>
+class IOCClass
+{
+    @Autowired              // creates the singleton object of Person from bean
+    Person person;
+
+    // normal bean          // creates the singleton object of return type of the function
+    @Autowired
+    @Qualifier(value = "thirdBean")
+    String string3;
+
+}
+
+@Component
+class BeanClass        // A class for which a bean is created
+{
+
+    // normal bean
+    @Bean(name = "thirdBean")
+    public String inverseFunction3 ()
+    {
+        return "@Bean3 returned ";
+    }
+
+}
+</pre>
+>in other words we say , Person class is injected into the Shared class or Shared class has a DI on Person
+
+<br/></br>**@Bean**
+- we can create a singleton object of a function return type using @Bean code
+- function inside @Bean can never return void
+- @Configuration is to be used in the class in which @Bean is used
+- the @Bean will create a object of the function return type in the IOC container which can be used
+  when required
+- when multiple function have the same return type then the ambuiguity is ressolved
+  by @Primary and @Qualifier
+
+<pre>
+class IOCClass
+{
+
+    // normal bean              // creates the singleton object of return type of the function
+    @Autowired
+    @Qualifier(value = "thirdBean")
+    String string3;
+
+    // normal bean
+    @Autowired
+    @Qualifier(value = "thirdBean")
+    String string3;
+
+    // function with same return type are segregated by @Primary @Qualifier
+    @Autowired            
+    @Qualifier(value = "firstBean")
+    String string1;
+
+    @Autowired
+    @Qualifier(value = "secondBean")
+    String string2;
+
+    // bean attached with some functions
+    @Autowired
+    @Qualifier(value = "personBean")
+    Person person;
+
+}
+
+@Configuration
+class BeanClass
+{
+    // normal bean
+    @Bean(name = "thirdBean")
+    public String inverseFunction3 ()
+    {
+        return "@Bean3 returned ";
+    }
+
+    // function with same return type are segregated by @Primary @Qualifier
+    @Bean(name = "firstBean")
+    @Primary
+    public String inverseFunction ()
+    {
+        Syso ("This is a Bean function inside the Beans Class");
+        return "@Bean1 returned ";
+    }
+
+    @Bean(name = "secondBean")
+    public String inverseFunction2 ()
+    {
+        Syso ("This is a Bean function inside the Beans Class");
+        return "@Bean2 returned ";
+    }
+
+    // init & destroy funtions are attached to the bean
+    @Bean(name = "personBean" , initMethod = "start" , destroyMethod = "destroy")
+    public Person generatePerson()
+    {
+        // custom logic can be applied during bean creation
+        boolean flag = false;
+
+        if(flag)
+             return new Person("Arindam",34);
+        else
+            return new Person("Sourav",67);
+
+    }
+}
+
+
+
+public class Person {
+    String name ;
+    Integer age;
+
+    // runs before the bean is created
+    public void start() {
+        System.out.println("Init method for the bean started...");
+    }
+
+    // runs after the bean is destroyed
+    public void destroy() {
+        System.out.println("Destroy method for the bean started...");
+    }
+}
+
+</pre>
+
+### application.properties file
+- this file contains the properties like url , port no , DB user name , DB pwd, etc that are needed to run the application
+<pre>
+spring.datasource.url=jdbc:mysql://localhost:3306/library?createDatabaseIfNotExist=true
+spring.datasource.username = root
 spring.datasource.password = admin
 
 spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto=create
+spring.jpa.hibernate.ddl-auto=update
 
+logging.level.root=debug
 server.PORT = 9000
-</code>
 </pre>
