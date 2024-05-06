@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 public class RedisConnectionFactoryClass {
 
 
+    // connection start
     public static LettuceConnectionFactory connectionFactory()
     {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("localhost", 6379);
@@ -20,7 +21,7 @@ public class RedisConnectionFactoryClass {
 
     }
 
-
+// redistemplate to use the apis of redis server
     public static RedisTemplate<String, Object> getTemplate(){
 
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
