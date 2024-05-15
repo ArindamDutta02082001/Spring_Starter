@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="demoredis" />
         <module name="book-management" />
         <module name="online-library-management-system" />
         <module name="restapi" />
@@ -23,6 +24,7 @@
       <module name="book-management" options="-parameters" />
       <module name="demo-security" options="-parameters" />
       <module name="demo-spring" options="-parameters" />
+      <module name="demoredis" options="-parameters" />
       <module name="online-library-management-system" options="-parameters" />
       <module name="restapi" options="-parameters" />
       <module name="restapi (1)" options="-parameters" />
