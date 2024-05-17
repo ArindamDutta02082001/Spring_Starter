@@ -167,7 +167,8 @@ payload :
 
 #### Lombok Dependency Installation
 
-To use Lombok in your Spring Boot project, add the Lombok dependency to your pom.xml
+To use Lombok in your Spring Boot project, add the Lombok dependency to your pom.xml & make sure to install and enable the Intellij Plugin for lombok (else IDE wont detect annotations)
+   File -> Setting -> Plugin -> install
 
 #### Annotations
 
