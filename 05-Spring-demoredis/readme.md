@@ -1,4 +1,4 @@
-# This is a SpringBoot rest api demo with redis
+# This is a SpringBoot demo with redis and REST apis
 We follow the MVC model
 >FLOW  → controller  → service → repository → model
 

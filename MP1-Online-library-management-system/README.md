@@ -1,4 +1,4 @@
-# Online Library Management
+# Online Library Management ( Minor Project 1 )
 It is a online library management system , where
 <br/>
 <br/>

@@ -1,4 +1,4 @@
-# This is a SpringBoot rest api demo with redis
+# This is a SpringBoot Web Security demo In Memory
 We follow the MVC model
 >FLOW  → controller  → service → repository → model
 
@@ -49,7 +49,7 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
     }
 </pre>
 
-- The **Second configure()** method enables us to provide authorization to the authenticated users
+- The `Second configure()` method enables us to provide authorization to the authenticated users. we can use `hasRole` or `hasAuthority` to provide authorization
 <pre>
 // this configure method is defined to authorize the users after they are authenticated 
     @Override
@@ -68,7 +68,7 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
     }
 </pre>
 
-- we provide a **Password encoder** bean
+- we provide a `Password encoder` bean
 <pre>
 // the bean of the type of password encoder to be used is provided
     @Bean
@@ -77,6 +77,7 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
 
     }
 </pre>
+
 >  .and() .formLogin(); -> this ensures to give 2 extra api endpoints for form login for authentication
 
 #### Disabling CSRF token
@@ -100,6 +101,7 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
                 .formLogin();
     }
     </pre>
+
 > In the steps the MVC model is not followed but in the project you can see the MVC folder structure
 
 ### API endpoints are here
