@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { }
 </pre>
 we have to define a `InMemoryUserDetailsManager` to manage the user details
 <pre> private final InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();</pre>
-- Now inside the class , we have to `@Override` 2 `configure` methods & provide a password encoder Bean. The **First configure()** is used to provide authentication to the user
+- Now inside the class , we have to `@Override` : `2 configure methods` & provide a `password encoder Bean`. The **First configure()** is used to provide authentication to the user
  <pre>
 
 // this configure method is defined to authenticate the users
@@ -77,7 +77,7 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
 
     }
 </pre>
->  .and() .formLogin(); -> this ensure sto give 2 extra api endpoints for form login for authentication
+>  .and() .formLogin(); -> this ensures to give 2 extra api endpoints for form login for authentication
 
 #### Disabling CSRF token
 - If you dont want to hardcode the user details instead you want to dynamically add user details from the endpoint , instead we want to POST request then
@@ -107,7 +107,7 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
 - `localhost:9000/home`
 - `localhost:9000/shop`
 
->**Note : for the below endpoints first authenticate i.e to access the endpoint from postman first login through the UI form or login through the /login?username=something&password=something and note the authenticated JSESSIONID , and pass that JSESSIONID in the request header**
+>**Note : for the below endpoints first authenticate i.e to access the endpoint from postman first login through the UI form or login through the `/login?username=something&password=something` and note the authenticated JSESSIONID , and pass that JSESSIONID in the request header**
 ##### only admin has the access   (hardcoded : ayush as admin , arindam as student , ram as faculty)
 - `localhost:9000/login?username=ayush&password=ayush@123`    [  authentication is success | capture the JSESSIONID from cookie ]
 - `localhost:9000/credential?username=ram`                 getting credential of a user ( anyone can be )
