@@ -199,8 +199,6 @@ public Employee registerEmployee(@RequestBody @Valid Employeedto request) throws
    * username
    * password
    * Database Name to connect
-  > the above strategy has various drawback of security and scaling and time as you can`t write the most
-  time efficient sql query
 
   learn form doc  :  [JDBC doc Link](https://docs.google.com/document/d/1oMDdmSlQryVSw5POggkbzv_zMlEN9hNYDh_IaXQLDB8/view)
 
