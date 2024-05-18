@@ -26,7 +26,6 @@ public class RepositoryClass {
      */
     RepositoryClass()
     {
-
         inMemoryUserDetailsManager.createUser(User.builder().username("arindam")
                 .password("$2a$10$P68A3Wf2H6nES9OkXWZoj.CakfPbEoh1VDNEueXDjBNsUNZysU43W")
                 .roles("student")

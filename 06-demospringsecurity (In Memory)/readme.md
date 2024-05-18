@@ -27,7 +27,7 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
       
       // few hardcoded users defined
-      inMemoryUserDetailsManager.createUser(User.builder().username("arindam")
+        inMemoryUserDetailsManager.createUser(User.builder().username("arindam")
                 .password("$2a$10$P68A3Wf2H6nES9OkXWZoj.CakfPbEoh1VDNEueXDjBNsUNZysU43W")
                 .roles("student")
                 .build());
@@ -35,7 +35,11 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
                 .password("$2a$10$b.6RmGDoZ6O12h8QRaShxeA9ckO6yuVMQJYZFHVt6fSzrC.Mo2gNq")
                 .roles("faculty")
                 .build());
-        auth.userDetailsService(inMemoryUserDetailsManager);
+        inMemoryUserDetailsManager.createUser(User.builder().username("ayush")
+                .password("$2a$10$s1Cp0dps2uDYG9SWXBdivOXyFqBmN4YmrNy70qrWlSqoh7v7.BWG6")
+                .roles("admin")
+                .build());
+
     }
 
 // new users will be saved by this method
