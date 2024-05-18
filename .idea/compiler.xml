@@ -9,7 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="demoredis" />
         <module name="book-management" />
-        <module name="online-library-management-system" />
+        <module name="project" />
         <module name="restapi" />
         <module name="demo-security" />
         <module name="07-demospringsecurity-database" />
@@ -17,6 +17,9 @@
         <module name="restapi (1)" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="online-library-management-system" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -26,6 +29,7 @@
       <module name="demo-spring" options="-parameters" />
       <module name="demoredis" options="-parameters" />
       <module name="online-library-management-system" options="-parameters" />
+      <module name="project" options="-parameters" />
       <module name="restapi" options="-parameters" />
       <module name="restapi (1)" options="-parameters" />
     </option>

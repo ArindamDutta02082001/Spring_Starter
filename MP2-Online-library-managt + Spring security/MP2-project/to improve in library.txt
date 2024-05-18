@@ -1,0 +1,21 @@
+Authorization and authentication
+1. get student details : only by that student and admin
+2. update student details : same as above
+3. remove student  : same
+4. add a new student  : public api
+
+
+issue new book : student , admin
+return new book : student
+get transactions : student , admin
+
+** your DB structure about primary key and foreign key should be on the query pattern
+
+minor proj 2
+1. implement spring security
+2. implement cache to reduce time in api calls
+
+
+// code improvement
+// admin : controller , dto , service repository
+// user : controller , dto , service repository
