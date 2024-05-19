@@ -4,6 +4,7 @@ import com.example.project.onlinelibrarywithsecurity.service.SecuredUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -44,11 +45,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // disabling this csrf
         http.csrf().disable().authorizeHttpRequests()
-                .antMatchers("/faculty/attendance/**").hasAnyAuthority("admin")
-                .antMatchers("/faculty/**").hasAuthority("faculty")
-                .antMatchers("/student/**").hasAuthority("student")
-                .antMatchers("/library/**").hasAnyAuthority("student", "faculty")
-                .antMatchers("/usersignup").permitAll()
+                // books
+                .antMatchers(HttpMethod.POST,"/book/**").hasAuthority("admin")
+                .antMatchers(HttpMethod.DELETE,"/book/**").hasAuthority("admin")
+                .antMatchers(HttpMethod.PUT,"/book/**").hasAuthority("admin")
+                .antMatchers(HttpMethod.GET,"/book/**").hasAnyAuthority("student","admin")
+                // authors
+                .antMatchers(HttpMethod.POST,"/author/**").hasAuthority("admin")
+                .antMatchers(HttpMethod.GET,"/author/**").hasAnyAuthority("student","admin")
+                // students
+                .antMatchers(HttpMethod.POST , "/student/**").hasAuthority("admin")
+                .antMatchers(HttpMethod.GET , "/student/**").hasAnyAuthority("admin" , "student" )
+                .antMatchers(HttpMethod.DELETE , "/student/**").hasAnyAuthority("admin" , "student" )
+                .antMatchers(HttpMethod.PUT , "/student/**").hasAnyAuthority("admin" , "student" )
+                // admin and other
+//                .antMatchers("/admin").hasAuthority("admin")
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin();

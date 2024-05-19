@@ -21,8 +21,8 @@ public class SecuredUserService implements UserDetailsService {
         return null;
     }
 
-    public SecuredUser saveUserinDB(SecuredUser securedUser)
+    public void saveUserinDB(SecuredUser securedUser)
     {
-        return this.securedUserRepository.save(securedUser);
+        this.securedUserRepository.save(securedUser);
     }
 }

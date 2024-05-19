@@ -26,16 +26,17 @@ public class AdminService {
                 .username(createAdminDto.getUsername())
                 .password(new BCryptPasswordEncoder().encode(createAdminDto.getPassword()))
                 .build();
+
         Admin admin = Admin.builder()
                 .name(createAdminDto.getName())
                 .securedUser(securedUser)
                 .build();
 
         // create a secured user
-        securedUser.setAdmin(admin);
+//        securedUser.setAdmin(admin);
         securedUserService.saveUserinDB(securedUser);
 
-        // create a admin
+        // create an admin
         admin.setSecuredUser(securedUser);
         return adminRepository.save(admin);
     }

@@ -77,12 +77,15 @@ public class TransactionService {
 
             // assign the book to the student who requested for
             bookRepository.assignBookToStudent(bookList.get(0).getId(), student);
+
+            // then saving the successful transaction
             transaction.setTransactionStatus(TransactionStatus.SUCCESS);
             transactionRepository.save(transaction);
 
         }
         catch(Exception e)
         {
+            //  else saving the unsuccessful transaction
             transaction.setTransactionStatus(TransactionStatus.FAILED);
             transactionRepository.save(transaction);
             return "Transaction failed txn_id : "+transaction.getExternalTxnId();
@@ -126,13 +129,17 @@ return "Book : "+bookname+" is allocated to student : "+studentId+" with txn_id 
                 .build();
 
         try {
-            // unassign the book from the student
+
+            // unassigned the book from the student
             bookRepository.unassignBookToStudent(bookList.get(0).getId());
+
+            // then saving the successful transaction
             transaction.setTransactionStatus(TransactionStatus.SUCCESS);
             transactionRepository.save(transaction);
         }
         catch(Exception e)
         {
+            //  else saving the unsuccessful transaction
             transaction.setTransactionStatus(TransactionStatus.FAILED);
             transactionRepository.save(transaction);
             return "Transaction failed txn_id : "+transaction.getExternalTxnId();

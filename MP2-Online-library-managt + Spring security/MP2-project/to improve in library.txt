@@ -1,8 +1,11 @@
 Authorization and authentication
+
 1. get student details : only by that student and admin
 2. update student details : same as above
-3. remove student  : same
+3. remove student   : only admin allowed
+
 4. add a new student  : public api
+5.
 
 
 issue new book : student , admin

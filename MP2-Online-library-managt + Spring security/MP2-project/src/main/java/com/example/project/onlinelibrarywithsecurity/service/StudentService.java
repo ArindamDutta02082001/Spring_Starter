@@ -34,7 +34,7 @@ public class StudentService {
 /* the above method of creating the new Student will change as we have to create an secured user
     that can be either user , admin */
 
-// before creating a admin , SecuredUser should have a new row
+// before creating a student , SecuredUser should have a new row
 public Student createStudent(CreateStudentDto createStudentDto){
 
     SecuredUser securedUser = SecuredUser.builder()
