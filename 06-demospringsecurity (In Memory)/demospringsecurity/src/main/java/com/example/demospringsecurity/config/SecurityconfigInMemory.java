@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,13 +24,16 @@ for some reason WebSecurityConfigurerAdapter was not coming here ,
 if same issue persists then copy this pom.xml file
  */
 @Configuration
+@EnableWebSecurity
 public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
 
     // In memory authentication
     // In this , there is a inMemoryUserDetailsManager that manages the user details entered into it
+
     // we have to
     //          - @Override 2 configure methods
-    //          - provide one password encoder function
+    //          - provide one password encoder function ( optional , can pass its object into the first configure() )
+
     // the AuthenticationManagerBuilder decides what type of authentication is to be provided
     // we provide the authentication in the first configure function and authorization in the 2nd configure function
     // after authentication the authorized personnel can use the endpoints
@@ -117,7 +121,7 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin();
 
-        //                 .and()
+        //                .and()   --> ensures that the functions coming after it are directly attached to the root , HttpClient
         //                .formLogin(); --> this ensure sto give 2 extra api endpoints for form login for authentication
 
         // most restricted --> least restricted
@@ -129,11 +133,10 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
 
 
     // spring security Encoder instance - The passwords that are passed from UI are to be encoded and matched,
-    // so we have to provide a type of encoder instance that we want to use
+    // you need to make sure that the data present in Storage should be in this format
 
     /*
-    A. a normal noOpsEncoder instance - pwds are compared in raw format ,
-    bohot basic sa encoder hai
+    A. a normal noOpsEncoder instance - passwords are compared in raw string format
     */
 
 //    @Bean
@@ -143,8 +146,7 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
 //    }
 
     /*
-     B. BcryptEncoder - the passwords are bcrypted
-     you need to make sure that the data present in memory should be in this format
+     B. BcryptEncoder - the passwords are hashed upto 10 rounds
 
      arindam@123 - $2a$10$P68A3Wf2H6nES9OkXWZoj.CakfPbEoh1VDNEueXDjBNsUNZysU43W
      ram@123 - $2a$10$b.6RmGDoZ6O12h8QRaShxeA9ckO6yuVMQJYZFHVt6fSzrC.Mo2gNq

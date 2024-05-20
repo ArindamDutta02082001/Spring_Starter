@@ -1,13 +1,30 @@
-# This is a SpringBoot Web Security demo In Memory
+# This is a SpringBoot Web Security [ In Memory ]
 We follow the MVC model
 >FLOW  → controller  → service → repository → model
 
+### What is Spring Web Security ?
+It is a spring frame work that helps in authorization & authentication
+- Authentication : check user is a valid user or not
+- Authorization : If the user is valid , which endpoint he will have the access
+  we have to install `spring-boot-starter-security` . After installation the endpoints will be secured .
+
 ### Integrate Spring Security with spring boot App [ In Memory ]
 - Install the necessary dependencies + spring security dependency `spring-boot-starter-security`
-- Create a **SecurityConfig.java file** to define the configurations in this file
-- In this we define the **authentication** & **authorization** policy
-    - Authentication : check user is a valid user or not
-    - Authorization : If the user is valid , which endpoint he will have the access
+- Create a `SecurityConfig.java file` to define the configurations of the **authentication** & **authorization** policy
+- When you log in with Spring Security, it manages your authentication across multiple requests, despite
+  HTTP being stateless i.e **Spring Security is a session based framework that works  in HTTP which intern is a session less protocol**
+  1. Session Creation: After successful authentication, an HTTP session is formed. Your authentication
+     details are stored in this session.
+  2. Session Cookie: A `JSESSIONID` cookie is sent to your browser, which gets sent back with subsequent
+     requests, helping the server recognize your session.
+  3. SecurityContext: Using the JSESSIONID, Spring Security fetches your authentication details for each
+     request.
+  4. Session Timeout: Sessions have a limited life. If you're inactive past this limit, you're logged out.
+  5. Logout: When logging out, your session ends, and the related cookie is removed.
+  6. Remember-Me: Spring Security can remember you even after the session ends using a different
+     persistent cookie (typically have a longer lifespan) .
+     In essence, Spring Security leverages sessions and cookies, mainly JSESSIONID, to ensure you rem
+     authenticated across requests.
 
 ##### Inside the SecurityConfig.java file
 - The config file class extends the `WebSecurityConfigurerAdapter` ( spring boot version 2.7.17 )
@@ -68,6 +85,14 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
     }
 </pre>
 
+> `.and()` : It means that the next methods that comes after .and() will be joined directly to the root ( HttpSecurity http ).
+>
+> `.formLogin()` : this ensures to give 2 extra api endpoints (/login , /logout) with a html basic form page for form login for authentication. We can provide our own login page by extending `.formLogin().loginPage("/custom-path")`
+>
+> `.permitAll()` : it means that any user matching that endpoint can have access
+>
+> `.csrf().disable()` : By default Spring Security doesnt allow to do UNSAFE methods like PUT POST DELETE PATCH etc , with csrf enabled . So we have to disable it before doing such requests
+
 - we provide a `Password encoder` bean
 <pre>
 // the bean of the type of password encoder to be used is provided
@@ -77,14 +102,11 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
 
     }
 </pre>
-
->  .and() .formLogin(); -> this ensures to give 2 extra api endpoints for form login for authentication
-
 #### Disabling CSRF token
 - If you dont want to hardcode the user details instead you want to dynamically add user details from the endpoint , instead we want to POST request then
   **we have to disable the csrf token which is a security concern in prod level**
 - By default Spring Security doesnt allow to do UNSAFE methods like PUT POST DELETE PATCH etc , with csrf enabled . So we have to disable it before doing such requests
-- Without disabling csrf ,only GET call to the endpoints ( after authentication + authorization ) is allowed
+- Without disabling csrf ,only GET call is allowed to the endpoints ( after authentication + authorization )
     <pre>
     // csrf token is disabled by csrf().disable(). 
     @Override
@@ -110,6 +132,8 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
 - `localhost:9000/shop`
 
 >**Note : for the below endpoints first authenticate i.e to access the endpoint from postman first login through the UI form or login through the `/login?username=something&password=something` and note the authenticated JSESSIONID , and pass that JSESSIONID in the request header**
+>
+> This has to be done as Spring Security is a session based framework that works  in HTTP which intern is a session less protocol
 ##### only admin has the access   (hardcoded : ayush as admin , arindam as student , ram as faculty)
 - `localhost:9000/login?username=ayush&password=ayush@123`    [  authentication is success | capture the JSESSIONID from cookie ]
 - `localhost:9000/credential?username=ram`                 getting credential of a user ( anyone can be )
