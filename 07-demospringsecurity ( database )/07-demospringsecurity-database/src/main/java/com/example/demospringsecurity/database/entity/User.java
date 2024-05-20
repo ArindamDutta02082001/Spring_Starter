@@ -31,15 +31,18 @@ public class User implements UserDetails {
     private String authorities; // login_faculty::access_library
 
 
-
     @Override
     public Collection<? extends GrantedAuthority > getAuthorities() {
         String[] authoritiesList = this.authorities.split(AUTHORITIES_DELIMITER);
         return Arrays.stream(authoritiesList)
-                .map(authority -> new SimpleGrantedAuthority(authority))
+                .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
+    }
 
-
+    // not using the above getAuthorities instead using this one
+    public String getAuthoritiess()
+    {
+        return authorities;
     }
 
     @Override

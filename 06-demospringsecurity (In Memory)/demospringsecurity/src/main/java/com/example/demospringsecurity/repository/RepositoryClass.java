@@ -28,15 +28,15 @@ public class RepositoryClass {
     {
         inMemoryUserDetailsManager.createUser(User.builder().username("arindam")
                 .password("$2a$10$P68A3Wf2H6nES9OkXWZoj.CakfPbEoh1VDNEueXDjBNsUNZysU43W")
-                .roles("student")
+                .authorities("student")
                 .build());
         inMemoryUserDetailsManager.createUser(User.builder().username("ram")
                 .password("$2a$10$b.6RmGDoZ6O12h8QRaShxeA9ckO6yuVMQJYZFHVt6fSzrC.Mo2gNq")
-                .roles("faculty")
+                .authorities("faculty")
                 .build());
         inMemoryUserDetailsManager.createUser(User.builder().username("ayush")
                 .password("$2a$10$s1Cp0dps2uDYG9SWXBdivOXyFqBmN4YmrNy70qrWlSqoh7v7.BWG6")
-                .roles("admin")
+                .authorities("admin")
                 .build());
     }
 

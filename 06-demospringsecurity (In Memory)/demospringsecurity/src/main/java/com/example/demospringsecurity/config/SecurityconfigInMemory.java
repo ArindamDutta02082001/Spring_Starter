@@ -22,19 +22,30 @@ import java.util.List;
 /*
 for some reason WebSecurityConfigurerAdapter was not coming here ,
 if same issue persists then copy this pom.xml file
+
+     if anything is not supporting like the interface or the methods
+     then downgrade the application to this project version
+     2.7.4
+
+@EnableWebSecurity  - optional
+
  */
+
+
 @Configuration
 @EnableWebSecurity
 public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
 
-    // In memory authentication
-    // In this , there is a inMemoryUserDetailsManager that manages the user details entered into it
 
     // we have to
     //          - @Override 2 configure methods
     //          - provide one password encoder function ( optional , can pass its object into the first configure() )
 
     // the AuthenticationManagerBuilder decides what type of authentication is to be provided
+    // In memory authentication
+    // In this , there is a inMemoryUserDetailsManager that manages the user details entered into it
+
+
     // we provide the authentication in the first configure function and authorization in the 2nd configure function
     // after authentication the authorized personnel can use the endpoints
 
@@ -53,11 +64,11 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
 //        auth.inMemoryAuthentication()
 //                .withUser("arindam")
 //                .password("$2a$10$P68A3Wf2H6nES9OkXWZoj.CakfPbEoh1VDNEueXDjBNsUNZysU43W")
-//                .roles("student")
+//                .authorities("student")
 //                .and()
 //                .withUser("ram")
 //                .password("$2a$10$b.6RmGDoZ6O12h8QRaShxeA9ckO6yuVMQJYZFHVt6fSzrC.Mo2gNq")
-//                .roles("faculty");
+//                .authorities("faculty");
 //
 //    }
 
@@ -68,11 +79,11 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        inMemoryUserDetailsManager.createUser(User.builder().username("arindam")
 //                .password("$2a$10$P68A3Wf2H6nES9OkXWZoj.CakfPbEoh1VDNEueXDjBNsUNZysU43W")
-//                .roles("student")
+//                .authorities("student")
 //                .build());
 //        inMemoryUserDetailsManager.createUser(User.builder().username("ram")
 //                .password("$2a$10$b.6RmGDoZ6O12h8QRaShxeA9ckO6yuVMQJYZFHVt6fSzrC.Mo2gNq")
-//                .roles("faculty")
+//                .authorities("faculty")
 //                .build());
 //        auth.userDetailsService(inMemoryUserDetailsManager);
 //    }
@@ -111,12 +122,12 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeHttpRequests()
-                .antMatchers("/faculty/attendance/**").hasRole("admin")
-                .antMatchers("/signup/**").hasRole("admin")
-                .antMatchers("/credential/**").hasRole("admin")
-                .antMatchers("/faculty/**").hasRole("faculty")
-                .antMatchers("/student/**").hasRole("student")
-                .antMatchers("/library/**").hasAnyRole("student", "faculty")
+                .antMatchers("/faculty/attendance/**").hasAuthority("admin")
+                .antMatchers("/signup/**").hasAuthority("admin")
+                .antMatchers("/credential/**").hasAuthority("admin")
+                .antMatchers("/faculty/**").hasAuthority("faculty")
+                .antMatchers("/student/**").hasAuthority("student")
+                .antMatchers("/library/**").hasAnyAuthority("student", "faculty")
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin();

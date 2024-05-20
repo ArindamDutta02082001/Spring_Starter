@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 // responsible  for retrieving the data from the DB
 @Service
@@ -15,12 +16,27 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserRepository userRepository;
 
+
+    // to get a user by username
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User userDetails = this.userRepository.findByUsername(username);
+        System.out.println(userDetails.getUsername() );
+        System.out.println(userDetails.getPassword() );
+        System.out.println( userDetails.getAuthoritiess());
         return this.userRepository.findByUsername(username);
     }
 
-    public User save(User demoUser){
-        return this.userRepository.save(demoUser);
+
+    // to save a user in user table
+    public void save(User demoUser){
+        this.userRepository.save(demoUser);
     }
+
+    // to get all users
+    public List<User> getAllUsers()
+    {
+        return this.userRepository.findAll();
+    }
+
 }
