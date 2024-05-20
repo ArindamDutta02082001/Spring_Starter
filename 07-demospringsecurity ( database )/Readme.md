@@ -10,8 +10,8 @@ It is a spring framework that helps in authorization & authentication
 
 ### Integrate Spring Security with spring boot App [ In Database ]
 - Install the necessary dependencies + spring security dependency `spring-boot-starter-security`
-- Create a `SecurityConfig.java file` to define the configurations of the **authentication** & **authorization** policy
-- We have to create a **User** entity which will implement the `UserDetails` builtin interface
+- config : Create a `SecurityConfig.java file` to define the configurations of the **authentication** & **authorization** policy
+- dto : We have to create a **User** entity which will implement the `UserDetails` builtin interface
 <pre>
 @Entity
 @Setter
@@ -23,7 +23,7 @@ public class User implements UserDetails
 // - do -
 }
 </pre>
-- We have to create a **UserService** class that implements `UserDetailsService` builtin interface
+- service : We have to create a **UserService** class that implements `UserDetailsService` builtin interface
 <pre>
 @Service
 public class UserService implements UserDetailsService {
@@ -35,7 +35,7 @@ public class UserService implements UserDetailsService {
 
     // other save , etc functions write as requirement
 </pre>
-- We have to create a **UserRepository** class to store the `User` Entity
+- repository : We have to create a **UserRepository** class to store the `User` Entity
 <pre>
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {

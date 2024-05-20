@@ -10,8 +10,8 @@ It is a spring framework that helps in authorization & authentication
 
 ### Integrate Spring Security with spring boot App [ In Memory ]
 - Install the necessary dependencies + spring security dependency `spring-boot-starter-security`
-- Create a `SecurityConfig.java file` to define the configurations of the **authentication** & **authorization** policy
-  > we havent created any service , dto for in-memory , we can if needed no issue 
+- config : Create a `SecurityConfig.java file` to define the configurations of the **authentication** & **authorization** policy
+  > we haven`t created any service , dto for in-memory , we can if needed no issue 
 - When you log in with Spring Security, it manages your authentication across multiple requests, despite
   HTTP being stateless . Thus you need to use the authenticated `JSESSIONID` to use the endpoints
 
