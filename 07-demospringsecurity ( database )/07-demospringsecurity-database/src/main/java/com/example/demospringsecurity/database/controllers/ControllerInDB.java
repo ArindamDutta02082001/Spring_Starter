@@ -48,7 +48,7 @@ public class ControllerInDB {
     }
 
 
-    @PostMapping("/usersignup")
+    @PostMapping("/usersignup")                         // kept unsecured general api
     public User signUp(@RequestBody User user)
     {
         User newuser = User.builder()
@@ -91,7 +91,6 @@ public class ControllerInDB {
 
 
     /* below are the endpoints for authorized student , faculty , admin */
-
 
     // for faculty
     @GetMapping("/faculty")

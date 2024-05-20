@@ -20,10 +20,6 @@ public class UserService implements UserDetailsService {
     // to get a user by username
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User userDetails = this.userRepository.findByUsername(username);
-        System.out.println(userDetails.getUsername() );
-        System.out.println(userDetails.getPassword() );
-        System.out.println( userDetails.getAuthoritiess());
         return this.userRepository.findByUsername(username);
     }
 

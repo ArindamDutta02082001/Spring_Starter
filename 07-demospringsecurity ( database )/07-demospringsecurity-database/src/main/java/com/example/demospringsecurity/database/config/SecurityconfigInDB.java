@@ -63,7 +63,7 @@ public class SecurityconfigInDB extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeHttpRequests()
                 .antMatchers("/faculty/attendance/**").hasAuthority("admin")
-//                .antMatchers("/credential/**").hasRole("admin")
+                .antMatchers("/credential/**").hasAnyAuthority("admin")
                 .antMatchers("/faculty/**").hasAuthority("faculty")
                 .antMatchers("/student/**").hasAuthority("student")
                 .antMatchers("/library/**").hasAnyAuthority("student", "faculty")

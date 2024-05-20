@@ -1,4 +1,4 @@
-# This is a SpringBoot Web Security [ In Memory ]
+# This is a SpringBoot Web Security [ In Database ]
 We follow the MVC model
 >FLOW  → controller  → service → repository → model
 
@@ -12,7 +12,38 @@ It is a spring framework that helps in authorization & authentication
 - Install the necessary dependencies + spring security dependency `spring-boot-starter-security`
 - Create a `SecurityConfig.java file` to define the configurations of the **authentication** & **authorization** policy
 - We have to create a **User** entity which will implement the `UserDetails` builtin interface
-- We have to create a **UserService** that implements `UserDetailsService` builtin interface
+<pre>
+@Entity
+@Setter
+@AllArgsConstructor
+@Builder
+public class User implements UserDetails 
+{ 
+// implement default methods isEnabled , isCredentialsNonExpired , isAccountNonLocked , isAccountNonExpired , getUsername , getPassword 
+// - do -
+}
+</pre>
+- We have to create a **UserService** class that implements `UserDetailsService` builtin interface
+<pre>
+@Service
+public class UserService implements UserDetailsService {
+    // implement default method loadUserByUsername
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return this.userRepository.findByUsername(username);
+    }
+
+    // other save , etc functions write as requirement
+</pre>
+- We have to create a **UserRepository** class to store the `User` Entity
+<pre>
+@Repository
+public interface UserRepository extends JpaRepository<User, Integer> {
+
+    @Query("select u from User u where u.username = :username")
+    public User findByUsername(String username) ;
+}
+</pre>
 - When you log in with Spring Security, it manages your authentication across multiple requests, despite
   HTTP being stateless . Thus you need to use the authenticated `JSESSIONID` to use the endpoints
 
@@ -36,34 +67,30 @@ It is a spring framework that helps in authorization & authentication
   **now it has been obsolate , try new**
 <pre>
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter { }
+@EnableWebSecurity  ( optional annotation )
+public class SecurityConfig extends WebSecurityConfigurerAdapter { 
+
+// we define a user service
+   @Autowired
+   UserService userService;
+
+}
 </pre>
-we have to define a `InMemoryUserDetailsManager` to manage the user details
-<pre> private final InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();</pre>
-- Now inside the class , we have to `@Override` 2 `configure` methods & provide a password encoder Bean. The **First configure()** is used to provide authentication to the user
+
+- Now inside the class , we have to `@Override` 2 `configure` methods & provide a `password encoder Bean`. The **First configure()** is used to provide authentication to the user
  <pre>
 
 // this configure method is defined to authenticate the users
+// Here we are using user service for DB auth so we aren`t hard coding the user credentials
+
+    @Autowired
+    UserService userService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-      
-      // few hardcoded users defined
-      inMemoryUserDetailsManager.createUser(User.builder().username("arindam")
-                .password("$2a$10$P68A3Wf2H6nES9OkXWZoj.CakfPbEoh1VDNEueXDjBNsUNZysU43W")
-                .roles("student")
-                .build());
-        inMemoryUserDetailsManager.createUser(User.builder().username("ram")
-                .password("$2a$10$b.6RmGDoZ6O12h8QRaShxeA9ckO6yuVMQJYZFHVt6fSzrC.Mo2gNq")
-                .roles("faculty")
-                .build());
-        auth.userDetailsService(inMemoryUserDetailsManager);
-    }
 
-// new users will be saved by this method
-    public void saveEmployee(UserDetails userDetails)
-    {
-        inMemoryUserDetailsManager.createUser(userDetails);
+        // defines the type of authentication we want to have in app
+        auth.userDetailsService(userService);
     }
 </pre>
 
@@ -74,6 +101,7 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeHttpRequests()
                 .antMatchers("/faculty/attendance/**").hasAuthority("admin")
+                .antMatchers("/credential/**").hasAnyAuthority("admin")
                 .antMatchers("/faculty/**").hasAuthority("faculty")
                 .antMatchers("/student/**").hasAuthority("student")
                 .antMatchers("/library/**").hasAnyAuthority("student", "faculty")
@@ -82,11 +110,19 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
                 .formLogin();
 
         // most restricted --> least restricted
-
     }
+
 </pre>
 
-- we provide a **Password encoder** bean
+> `.and()` : It means that the next methods that comes after .and() will be joined directly to the root ( HttpSecurity http ).
+>
+> `.formLogin()` : this ensures to give 2 extra api endpoints (/login , /logout) with a html basic form page for form login for authentication. We can provide our own login page by extending `.formLogin().loginPage("/custom-path")`
+>
+> `.permitAll()` : it means that any user matching that endpoint can have access
+>
+> `.csrf().disable()` : By default Spring Security doesnt allow to do UNSAFE methods like PUT POST DELETE PATCH etc , with csrf enabled . So we have to disable it before doing such requests
+
+- we provide a `Password encoder` bean ( We can pass `new PasswordEncoder()` in the first configure()  )
 <pre>
 // the bean of the type of password encoder to be used is provided
     @Bean
@@ -95,7 +131,6 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
 
     }
 </pre>
->  .and() .formLogin(); -> this ensure sto give 2 extra api endpoints for form login for authentication
 
 #### Disabling CSRF token
 - If you dont want to hardcode the user details instead you want to dynamically add user details from the endpoint , instead we want to POST request then
@@ -107,33 +142,51 @@ we have to define a `InMemoryUserDetailsManager` to manage the user details
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeHttpRequests()
-                .antMatchers("/faculty/attendance/**").hasRole("admin")
-                .antMatchers("/faculty/**").hasRole("faculty")
-                .antMatchers("/student/**").hasRole("student")
-                .antMatchers("/library/**").hasAnyRole("student", "faculty")
+                .antMatchers("/faculty/attendance/**").hasAuthority("admin")
+                .antMatchers("/credential/**").hasAnyAuthority("admin")
+                .antMatchers("/faculty/**").hasAuthority("faculty")
+                .antMatchers("/student/**").hasAuthority("student")
+                .antMatchers("/library/**").hasAnyAuthority("student", "faculty")
                 .antMatchers("/**").permitAll()
                 .and()
+                .formLogin();
     }
+
     </pre>
 > In the steps the MVC model is not followed but in the project you can see the MVC folder structure
+
 
 ### API endpoints are here
 ##### general endpoints anyone can use without authentication
 - `localhost:9000/home`
 - `localhost:9000/shop`
+- `localhost:9000/usersignup`        for creating new user
+    <pre>
+    payload : 
+    {
+     "username": "ram" , 
+     "password": "ram@123",
+     "authorities": "faculty"
+    }
+    </pre>
+>**Note : for the below endpoints first authenticate i.e to access the endpoint from postman first login through the UI form or login through the `/login?username=something&password=something` and note the authenticated JSESSIONID , and pass that JSESSIONID in the request header**
+>
+> This has to be done as Spring Security is a session based framework that works  in HTTP which intern is a session less protocol
+##### only admin has the access  
+- `localhost:9000/login?username=<create_it>&password=<create_it>`    [  authentication is success | capture the JSESSIONID from cookie ]
+- `localhost:9000/credential?username=ram`                 getting credential of a user ( anyone can be )
+- `localhost:9000/credential/all`      get all user credentials
 
->**Note : for the below endpoints you have to be authenticated i.e to access the endpoint from postman first login through the form and provide the authenticated JSESSIONID in the request header**
-##### only student has the access [ if authentication is success ]  | provide the JSESSIONID
+##### only student has the access
+- `localhost:9000/login?username=<create_it>&password=<create_it>`    [  authentication is success | capture the JSESSIONID from cookie ]
 - `localhost:9000/student`
 - `localhost:9000/library`
 
-##### only faculty has the access [ if authentication is success ] | provide the JSESSIONID
-- `localhost:9000/student`
+##### only faculty has the access
+- `localhost:9000/login?username=<create_it>&password=<create_it>`    [  authentication is success | capture the JSESSIONID from cookie ]
+- `localhost:9000/faculty`
 - `localhost:9000/library`
 
-##### only the admin has the access neither the student or faculty [ if authentication is success ] | provide the JSESSIONID
-- `localhost:9000//faculty/attendance`
-> this will throw error 404 as this endpoint is not present in the controllers
 
 ### application.properties file
 <pre>

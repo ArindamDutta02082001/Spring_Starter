@@ -34,13 +34,17 @@ authenticated across requests.
   **now it has been obsolate , try new**
 <pre>
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter { }
+@EnableWebSecurity  ( optional annotation )
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+// we have to define a `InMemoryUserDetailsManager` to manage the user details
+ private final InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
+
+ }
 </pre>
-we have to define a `InMemoryUserDetailsManager` to manage the user details
-<pre> private final InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();</pre>
+
 - Now inside the class , we have to `@Override` : `2 configure methods` & provide a `password encoder Bean`. The **First configure()** is used to provide authentication to the user
  <pre>
-
 // this configure method is defined to authenticate the users
 
     @Override
