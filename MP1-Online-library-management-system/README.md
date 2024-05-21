@@ -2,10 +2,10 @@
 It is a online library management system , where
 <br/>
 <br/>
-## Tables present
+### Tables present
 Author , Book , Student , Transaction
 
-## Database tables
+### Database tables
 1. Author Table  <br/>
    ![img.png](images/img.png)   <br/>
    ![img_5.png](images/img_5.png)
@@ -19,20 +19,19 @@ Author , Book , Student , Transaction
    ![img_3.png](images/img_3.png)<br/>
    ![img_7.png](images/img_7.png)
 
-## Important Relations among tables
+### Important Relations among tables
 1. A Author can write many Books & A Book can be written by one author [ Author : Book :: 1 : N ]
 2. A Student can borrow many books & A Book can be borrowed by one Student ( Here it is assumed only one copy of a book exist in library else same name ka boht books store ho rha tha and findBookByName mei list return ho ra tha, so one book can be taken by only one student ) [ Student : Book :: 1 : M ]
 3. A Book can have many transactions associated to it [ Book : Transaction :: 1 : M ]
 4. A Admin is free to do any no of issue and return Transaction for a student [ student : transacio :: 1 : M ]
 
-## Database Schema
-
+### Database Schema
 ![img_4.png](images/img_4.png)
 
-
-## App functionality
-- Admin can create a Book with its details like name , id , author details
-- Admin can create 2 type of txn for a student <br/>
+### App functionality
+- User can create a Book with its details like name , id , author details
+  **make sure that you create author before inserting book**
+- User can create 2 type of txn for a student <br/>
     * Issue Txn
         *       1. To start the issue txn we take the book name and student id
                 2. Then we are checking whether book is available or not or that student exists or if the book is occupied
@@ -48,7 +47,7 @@ Author , Book , Student , Transaction
                 4. Un-assign the book to that particular student i.e update book table and set student_id = null to deallocate
                 5. Update the txn accordingly with status as SUCCESS or FAILED if any exception occured
 
-## APIs
+### APIs
 1. Book
 * Create a new Book - `localhost:9000/book/regbook`
 * Get a book by id - `localhost:9000/book/book/1`
@@ -77,7 +76,7 @@ payload :
 * Start a issue transaction - `localhost:9000/transaction/issue?name=Booknew2&studentId=1`
 * Start a return transaction - `localhost:9000/transaction/return?name=Booknew2&studentId=1`
 
-## Payloads and response of apis
+### Payloads and response of apis
  <pre>
  <code>
  payload and response :
@@ -118,7 +117,7 @@ response :
 Update Book
 payload :
 {
-	"name": "Booknew1",
+    "name": "Booknew1",
     "genre" : "FICTION",
     "pages" : 50505,
     "author" : 
@@ -190,7 +189,7 @@ Payloads of issue & return txn is not needed
  </code>
  </pre>
 
-## Properties used
+### Properties used
 <pre>
 <code>
 spring.datasource.url=jdbc:mysql://localhost:3306/online-library?createDatabaseIfNotExist=true

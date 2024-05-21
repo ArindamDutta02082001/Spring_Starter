@@ -18,7 +18,7 @@ public class SecuredUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        return this.securedUserRepository.findByUsername(username);
     }
 
     public void saveUserinDB(SecuredUser securedUser)

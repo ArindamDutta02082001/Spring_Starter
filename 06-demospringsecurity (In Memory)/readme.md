@@ -12,6 +12,28 @@ It is a spring framework that helps in authorization & authentication
 - Install the necessary dependencies + spring security dependency `spring-boot-starter-security`
 - config : Create a `SecurityConfig.java file` to define the configurations of the **authentication** & **authorization** policy
   > we haven`t created any service , dto for in-memory , we can if needed no issue
+- dto : We have to create a **User** entity which will implement the `UserDetails` builtin interface
+<pre>
+@Entity
+@Setter
+@AllArgsConstructor
+@Builder
+public class User implements UserDetails 
+{ 
+// implement default methods isEnabled , isCredentialsNonExpired , isAccountNonLocked , isAccountNonExpired , getUsername , getPassword 
+// - do -
+}
+</pre>
+- service : not req here as we are doing `in-memory` 
+- repository : We have to create a **UserRepository** class to store the `User` Entity
+<pre>
+@Repository
+public interface UserRepository extends JpaRepository <User ,Integer> {
+
+    @Query("select u from User u where u.username = :username")
+    public User findByUsername(String username) ;
+}
+</pre>
 - When you log in with Spring Security, it manages your authentication across multiple requests, despite
   HTTP being stateless . Thus you need to use the authenticated `JSESSIONID` to use the endpoints
 

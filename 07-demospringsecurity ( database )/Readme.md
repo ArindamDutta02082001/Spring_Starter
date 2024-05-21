@@ -23,7 +23,7 @@ public class User implements UserDetails
 // - do -
 }
 </pre>
-- service : We have to create a **UserService** class that implements `UserDetailsService` builtin interface
+- service : We have to create a **UserService** class that implements `UserDetailsService` builtin interface. We have to override the `loadUserByUsername()` so that it returns a User. **Upon Login this function is responsible for returning the user which matches the user entered user details in UI**
 <pre>
 @Service
 public class UserService implements UserDetailsService {

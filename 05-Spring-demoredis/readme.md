@@ -37,7 +37,7 @@ We follow the MVC model
             redisTemplate.afterPropertiesSet();
             return redisTemplate;
           }
-- Serialize the object by implementing **Serializable** in the entity class
+- Serialize the object by implementing **Serializable** in the entity class as we store serialized object into the redis server
 <pre>
 @Getter
 @Setter
