@@ -25,14 +25,21 @@ public class UserService implements UserDetailsService {
 
 
     // to save a user in user table
-    public void save(User demoUser){
+    public void saveFromDB(User demoUser){
         this.userRepository.save(demoUser);
     }
 
     // to get all users
-    public List<User> getAllUsers()
+    public List<User> getAllUsersFromDB()
     {
         return this.userRepository.findAll();
+    }
+
+
+    // deleting the user
+    public void deleteUserFromDB(int id)
+    {
+        this.userRepository.deleteById(id);
     }
 
 }

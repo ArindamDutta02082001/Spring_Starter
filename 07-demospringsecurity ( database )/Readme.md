@@ -155,12 +155,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     </pre>
 > In the steps the MVC model is not followed but in the project you can see the MVC folder structure
 
-
 ### API endpoints are here
 ##### general endpoints anyone can use without authentication
-- `localhost:9000/home`
-- `localhost:9000/shop`
-- `localhost:9000/usersignup`        for creating new user
+- GET : `localhost:9000/home`
+- GET : `localhost:9000/shop`
+- POST : `localhost:9000/usersignup`        for creating new user
     <pre>
     payload : 
     {
@@ -172,21 +171,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 >**Note : for the below endpoints first authenticate i.e to access the endpoint from postman first login through the UI form or login through the `/login?username=something&password=something` and note the authenticated JSESSIONID , and pass that JSESSIONID in the request header**
 >
 > This has to be done as Spring Security is a session based framework that works  in HTTP which intern is a session less protocol
-##### only admin has the access  
-- `localhost:9000/login?username=<create_it>&password=<create_it>`    [  authentication is success | capture the JSESSIONID from cookie ]
-- `localhost:9000/credential?username=ram`                 getting credential of a user ( anyone can be )
-- `localhost:9000/credential/all`      get all user credentials
+##### only admin has the access
+- POST : `localhost:9000/login?username=<create_it>&password=<create_it>`    [  authentication is success | capture the JSESSIONID from cookie ]
+- GET : `localhost:9000/credential?username=ram`                 getting credential of a user ( anyone can be )
+- GET : `localhost:9000/credential/all`      get all user credentials
 
 ##### only student has the access
-- `localhost:9000/login?username=<create_it>&password=<create_it>`    [  authentication is success | capture the JSESSIONID from cookie ]
-- `localhost:9000/student`
-- `localhost:9000/library`
+- POST : `localhost:9000/login?username=<create_it>&password=<create_it>`    [  authentication is success | capture the JSESSIONID from cookie ]
+- GET : `localhost:9000/student`
+- GET : `localhost:9000/library`
 
 ##### only faculty has the access
-- `localhost:9000/login?username=<create_it>&password=<create_it>`    [  authentication is success | capture the JSESSIONID from cookie ]
-- `localhost:9000/faculty`
-- `localhost:9000/library`
+- POST : `localhost:9000/login?username=<create_it>&password=<create_it>`    [  authentication is success | capture the JSESSIONID from cookie ]
+- GET : `localhost:9000/faculty`
+- GET : `localhost:9000/library`
 
+##### SPRING SECURITY CONTEXT : only the logged-in personnel can access this
+- GET : `localhost:9000/my-detail`  no need to pass user_id to fetch the details
+- PUT : `localhost:9000/update-password`  to update password of only logged-in account
+  <pre>
+  {
+    "password": "arindam@1234"
+  }
+  </pre>
+- DELETE : `localhost:9000/delete-detail`  to delete the currently logged-in account
+
+### Spring Security Context ?
+it contains the object details just like an Application Context holding details of the Beans .
+It gives the object details based on the authentication details ( username & password ) that we pass in the beginning
 
 ### application.properties file
 <pre>

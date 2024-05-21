@@ -1,9 +1,11 @@
 package com.example.demospringsecurity.database.controllers;
 
+import com.example.demospringsecurity.database.dto.createUserDto;
 import com.example.demospringsecurity.database.entity.User;
-
 import com.example.demospringsecurity.database.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +51,7 @@ public class ControllerInDB {
 
 
     @PostMapping("/usersignup")                         // kept unsecured general api
-    public User signUp(@RequestBody User user)
+    public User signUp(@RequestBody createUserDto user)
     {
         User newuser = User.builder()
                 .username(user.getUsername())
@@ -57,10 +59,10 @@ public class ControllerInDB {
                 .isEnabled(true)
                 .isAccountNonLocked(true)
                 .isCredentialsNonExpired(true)
-                .authorities(user.getAuthoritiess())
+                .authorities(user.getAuthorities())
                 .password( new BCryptPasswordEncoder().encode(user.getPassword()))
                 .build();
-        this.userService.save(newuser);
+        this.userService.saveFromDB(newuser);
         return newuser;
     }
 
@@ -73,7 +75,7 @@ public class ControllerInDB {
     // for admins
 
 
-
+    // unsafe method , we later created the safe method to fetch details
     @GetMapping("/credential")
     public UserDetails getAllCredentials(@RequestParam("username") String username)
     {
@@ -84,7 +86,7 @@ public class ControllerInDB {
     @GetMapping("/credential/all")
     public List<User> getAllUser()
     {
-        return userService.getAllUsers();
+        return userService.getAllUsersFromDB();
     }
 
 
@@ -109,6 +111,49 @@ public class ControllerInDB {
     public String welcomeToLibrary(){
         return "Welcome to library!!";
     }
+
+
+    /* Spring Security Context
+     *  just like IOC container / application context , it is also a container that holds the object details
+     *
+     */
+
+
+    // try to get a particular credential of a user
+    // how to do ? ans : we have to pass the user_id either in req param , body or in path variable
+    // but user_id is sensitive information , so we should not pass them like this .
+    // here comes the spring security context , which holds the user object details that is currently logged in
+
+    @GetMapping("/my-detail")
+    public User getMyDetail()
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (User) authentication.getPrincipal();
+    }
+
+    @PutMapping("/update-password")
+    public User updateMyDetail(@RequestBody createUserDto createUserdto)
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        String username = user.getUsername();
+        User newUser = (User) userService.loadUserByUsername(username);
+
+        // updating the password
+        newUser.setPassword(new BCryptPasswordEncoder().encode(createUserdto.getPassword()));
+        userService.saveFromDB(newUser);
+        return newUser;
+    }
+
+    @DeleteMapping("/delete-detail")
+    public User deleteMyDetail()
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        userService.deleteUserFromDB(user.getId());
+        return user;
+    }
+
 
 
 }

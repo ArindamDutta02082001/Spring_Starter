@@ -1,14 +1,15 @@
 package com.example.demospringsecurity.controllers;
 
 import com.example.demospringsecurity.config.SecurityconfigInMemory;
+import com.example.demospringsecurity.dto.createUserDto;
+import com.example.demospringsecurity.models.DemoUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -30,8 +31,6 @@ public class ControllerInMemory {
 
     @Autowired
     SecurityconfigInMemory securityconfigInMemory;
-
-
 
 
 
@@ -59,14 +58,19 @@ public class ControllerInMemory {
     // for admins
 
     @PostMapping("/signup")
-    public UserDetails userSignup(@RequestParam("username") String username  , @RequestParam("password") String password , @RequestParam("role") String role  )
+    public DemoUser userSignup(@RequestBody createUserDto createUserdto )
     {
-        UserDetails userDetails =  User.builder().username(username)
-                .password(new BCryptPasswordEncoder().encode(password))
-                .authorities(role)
+        DemoUser user =  DemoUser.builder()
+                .username(createUserdto.getUsername())
+                .password(new BCryptPasswordEncoder().encode(createUserdto.getPassword()))
+                .authorities(createUserdto.getAuthorities())
+                .isEnabled(true)
+                .isAccountNonLocked(true)
+                .isAccountNonExpired(true)
+                .isCredentialsNonExpired(true)
                 .build();
-        securityconfigInMemory.saveUserDetailsInDB(userDetails);
-        return  userDetails;
+        securityconfigInMemory.saveUserDetailsInDB(user);
+        return  user;
     }
 
     @GetMapping("/credential")
@@ -95,6 +99,27 @@ public class ControllerInMemory {
     @GetMapping("/library")
     public String welcomeToLibrary(){
         return "Welcome to library!!";
+    }
+
+
+    /* Spring Security Context
+     *  just like IOC container / application context , it is also a container that holds the object details
+     *
+     */
+
+
+    // try to get a particular credential of a user
+    // how to do ? ans : we have to pass the user_id either in req param , body or in path variable
+    // but user_id is sensitive information , so we should not pass them like this .
+    // here comes the spring security context , which holds the user object details that is currently logged in
+
+    @GetMapping("/my-detail")
+    public UserDetails getMyDetail()
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        return (UserDetails)authentication.getPrincipal();
+
     }
 
 
