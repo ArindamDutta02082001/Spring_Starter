@@ -1,4 +1,4 @@
-package com.example.demospringsecurity.database.entity;
+package com.example.demospringsecurity.database.model;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

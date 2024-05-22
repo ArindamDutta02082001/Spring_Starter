@@ -1,6 +1,6 @@
 package com.example.demospringsecurity.database.service;
 
-import com.example.demospringsecurity.database.entity.User;
+import com.example.demospringsecurity.database.model.User;
 import com.example.demospringsecurity.database.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

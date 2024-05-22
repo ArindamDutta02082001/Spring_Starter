@@ -1,4 +1,4 @@
-package com.example.demoredis.entity;
+package com.example.demoredis.model;
 
 import lombok.*;
 

@@ -58,8 +58,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET , "/student/**").hasAnyAuthority("admin" , "student" )
                 .antMatchers(HttpMethod.DELETE , "/student/**").hasAuthority("student" )
                 .antMatchers(HttpMethod.PUT , "/student/**").hasAuthority("student" )
-                // admin and other
-//                .antMatchers("/admin").hasAuthority("admin")
+                // txn
+                .antMatchers( "/transaction/**").hasAnyAuthority("admin" , "student" )
+                // admin
+                .antMatchers("/admin/**").hasAuthority("admin")
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin();

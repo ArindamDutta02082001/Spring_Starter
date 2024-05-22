@@ -1,13 +1,10 @@
 package com.example.demoredis.controllers;
 
 
-import com.example.demoredis.connection.RedisConnectionFactoryClass;
-import com.example.demoredis.entity.Person;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.demoredis.model.Person;
+import com.example.demoredis.repository.HashRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("person/")
@@ -20,54 +17,34 @@ public class HashPersonController {
 
 
     @Autowired
-    RedisConnectionFactoryClass redisConnectionFactoryClass;
+    HashRepository hashRepository;
 
-
-    private static final String PERSON_HASH_KEY_PREFIX = "person_hash::";
-
-    /* it converts an object to map and vice versa
-     hash map <--> java object
-
-     */
-    ObjectMapper objectMapper = new ObjectMapper();
-
-    // to create a new hash map for each person object
-    // a new table name is formed by the id we pass
     @PostMapping("/hmset")
     public void addPerson(@RequestBody Person person){
 
-        Map map = objectMapper.convertValue(person, Map.class);
-        redisConnectionFactoryClass.getTemplate().opsForHash().putAll(PERSON_HASH_KEY_PREFIX + person.getId(), map);
+        hashRepository.addPersoninDB(person);
     }
 
     // to get the hash map based on the hashmap
     @GetMapping("/hmget")
     public Object getPerson(@RequestParam("id") int personId){
 
-        System.out.println(redisConnectionFactoryClass.getTemplate().opsForHash().entries(PERSON_HASH_KEY_PREFIX + personId));
-        Map map =  redisConnectionFactoryClass.getTemplate().opsForHash().entries(PERSON_HASH_KEY_PREFIX + personId);
-        return  objectMapper.convertValue(map, Object.class);
+        return hashRepository.getPersonFromDB(personId);
     }
 
     // to update a particular key-val pair in a hash table
     @PutMapping("/hmupdate")
     public Object updatePerson(@RequestParam("id") int personId , @RequestParam("attribute") String attribute , @RequestParam("value") String value){
 
-        redisConnectionFactoryClass.getTemplate().opsForHash().put(PERSON_HASH_KEY_PREFIX + personId , attribute, value);
-
-        // getting the updated person
-        Map map =  redisConnectionFactoryClass.getTemplate().opsForHash().entries(PERSON_HASH_KEY_PREFIX + personId);
-        return objectMapper.convertValue(map, Object.class);
+        return  hashRepository.updatePersonINDB(personId,attribute,value);
     }
 
     // to delete a particular key val in a hashmap
     @DeleteMapping("/hdel")
-    public Object hdel(@RequestParam("id") int id,
-                       @RequestParam("attributes") String fields){
+    public Object deletePerson(@RequestParam("id") int id,
+                               @RequestParam("attributes") String fields){
 
-        redisConnectionFactoryClass.getTemplate().opsForHash().delete(PERSON_HASH_KEY_PREFIX + id, fields);
-        Map map =  redisConnectionFactoryClass.getTemplate().opsForHash().entries(PERSON_HASH_KEY_PREFIX + id);
-        return objectMapper.convertValue(map, Object.class);
+        return hashRepository.deletePersonINDB(id, fields);
     }
 
 }

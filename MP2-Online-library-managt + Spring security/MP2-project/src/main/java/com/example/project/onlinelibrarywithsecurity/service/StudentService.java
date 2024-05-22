@@ -16,11 +16,12 @@ import java.util.List;
 @Service
 public class StudentService {
 
-    @Autowired
-    SecuredUserService securedUserService;
 
-    @Autowired
-    StudentRepository studentRepository;
+        @Autowired
+        SecuredUserService securedUserService;
+
+        @Autowired
+        StudentRepository studentRepository;
 
 
 //     creating a new Student Object from the student DTO using builder
@@ -34,52 +35,57 @@ public class StudentService {
 /* the above method of creating the new Student will change as we have to create an secured user
     that can be either user , admin */
 
-// before creating a student , SecuredUser should have a new row
-public Student createStudent(CreateStudentDto createStudentDto){
+        // before creating a student , SecuredUser should have a new row
+        public Student createStudent(CreateStudentDto createStudentDto){
 
-    SecuredUser securedUser = SecuredUser.builder()
-            .authorities("student")
-            .username(createStudentDto.getUsername())
-            .password(new BCryptPasswordEncoder().encode(createStudentDto.getPassword()))
-            .build();
-    Student student = Student.builder()
-            .name(createStudentDto.getName())
-            .securedUser(securedUser)
-            .build();
+            SecuredUser securedUser = SecuredUser.builder()
+                    .authorities("student")
+                    .username(createStudentDto.getUsername())
+                    .password(new BCryptPasswordEncoder().encode(createStudentDto.getPassword()))
+                    .isEnabled(true)
+                    .isAccountNonExpired(true)
+                    .isAccountNonLocked(true)
+                    .isCredentialsNonExpired(true)
+                    .isEnabled(true)
+                    .build();
 
-    // create a secured user
-    securedUser.setStudent(student);
-    securedUserService.saveUserinDB(securedUser);
+            // create a secured user
+            securedUserService.saveUserinDB(securedUser);
 
-    // create a student
-    student.setSecuredUser(securedUser);
-    return studentRepository.save(student);
-}
+            // create a student
+            Student student = Student.builder()
+                    .name(createStudentDto.getName())
+                    .contact(createStudentDto.getContact())
+                    .securedUser(securedUser)
+                    .build();
 
-    public Student saveStudent( CreateStudentDto studentDto)
-    {
-        Student newStudent = createStudent(studentDto);
-        studentRepository.save(newStudent);
-        return newStudent;
-    }
-    public List<Student> getAllStudent()
-    {
-        return studentRepository.findAll();
-    }
-
-    public Student getStudentById( Integer studentId)
-    {
-        return studentRepository.findById(studentId).orElse(null);
-    }
-
-    public Student deleteStudentId( Integer studentId)
-    {
-        Student student = studentRepository.findById(studentId).orElse(null);
-        if(student != null)
-        {
-            studentRepository.deleteById(studentId);
+            return studentRepository.save(student);
         }
-        return student;
-    }
+
+        public Student saveStudent( CreateStudentDto studentDto)
+        {
+            Student newStudent = createStudent(studentDto);
+            studentRepository.save(newStudent);
+            return newStudent;
+        }
+        public List<Student> getAllStudent()
+        {
+            return studentRepository.findAll();
+        }
+
+        public Student getStudentById( Integer studentId)
+        {
+            return studentRepository.findById(studentId).orElse(null);
+        }
+
+        public Student deleteStudentId( Integer studentId)
+        {
+            Student student = studentRepository.findById(studentId).orElse(null);
+            if(student != null)
+            {
+                studentRepository.deleteById(studentId);
+            }
+            return student;
+        }
 
 }

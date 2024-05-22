@@ -35,15 +35,15 @@ public class AdminService {
                 .build();
 
         // create a secured user
-//        securedUser.setAdmin(admin);
         securedUserService.saveUserinDB(securedUser);
 
         // create an admin
         Admin admin = Admin.builder()
                 .name(createAdminDto.getName())
                 .securedUser(securedUser)
+                .securedUser(securedUser)
                 .build();
-        admin.setSecuredUser(securedUser);
+
         return adminRepository.save(admin);
     }
 

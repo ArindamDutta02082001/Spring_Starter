@@ -5,7 +5,7 @@ We follow the MVC model
 ### Integrate redis with spring boot
 - **make sure you start your redis in your localhost ( port 6379 )**
 - **install necessary dependencies + spring data redis ( access + driver )** . It installs the lettuce driver needed for the connection of your app to the redis driver . ( we can use other drivers like Jedis )
-- **Create a Config.java file , inside it**
+- Config : **Create a RedisConnectionConfig.java file , inside it**
     - **Create a connection factory** . It will initiate the connection from the app to redis server
         <pre>
         // connection start
@@ -18,7 +18,6 @@ We follow the MVC model
         }
       </pre>
     - **Create a redis template** to handle the redis functions for set , hashmap, list , sorted set & other data structures
-    - **Always use the serializer for storing the keys and values in the redis server as we have to serialize the key & value to String before storing**
 
           // redis template to use the apis of redis server
           public  RedisTemplate<String , Object> getTemplate()
@@ -37,7 +36,8 @@ We follow the MVC model
             redisTemplate.afterPropertiesSet();
             return redisTemplate;
           }
-- Serialize the object by implementing **Serializable** in the entity class as we store serialized object into the redis server
+- Entity : Serialize the entity object by implementing **Serializable** in the entity class as we store serialized object into the redis server. **Always use the serializer for storing the keys and values in the redis server as we have to serialize the key & value to String before storing**
+- dto : here we are using same class as Entity
 <pre>
 @Getter
 @Setter
@@ -54,7 +54,8 @@ public class Person implements Serializable {
 
 }
 </pre>
-- Now we create the **controllers** to interact with the incoming requests by using the **redis template** from the factory class
+- Controllers : Now we create the **controllers** to interact with the incoming requests.
+- Repository : It contains the functions that interact with the redis DB by using the **redis template** from the config class
 
 learn form docs  :  [Redis official Commands](https://redis.io/docs/latest/commands/)
 | [Redis Concept google doc]()

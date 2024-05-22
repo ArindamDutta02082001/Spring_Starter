@@ -1,7 +1,7 @@
 package com.example.demospringsecurity.database.controllers;
 
 import com.example.demospringsecurity.database.dto.createUserDto;
-import com.example.demospringsecurity.database.entity.User;
+import com.example.demospringsecurity.database.model.User;
 import com.example.demospringsecurity.database.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

@@ -51,7 +51,7 @@ public class Student {
 
     private  List<Transaction> transactionList_S ;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn
     @JsonIgnoreProperties(value = {"student"})
     private SecuredUser securedUser;

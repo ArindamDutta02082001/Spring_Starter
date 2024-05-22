@@ -7,8 +7,23 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.annotation.PostConstruct;
+
 @SpringBootApplication
 public class OnlinelibrarymanagementWithSecurityApplication {
+
+	// the above method is used as we cant use the static
+	private static AdminService adminService;
+
+	@Autowired
+	private AdminService adminServiceAuto;
+
+
+	@PostConstruct
+	private void init() {
+		adminService = this.adminServiceAuto;
+	}
+
 
 
 
@@ -16,9 +31,9 @@ public class OnlinelibrarymanagementWithSecurityApplication {
 		SpringApplication.run(OnlinelibrarymanagementWithSecurityApplication.class, args);
 		System.out.println("Server started at 9000 .. . .");
 
-		AdminService adminService1 = new AdminService();
-		CreateAdminDto createAdminDto = CreateAdminDto.builder().name("Arindam").username("arindam").password(new BCryptPasswordEncoder().encode("arindam@123")).build();
-		adminService1.createAdmin(createAdminDto);
+
+		CreateAdminDto createAdminDto = CreateAdminDto.builder().name("Arindam").username("arindam").password("arindam@123").build();
+		adminService.createAdmin(createAdminDto);
 
 	}
 
