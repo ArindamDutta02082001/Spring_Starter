@@ -10,16 +10,16 @@ SecuredUser , Admin , Student
 ### Database tables
 #### **For Library**
 1. Author Table  <br/>
-   ![img.png](images/imga.png)   <br/>
-   ![img_5.png](images/img_5.png)
+   ![imga.png](images/imga.png)   <br/>
+   ![img_aall.png](images/img_aall.png)
 2. Book Table  <br/>
-   ![img_1.png](images/img_1.png) <br/>
+   ![img_ball.png](images/img_ball.png) <br/>
    ![img_6.png](images/img_6.png)
 4. Student Table ( little different from MP1 ) <br/>
     ![img.png](images/img.png)
     ![img_1.png](images/img_1.png)
 5. Transaction table  <br/>
-   ![img_3.png](images/img_3.png)<br/>
+   ![img_tdesc.png](images/img_tdesc.png)<br/>
    ![img_7.png](images/img_7.png)
 
 #### **For Authentication + authorization ( Spring Security )**
