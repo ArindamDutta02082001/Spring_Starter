@@ -5,7 +5,7 @@ Author , Book , Student , Transaction
 
 ### Database tables
 1. Author Table  <br/>
-   ![img.png](..%2FMP2-Online-library-managmt%20%2B%20Spring%20security%20%2B%20Redis%20Cache%2Fimages%2Fimg.png)
+    ![img.png](images/img.png)
    ![img_5.png](images/img_5.png)
 
 2. Book Table  <br/>

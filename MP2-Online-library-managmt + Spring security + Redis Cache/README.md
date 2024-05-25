@@ -10,7 +10,7 @@ SecuredUser , Admin , Student
 ### Database tables
 #### **For Library**
 1. Author Table  <br/>
-   ![img.png](images/img.png)   <br/>
+   ![img.png](images/imga.png)   <br/>
    ![img_5.png](images/img_5.png)
 2. Book Table  <br/>
    ![img_1.png](images/img_1.png) <br/>
