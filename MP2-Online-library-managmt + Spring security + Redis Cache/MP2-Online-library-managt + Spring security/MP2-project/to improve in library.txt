@@ -1,0 +1,49 @@
+Authorization and authentication
+
+1. get student details : only by that student and admin
+2. update student details : same as above
+3. remove student   : only admin allowed
+
+4. add a new student  : public api
+5.
+
+interview
+static class in java ?
+classloader in class
+can nonstatic inner class be there inside the static inner class  yes
+list of various apis that supports thread
+batch processing in jdbc
+how to improve performance of jdbc ,
+    connection pooling
+how to handle connection leaks in jdbc
+
+constructor injection and setter injection m ,its types
+autowiring and its types
+
+concept of serializable - converting a java pojo or object into sequence of byte so that it can be transferred over a network or stored in a db
+constructor chaining
+join and yield keyword
+
+
+to do -  rename  the cache config.java
+repository definition in every readme
+issue new book : student , admin
+return new book : student
+get transactions : student , admin
+
+** your DB structure about primary key and foreign key should be on the query pattern
+
+minor proj 2
+1. implement spring security
+2. implement cache to reduce time in api calls
+
+
+// code improvement
+// admin : controller , dto , service repository
+// user : controller , dto , service repository
+
+
+kafka
+brokers - kafka servers
+problems : it is a async thing that goes right but cannot be used in real time as there can be latency . where we need turant notification like graviton , stake or like trading systems
+use case solve : publisher pusblish events / messsage s in the queue and subscriber subscribes to the queue

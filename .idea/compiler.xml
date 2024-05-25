@@ -9,7 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="demoredis" />
         <module name="book-management" />
-        <module name="project" />
+        <module name="securitycacheproject" />
         <module name="restapi" />
         <module name="demo-security" />
         <module name="07-demospringsecurity-database" />
@@ -19,6 +19,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="online-library-management-system" target="17" />
+      <module name="project" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -32,6 +33,7 @@
       <module name="project" options="-parameters" />
       <module name="restapi" options="-parameters" />
       <module name="restapi (1)" options="-parameters" />
+      <module name="securitycacheproject" options="-parameters" />
     </option>
   </component>
 </project>
