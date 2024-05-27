@@ -103,15 +103,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeHttpRequests()
                 .antMatchers("/faculty/attendance/**").hasAuthority("admin")
+                .antMatchers("/credential/**").hasAnyAuthority("admin")
                 .antMatchers("/faculty/**").hasAuthority("faculty")
                 .antMatchers("/student/**").hasAuthority("student")
                 .antMatchers("/library/**").hasAnyAuthority("student", "faculty")
-                .antMatchers("/**").permitAll()
+                .antMatchers("/home").permitAll()
+                .antMatchers("/shop").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin();
 
         // most restricted --> least restricted
-
     }
 </pre>
 
@@ -119,9 +121,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 >
 > `.formLogin()` : this ensures to give 2 extra api endpoints (/login , /logout) with a html basic form page for form login for authentication. We can provide our own login page by extending `.formLogin().loginPage("/custom-path")`
 >
-> `.permitAll()` : it means that any user matching that endpoint can have access
+> `.permitAll()` : it means that any type of user matching that endpoint can have access
 >
 > `.csrf().disable()` : By default Spring Security doesnt allow to do UNSAFE methods like PUT POST DELETE PATCH etc , with csrf enabled . So we have to disable it before doing such requests
+>
+> `.anyRequest().authenticated()` : user requesting for any other endpoint not matching to above rules (but defined in the controller) will have to get authenticated
 
 - we provide a `Password encoder` bean ( We can pass `new PasswordEncoder()` in the first configure()  )
 <pre>

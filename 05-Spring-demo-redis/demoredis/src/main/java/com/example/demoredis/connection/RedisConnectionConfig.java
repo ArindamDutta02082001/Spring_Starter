@@ -11,17 +11,20 @@ import org.springframework.stereotype.Component;
 public class RedisConnectionConfig {
 
 
-    // connection start
+    // START A CONNECTION TO THE REDIS SERVER
     public  LettuceConnectionFactory connectionFactory()
     {
+        // connection configs
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("localhost", 6379);
+
+        // starting a connection
         LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisStandaloneConfiguration);
         lettuceConnectionFactory.afterPropertiesSet();
         return lettuceConnectionFactory;
 
     }
 
-    // redis template to use the apis of redis server
+    // DEFINE A REDIS TEMPLATE TO USE DIFFERENT REDIS DATA SRUCTURES
     public  RedisTemplate<String, Object> getTemplate(){
 
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();

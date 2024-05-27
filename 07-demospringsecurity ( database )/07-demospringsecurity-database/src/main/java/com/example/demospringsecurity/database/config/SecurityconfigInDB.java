@@ -67,12 +67,19 @@ public class SecurityconfigInDB extends WebSecurityConfigurerAdapter{
                 .antMatchers("/faculty/**").hasAuthority("faculty")
                 .antMatchers("/student/**").hasAuthority("student")
                 .antMatchers("/library/**").hasAnyAuthority("student", "faculty")
-                .antMatchers("/**").permitAll()
+                .antMatchers("/home").permitAll()
+                .antMatchers("/shop").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin();
 
         //                .and()   --> ensures that the functions coming after it are directly attached to the root , HttpClient
         //                .formLogin(); --> this ensure sto give 2 extra api endpoints for form login for authentication
+        //                 .anyRequest().authenticated() --> user requesting for any other endpoint (has to be defined in the controller but hsa no authority mentioned)
+        //                                                  will have to get authenticated
+        //                 .antMatchers("/**").permitAll() --> any user hitting this endpoint will be permitted i.e no auth req
+
+
 
         // most restricted --> least restricted
     }
