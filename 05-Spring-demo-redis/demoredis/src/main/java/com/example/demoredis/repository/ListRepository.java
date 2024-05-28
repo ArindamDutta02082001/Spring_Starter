@@ -1,6 +1,6 @@
 package com.example.demoredis.repository;
 
-import com.example.demoredis.connection.RedisConnectionConfig;
+import com.example.demoredis.config.RedisConnectionConfig;
 import com.example.demoredis.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

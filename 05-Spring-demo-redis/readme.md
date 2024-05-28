@@ -5,37 +5,45 @@ We follow the MVC model
 ### Integrate redis with spring boot
 - **make sure you start your redis in your localhost ( port 6379 )**
 - **install necessary dependencies + spring data redis ( access + driver )** . It installs the lettuce driver needed for the connection of your app to the redis driver . ( we can use other drivers like Jedis )
-- Config : **Create a RedisConnectionConfig.java file , inside it**
-    - **Create a connection factory** . It will initiate the connection from the app to redis server
-        <pre>
-        // connection start
-        public  LettuceConnectionFactory connectionFactory()
+  - Config : **Create a RedisConnectionConfig.java file , inside it**
+      - **Create a connection factory** . It will initiate the connection from the app to redis server
+          <pre>
+                // START A CONNECTION TO THE REDIS SERVER
+                public  LettuceConnectionFactory connectionFactory()
+                {
+                    // connection configs
+                    RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("localhost", 6379);
+
+                    // starting a connection
+                    LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisStandaloneConfiguration);
+                    lettuceConnectionFactory.afterPropertiesSet();
+                    return lettuceConnectionFactory;
+        
+                }
+        </pre>
+      - **Create a redis template** to handle the redis functions for set , hashmap, list , sorted set & other data structures
+
+
+        // DEFINE A REDIS TEMPLATE TO USE DIFFERENT REDIS DATA STRUCTURES
+        public  RedisTemplate<String, Object> getTemplate()
         {
-            RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("localhost", 6379);
-            LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisStandaloneConfiguration);
-            lettuceConnectionFactory.afterPropertiesSet();
-            return lettuceConnectionFactory;
+        
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(connectionFactory());
+
+        // for normal key-val pairs | list | set | sorted sets
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+
+        // hashmaps
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer()); // ~field
+        redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer()); // value for a field
+
+        redisTemplate.afterPropertiesSet();
+        return redisTemplate;
+
         }
-      </pre>
-    - **Create a redis template** to handle the redis functions for set , hashmap, list , sorted set & other data structures
-
-          // redis template to use the apis of redis server
-          public  RedisTemplate<String , Object> getTemplate()
-           {
-            RedisTemplate <String , Object> redisTemplate = new RedisTemplate<>();
-            redisTemplate.setConnectionFactory(connectionFactory());
-
-            // to serialize for set , normal key-val pair , sorted set , hashmap etc
-            redisTemplate.setKeySerializer(new StringRedisSerializer());
-            redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
-
-            // to serialize the hash maps
-            redisTemplate.setHashKeySerializer(new StringRedisSerializer()); // ~field
-            redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer()); // value for a field
-
-            redisTemplate.afterPropertiesSet();
-            return redisTemplate;
-          }
+  
 - Entity : Serialize the entity object by implementing **Serializable** in the entity class as we store serialized object into the redis server. **Always use the serializer for storing the keys and values in the redis server as we have to serialize the key & value to String before storing**
 - dto : here we are using same class as Entity
 <pre>

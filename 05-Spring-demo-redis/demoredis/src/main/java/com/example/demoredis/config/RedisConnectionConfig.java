@@ -1,4 +1,4 @@
-package com.example.demoredis.connection;
+package com.example.demoredis.config;
 
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
