@@ -15,6 +15,7 @@
         <module name="07-demospringsecurity-database" />
         <module name="oauth2" />
         <module name="demo-spring" />
+        <module name="07-demospringsecurity-database (1)" />
         <module name="restapi (1)" />
       </profile>
     </annotationProcessing>
@@ -26,6 +27,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="07-demospringsecurity-database" options="-parameters" />
+      <module name="07-demospringsecurity-database (1)" options="-parameters" />
       <module name="book-management" options="-parameters" />
       <module name="demo-security" options="-parameters" />
       <module name="demo-spring" options="-parameters" />
