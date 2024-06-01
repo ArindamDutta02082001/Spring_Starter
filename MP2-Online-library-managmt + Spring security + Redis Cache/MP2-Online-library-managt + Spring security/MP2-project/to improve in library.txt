@@ -18,7 +18,7 @@ how to improve performance of jdbc ,
 how to handle connection leaks in jdbc
 
 constructor injection and setter injection m ,its types
-autowiring and its types
+auto wiring and its types
 
 concept of serializable - converting a java pojo or object into sequence of byte so that it can be transferred over a network or stored in a db
 constructor chaining
@@ -43,7 +43,81 @@ minor proj 2
 // user : controller , dto , service repository
 
 
-kafka
+kafka - open source streaming system used in stream processing , real time data pipelines at scale
+
 brokers - kafka servers
+
 problems : it is a async thing that goes right but cannot be used in real time as there can be latency . where we need turant notification like graviton , stake or like trading systems
-use case solve : publisher pusblish events / messsage s in the queue and subscriber subscribes to the queue
+use case solve : publisher publish events / message s in the queue and subscriber subscribes to the queue
+
+
+kafka is used not only in push notification service but also
+in linkedin connection recommendation system , movie recommendation by netflix etc , live location in delivery or cab system
+
+kafka works based on log based system
+
+terms
+topics - durable system of collection of logs | microservices talk to each other using kafka
+events - each topics contains the events
+
+
+benefits :
+1. high throughput
+2. auto scaling feature inbuilt in kafka
+3. data are replicated in kafka so no loss anyway fault tolerance or single point of faliure
+4. highly distributed system as mssg s are kept in more than 1 server
+
+install kafka
+steps https://kafka.apache.org/quickstart
+1. java is required for kafka installation
+
+
+zookeeper : it is auto installed  when you install the kafka .It handles metadata of the kafka
+use case ? it is a configuration system for kafka . keeps the state of a kafka broker that is how much te broker has read
+and how much that broker has to further read from the queue
+Zookeeper acts as the central nervous system for a Kafka cluster, handling coordination (broker membership, leader election, configuration management), service discovery (allowing producers and consumers to find brokers), and synchronization (ensuring distributed processes work together).
+
+kafka arch : https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.baeldung.com%2Fkafka-shift-from-zookeeper-to-kraft&psig=AOvVaw03rDsOYYkkIzDFf5BZHTpq&ust=1716887437884000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPjdtam-rYYDFQAAAAAdAAAAABAE
+
+
+4 main parts for the kafka
+1. producer : send records to a broker
+2. broker | kafka server : handles all requests from client ( producer , consume , metadata) and keeps data replicated within the cluster . there can be one
+or more brokers in a cluster
+topics - these are the actual queue that are managed by the server or broker
+3. consumer : consume batch of records from the broker | it pulls message from 1 .... n topics | new inflowing messages are auto retrieved | consumer always read from
+There can exist many consumers in a single consumer-group
+messages in one partition can be consumed by only and only 1 consumer of a consumer-group but 1 consumer can read from other partitions of multiple topics
+simple : can u and your friend write simultaneously in a single copy ?
+thus , no of consumers in  a consumer grp should be < partition of a topic ( thumb rule )
+also consumer will also from the leader only (thumb rule)
+** there exists a single leader in the cluster
+4. zookeeper : keeps the state of the cluster ( broker , topics , users , offset)
+
+
+how decoupling of producer and consumer occurs
+thus , no of consumers in  a consumer grp should be < partition of a topic ( thumb rule )
+if they are not decoupled then it may happen that the producer produces a half a million of messages and the limited no of consumers are there
+so messages keeps on accumulating in the queue
+
+so the decoupling is req . we can then increase the consumers by asking the producer team to increase the no of partition due to thumb rule
+and thus decoupling will help
+
+can we make a consumer consume from a particular partition in a topic ?
+yes we can provide th partition id while creation of the consumer
+
+concept of the partition leader inside a broker
+hierarchy : kafka-server > cluster of brokers/replicas (each broker have unique broker.id)  > each broker/s ( have same topics and same partitions , among it a leader partition present ) > same topic/s & same partition present in the replica r brokers
+
+
+inside a server there is cluster
+inside cluster there are many brokers , each broker have same content ( same topics and partitions )
+
+ the broker becomes a leader of a particular partition and message enters into that broker if it is send to that partition
+
+inside the cluster there is a leader broker which is the ine to interact with the consumer
+
+
+start kafka in cli medium link
+to start a kafka we need a zookeeper running first
+https://medium.com/@beheradebananda000/how-i-installed-apache-kafka-in-windows-11-75f67aa25def

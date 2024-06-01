@@ -47,7 +47,7 @@ public class ListPersonController {
     //    localhost:9000/person/list/lrange?start=0&end=-1
     @GetMapping("/lrange")
     public List<Object> getElements(@RequestParam(value = "start", required = false, defaultValue = "0") int start,
-                                    @RequestParam(value = "end", required = false, defaultValue = "-1") int end){
+                                    @RequestParam(value = "end", required = false, defaultValue = "-1") int end)    {
 
         return  listRepository.lrange(start,end);
     }

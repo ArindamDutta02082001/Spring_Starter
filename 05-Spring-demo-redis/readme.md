@@ -5,7 +5,7 @@ We follow the MVC model
 ### Integrate redis with spring boot
 - **make sure you start your redis in your localhost ( port 6379 )**
 - **install necessary dependencies + spring data redis ( access + driver )** . It installs the lettuce driver needed for the connection of your app to the redis driver . ( we can use other drivers like Jedis )
-  - Config : **Create a RedisConnectionConfig.java file , inside it**
+  - Config : **Create a CacheConfig.java file , inside it**
       - **Create a connection factory** . It will initiate the connection from the app to redis server
           <pre>
                 // START A CONNECTION TO THE REDIS SERVER

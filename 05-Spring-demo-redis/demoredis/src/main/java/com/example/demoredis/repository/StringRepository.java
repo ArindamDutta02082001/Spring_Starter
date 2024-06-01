@@ -1,6 +1,6 @@
 package com.example.demoredis.repository;
 
-import com.example.demoredis.config.RedisConnectionConfig;
+import com.example.demoredis.connection.CacheConfig;
 import com.example.demoredis.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class StringRepository {
 
     @Autowired
-    RedisConnectionConfig redisConnectionConfig;
+    CacheConfig cacheConfig;
 
     String PERSON_VALUE_PREFIX = "person:";
 
@@ -21,13 +21,13 @@ public class StringRepository {
                          Person person){
 
         String key = PERSON_VALUE_PREFIX + personId;
-        redisConnectionConfig.getTemplate().opsForValue().set(key, person, 120, TimeUnit.SECONDS);
+        cacheConfig.getTemplate().opsForValue().set(key, person, 120, TimeUnit.SECONDS);
     }
 
     // to get a person object into a key-value pair
     public Person getValue( Integer personId){
         String key = PERSON_VALUE_PREFIX + personId;
-        return (Person) redisConnectionConfig.getTemplate().opsForValue().get(key);
+        return (Person) cacheConfig.getTemplate().opsForValue().get(key);
     }
 
     // to delete a person
@@ -36,14 +36,14 @@ public class StringRepository {
         String key = PERSON_VALUE_PREFIX + personId;
 
         // getAndDelete() not working as redis in my PC is <5.0.0
-        return (Person) redisConnectionConfig.getTemplate().opsForValue().getAndDelete(key);
+        return (Person) cacheConfig.getTemplate().opsForValue().getAndDelete(key);
     }
 
     // to modify a person`s details
     public String updateValue( Integer personId , Person person)
     {
         String key = PERSON_VALUE_PREFIX + personId;
-        Boolean res = redisConnectionConfig.getTemplate().opsForValue().setIfPresent(key , person );
+        Boolean res = cacheConfig.getTemplate().opsForValue().setIfPresent(key , person );
         if(Boolean.TRUE.equals(res))
             return "key is updated ";
         else

@@ -1,5 +1,6 @@
-package com.example.demoredis.config;
+package com.example.demoredis.connection;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -8,12 +9,13 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RedisConnectionConfig {
+public class CacheConfig {
 
 
     // START A CONNECTION TO THE REDIS SERVER
     public  LettuceConnectionFactory connectionFactory()
     {
+
         // connection configs
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("localhost", 6379);
 
@@ -24,7 +26,7 @@ public class RedisConnectionConfig {
 
     }
 
-    // DEFINE A REDIS TEMPLATE TO USE DIFFERENT REDIS DATA SRUCTURES
+    // DEFINE A REDIS TEMPLATE TO USE DIFFERENT REDIS DATA STRUCTURES
     public  RedisTemplate<String, Object> getTemplate(){
 
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
