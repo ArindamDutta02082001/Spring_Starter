@@ -1,6 +1,6 @@
 package com.example.repository;
 
-import com.example.models.User;
+import com.example.cacheResponseObject.UserCache;
 import com.example.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -13,12 +13,14 @@ public class UserCacheRepository {
     @Autowired
     RedisTemplate<String, Object> redisTemplate;
 
-    public void save(User user){
+    // to save object in cache
+    public void saveInCache(UserCache user){
         this.redisTemplate.opsForValue().set(getKey(user.getUserId()), user, Constants.USER_REDIS_KEY_EXPIRY, TimeUnit.SECONDS);
     }
 
-    public User get(int userId){
-        return (User) this.redisTemplate.opsForValue().get(getKey(userId));
+    // to get object from cache
+    public Object getFromCache(int userId){
+        return  this.redisTemplate.opsForValue().get(getKey(userId));
     }
 
     private String getKey(int userId){

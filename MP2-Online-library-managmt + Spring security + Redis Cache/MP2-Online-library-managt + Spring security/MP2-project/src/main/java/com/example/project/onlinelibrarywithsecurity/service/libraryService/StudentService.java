@@ -77,6 +77,7 @@ public Student createStudent(CreateStudentDto createStudentDto){
         return studentRepository.findAll();
     }
 
+    // implemented redis-cache
     public studentResponse getStudentById(Integer studentId)
     {
         // implementing the redis-cache

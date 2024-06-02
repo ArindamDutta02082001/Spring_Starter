@@ -11,11 +11,12 @@ import org.springframework.kafka.core.ProducerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 @Configuration
-public class KafkaConfig {
+public class KafkaProducerConfig {
 
+
+    // creating the producer factory : start a consumer line to the kafka server for producing messages
     @Bean
     ProducerFactory getProducerFactory(){
         Map<String,Object> properties= new HashMap<>();

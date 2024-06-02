@@ -26,17 +26,17 @@ public class CacheConfig {
 
     @Bean
     public RedisTemplate<String, Object> getTemplate(){
-//
-//        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(
-//                new RedisStandaloneConfiguration()
-//        );
+
 
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(getConnectionFactory());
 
-//        redisTemplate.afterPropertiesSet();
+        // for normal key-val pairs | list | set | sorted sets
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+
+
+        redisTemplate.afterPropertiesSet();
 
         return redisTemplate;
 

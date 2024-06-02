@@ -36,10 +36,7 @@ public class SecurityConfig  {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.POST, "/user/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/user/details/**").hasAuthority("usr") // any user
-                                .requestMatchers(HttpMethod.GET, "/user/mobile/**").hasAuthority("svc") // any service
-
+                                .requestMatchers( "/user/**").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

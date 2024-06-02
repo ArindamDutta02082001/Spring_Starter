@@ -9,7 +9,7 @@ public class Constants {
 
 
     // Redis related constants
-    public static final String USER_REDIS_KEY_PREFIX = "usr::";
+    public static final String USER_REDIS_KEY_PREFIX = "user:";
     public static final Long USER_REDIS_KEY_EXPIRY = 86400l;
 
 

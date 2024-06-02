@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Main {
+public class UserMain {
     public static void main(String[] args) {
-        SpringApplication.run(Main.class);
-        System.out.println("Hello world!");
+        SpringApplication.run(UserMain.class);
+        System.out.println("User service started in 4000 port ");
     }
 }
