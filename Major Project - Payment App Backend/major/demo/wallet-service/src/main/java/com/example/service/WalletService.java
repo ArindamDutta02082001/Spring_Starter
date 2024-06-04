@@ -20,6 +20,7 @@ public class WalletService {
 
 
 
+    // consuming message from user_created topic of new user creation
     @KafkaListener(topics = "user_created", groupId = "random-id-it-is-needed-else-error")
     public void consumeKafkaEvent(String message) throws JsonProcessingException {
 
@@ -39,7 +40,10 @@ public class WalletService {
                 .mobile((String) event.get("mobile"))
                         .build();
 
-
         walletRepository.save(wallet) ;
     }
+
+
+
+    // producing message
 }
