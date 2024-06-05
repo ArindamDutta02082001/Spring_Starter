@@ -34,7 +34,7 @@ public class WalletService {
 
         // consume the message and forming the map of objects from the JSON Object String
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String,String> event = new HashMap<>();
+        Map<String,Object> event = new HashMap<>();
         event = objectMapper.readValue(message ,Map.class);
 
         // creating a new wallet as soon as we create a new user
@@ -50,18 +50,17 @@ public class WalletService {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    // consuming message from the transaction-service and updating the wallet of the user
-
+    // consuming message from the transaction-service and updating the money in wallet of the user
     @KafkaListener(topics = "transaction_initiated", groupId = "random-id-it-is-needed-else-error") // partitions - 3, replication - 2
     public void update(String message) throws ParseException, JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String,String> event = new HashMap<>();
+        Map<String,Object> event = new HashMap<>();
         event = objectMapper.readValue(message ,Map.class);
 
         String sender = String.valueOf(event.get("sender"));
         String receiver = String.valueOf(event.get("receiver"));
-        Double amount = Double.parseDouble(event.get("amount"));
+        Double amount = (Double) event.get("amount");
         String externalTxnId = String.valueOf(event.get("externalTxnId")); // required
 
         // finding the sender and the receiver wallet
@@ -77,18 +76,22 @@ public class WalletService {
         if(senderWallet == null || receiverWallet == null || senderWallet.getBalance() < amount){
            System.out.println("Wallets will not be updated as the constraints failed");
             responseMessage.put("walletUpdateStatus", "FAILED");
-            kafkaTemplate.send(Constants.WALLET_UPDATE_TOPIC, objectMapper.writeValueAsString(responseMessage));
+            kafkaTemplate.send("wallet_updated", objectMapper.writeValueAsString(responseMessage));
             return;
         }
 
         try {
+
+            // updating the amount in receiver and donor wallet
             walletRepository.updateWallet(sender, -amount);
             walletRepository.updateWallet(receiver, amount);
+
+
             responseMessage.put("walletUpdateStatus", "SUCCESS");
             kafkaTemplate.send(Constants.WALLET_UPDATE_TOPIC, objectMapper.writeValueAsString(responseMessage));
         }catch (Exception e){
             responseMessage.put("walletUpdateStatus", "FAILED");
-            kafkaTemplate.send(Constants.WALLET_UPDATE_TOPIC, objectMapper.writeValueAsString(responseMessage));
+            kafkaTemplate.send("wallet_updated", objectMapper.writeValueAsString(responseMessage));
         }
 
 

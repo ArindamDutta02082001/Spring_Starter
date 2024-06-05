@@ -14,7 +14,6 @@ import lombok.*;
 public class createTransactionDto {
 
 
-
     // for starting a transaction we need the receiver user and amount and purpose
 
     @NotBlank

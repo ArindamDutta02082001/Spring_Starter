@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TransactionMain {
     public static void main(String[] args) {
         SpringApplication.run(TransactionMain.class);
-        System.out.println("Hello world!");
+        System.out.println("Transaction service started at 7000 ...");
     }
 }

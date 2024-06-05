@@ -8,10 +8,12 @@ import com.example.repository.TransactionRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.apache.tomcat.util.codec.binary.Base64;
+import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -74,14 +76,14 @@ public class TransactionService implements UserDetailsService {
 
         // consume the message and forming the map of objects from the JSON Object String
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String,String> event = new HashMap<>();
+        Map<String,Object> event = new HashMap<>();
         event = objectMapper.readValue(message ,Map.class);
 
         String sender = String.valueOf(event.get("sender"));
         String receiver = String.valueOf(event.get("receiver"));
         String walletUpdateStatus = String.valueOf(event.get("walletUpdateStatus"));
         String externalTxnId = String.valueOf(event.get("externalTxnId"));
-        Double amount = Double.parseDouble(event.get("amount"));
+        Double amount = (Double) event.get("amount");
 
 //        TransactionStatus transactionStatus = walletUpdateStatus.equals("FAILED") ? TransactionStatus.FAILED : TransactionStatus.SUCCESSFUL;
 //        this.txnRepository.updateTxnStatus(externalTxnId, transactionStatus);
@@ -94,33 +96,44 @@ public class TransactionService implements UserDetailsService {
     }
 
 
-    RestTemplate restTemplate = new RestTemplate();
 
 
+
+    // ONLY this user will only be authenticated to use the transaction-service endpoints
+    // fetch the user details
     @Override
-    public UserDetails loadUserByUsername(String usermobile) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String mainmobile) throws UsernameNotFoundException {
 
-        // this user will only be authenticated to use the transaction-service endpoints
-        // fetch the user details
-        String url = "http://localhost:4000/user/mobile/" + usermobile;
+        String url = "http://localhost:4000/user/mobile/"+mainmobile;
 
-        // Creating authorization header for txn service
-        String plainCreds = "txnservice:P@ass123";
-        byte[] plainCredsBytes = plainCreds.getBytes();
-        byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);  // error
-        String base64Creds = new String(base64CredsBytes);
+
+
+//      Creating authorization header for txn service
+        String plainCreds = "txnid:password";
+        String base64Creds = Base64.getEncoder().encodeToString(plainCreds.getBytes());
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Basic " + base64Creds);
+//        headers.add("Authorization", "Basic " + base64Creds);
         HttpEntity<String> request = new HttpEntity<>(headers);
 
+        RestTemplate restTemplate = new RestTemplate();
+                ResponseEntity<String> responseUser = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                request,
+                String.class
+        );
+        System.out.println("info2"+responseUser.getBody());
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object>   userData = null;
         try {
-            userData = objectMapper.readValue((DataInput) request, Map.class);
+            userData = objectMapper.readValue(responseUser.getBody(), Map.class);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+
         return TransactionSecuredUser.builder()
                 .username((String)userData.get("mobile"))
                 .password((String) userData.get("password"))
