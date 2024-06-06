@@ -50,11 +50,14 @@ public class SecurityConfig  {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
-                                .anyRequest().permitAll())
-                .formLogin(Customizer.withDefaults())
+                                .requestMatchers(HttpMethod.POST, "/initiate-txn/*").permitAll()
+                                .anyRequest().denyAll()
+                ).formLogin(Customizer.withDefaults())
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
+
+
 
 
 

@@ -8,7 +8,8 @@ import com.example.repository.TransactionRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.Base64;
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +17,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,9 +28,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.DataInput;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionService implements UserDetailsService {
@@ -85,13 +86,16 @@ public class TransactionService implements UserDetailsService {
         String externalTxnId = String.valueOf(event.get("externalTxnId"));
         Double amount = (Double) event.get("amount");
 
-//        TransactionStatus transactionStatus = walletUpdateStatus.equals("FAILED") ? TransactionStatus.FAILED : TransactionStatus.SUCCESSFUL;
-//        this.txnRepository.updateTxnStatus(externalTxnId, transactionStatus);
+        TransactionStatusEnums transactionStatus = walletUpdateStatus.equals("FAILED") ? TransactionStatusEnums.FAILED : TransactionStatusEnums.SUCCESSFUL;
+        this.transactionRepository.updateTxnStatus(externalTxnId, transactionStatus);
 //
-//        Transaction transaction = this.txnRepository.findByExternalTxnId(externalTxnId);
+
 
         // TODO: Make an API call to user-service to fetch the email address of both sender and receiver
-//        kafkaTemplate.send(Constants.TXN_COMPLETED_TOPIC, objectMapper.writeValueAsString(transaction));
+
+        // pushing the transaction status to the transaction-complete-and notify topic
+        Transaction transaction = this.transactionRepository.findByExternalTxnId(externalTxnId);
+        kafkaTemplate.send("transaction-complete-and-notify", objectMapper.writeValueAsString(transaction));
 
     }
 
@@ -117,7 +121,7 @@ public class TransactionService implements UserDetailsService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
-                ResponseEntity<String> responseUser = restTemplate.exchange(
+        ResponseEntity<String> responseUser = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 request,
@@ -125,19 +129,30 @@ public class TransactionService implements UserDetailsService {
         );
         System.out.println("info2"+responseUser.getBody());
         ObjectMapper objectMapper = new ObjectMapper();
+
+        if(responseUser == null)
+            return null;
+
+
         Map<String, Object>   userData = null;
         try {
             userData = objectMapper.readValue(responseUser.getBody(), Map.class);
-
-        } catch (IOException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
+        List<GrantedAuthority> authorities = ((List<Map<String, String>>) userData.get("authorities")).stream()
+                .map(authorityMap -> new SimpleGrantedAuthority(authorityMap.get("authority")))
+                .collect(Collectors.toList());
 
-        return TransactionSecuredUser.builder()
+        TransactionSecuredUser transactionSecuredUser = TransactionSecuredUser.builder()
                 .username((String)userData.get("mobile"))
                 .password((String) userData.get("password"))
+                .authorities(authorities)
                 .build();
+
+        return transactionSecuredUser;
+
 
     }
 }

@@ -9,6 +9,18 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>javax.mail</groupId>-->
+<!--            <artifactId>javax.mail-api</artifactId>-->
+<!--        </dependency>-->
+    </dependencies>
+
     <artifactId>notification-service</artifactId>
 
     <properties>
