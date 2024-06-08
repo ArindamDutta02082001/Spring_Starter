@@ -8,11 +8,6 @@ requirements
 2. 
 
 
-stacks
-db - mysql
-	jpa hibernate to connect
-	microservice style
-
 
 qstn ohw sring security works
 https://medium.com/geekculture/spring-security-authentication-process-authentication-flow-behind-the-scenes-d56da63f04fa

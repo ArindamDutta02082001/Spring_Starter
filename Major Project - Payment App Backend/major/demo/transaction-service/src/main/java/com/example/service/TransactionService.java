@@ -72,7 +72,7 @@ public class TransactionService implements UserDetailsService {
     // as initially the transaction state in the above is PENDING
 
 
-    @KafkaListener(topics = "wallet_update", groupId = "random-id-it-is-needed-else-error")
+    @KafkaListener(topics = "wallet_updated", groupId = "random-id-it-is-needed-else-error")
     public void updateTxn(String message) throws ParseException, JsonProcessingException {
 
         // consume the message and forming the map of objects from the JSON Object String
@@ -88,13 +88,15 @@ public class TransactionService implements UserDetailsService {
 
         TransactionStatusEnums transactionStatus = walletUpdateStatus.equals("FAILED") ? TransactionStatusEnums.FAILED : TransactionStatusEnums.SUCCESSFUL;
         this.transactionRepository.updateTxnStatus(externalTxnId, transactionStatus);
-//
 
 
         // TODO: Make an API call to user-service to fetch the email address of both sender and receiver
 
         // pushing the transaction status to the transaction-complete-and notify topic
         Transaction transaction = this.transactionRepository.findByExternalTxnId(externalTxnId);
+
+        System.out.println(transaction);
+
         kafkaTemplate.send("transaction-complete-and-notify", objectMapper.writeValueAsString(transaction));
 
     }
@@ -110,11 +112,6 @@ public class TransactionService implements UserDetailsService {
 
         String url = "http://localhost:4000/user/mobile/"+mainmobile;
 
-
-
-//      Creating authorization header for txn service
-        String plainCreds = "txnid:password";
-        String base64Creds = Base64.getEncoder().encodeToString(plainCreds.getBytes());
 
         HttpHeaders headers = new HttpHeaders();
 //        headers.add("Authorization", "Basic " + base64Creds);

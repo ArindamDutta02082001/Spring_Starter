@@ -22,8 +22,8 @@ We follow the MVC model
 Include necessary dependencies +  spring-data-jpa dependency.
 <br/>
 <br/>
-**Step 2:** as soon as you install JDBC and SQL dependencies , in the application.properties file
-JDBC properties i.e url , username , pwd + extra ddl line + optional lines
+**Step 2:** as soon as you install JDBC and SQL dependencies , instantly provide the following in the application.properties file
+JDBC properties i.e url , username , pwd + extra ddl line + optional lines else you get error
 <br/>
 <br/>
 **Step 3:** Define Entities and Columns to create table

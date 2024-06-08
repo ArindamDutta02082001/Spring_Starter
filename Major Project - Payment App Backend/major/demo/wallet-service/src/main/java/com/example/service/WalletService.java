@@ -88,7 +88,7 @@ public class WalletService {
 
 
             responseMessage.put("walletUpdateStatus", "SUCCESS");
-            kafkaTemplate.send(Constants.WALLET_UPDATE_TOPIC, objectMapper.writeValueAsString(responseMessage));
+            kafkaTemplate.send("wallet_updated", objectMapper.writeValueAsString(responseMessage));
         }catch (Exception e){
             responseMessage.put("walletUpdateStatus", "FAILED");
             kafkaTemplate.send("wallet_updated", objectMapper.writeValueAsString(responseMessage));

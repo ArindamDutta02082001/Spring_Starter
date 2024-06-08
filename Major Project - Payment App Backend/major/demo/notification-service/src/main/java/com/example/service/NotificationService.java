@@ -4,30 +4,63 @@ package com.example.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.mail.Transport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class NotificationService {
 
-    private static Logger logger = LoggerFactory.getLogger(NotificationService.class);
-
-    @Autowired
-    SimpleMailMessage simpleMailMessage;
 
     @Autowired
     JavaMailSender javaMailSender;
 
+
+    // get mails of the sender and the receiver
+    public String getEmails(String mobile)
+    {
+        String url = "http://localhost:4000/user/mobile/"+mobile;
+
+
+        HttpHeaders headers = new HttpHeaders();
+//        headers.add("Authorization", "Basic " + base64Creds);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseUser = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                request,
+                String.class
+        );
+        System.out.println("info2"+responseUser.getBody());
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Map<String, Object>   userData = null;
+        try {
+            userData = objectMapper.readValue(responseUser.getBody(), Map.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        };
+
+        return (String) userData.get("email");
+    }
 
 
     @KafkaListener(topics = "transaction-complete-and-notify", groupId = "random-id-it-is-needed-else-error")
@@ -35,7 +68,7 @@ public class NotificationService {
 
         //TODO: SEND EMAILS
 
-        logger.info("msg received = {}", message);
+        System.out.println("Message from topic : " + message);
 
 
         // consume the message and forming the map of objects from the JSON Object String
@@ -49,20 +82,38 @@ public class NotificationService {
         Double amount = (Double) event.get("amount");
         String transactionStatus = String.valueOf(event.get("transactionStatus"));
 
+        // to get the emails of the sender and the receiver
+        String senderEmail = getEmails(sender);
+        String receiverEmail = getEmails(receiver);
+        System.out.println(senderEmail + "&&" + receiverEmail);
+
         if(!transactionStatus.equals("FAILED")){
-            String receiverMsg = "Hi! Your account has been credited with amount " + amount + "for the transaction done by " + sender;
-            simpleMailMessage.setTo("duttaarindam902@gmail.com");
-            simpleMailMessage.setSubject("your transaction update : ");
-            simpleMailMessage.setFrom("arindamdutta02082001@gmail.com");
-            simpleMailMessage.setText(receiverMsg);
+            // if txn fails the sender gets notifies
+            String senderMssg = "Hi! Your account has been credited with amount " + amount + " was Unsuccessful ! ";
+            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+            simpleMailMessage.setTo(senderEmail);
+            simpleMailMessage.setSubject("Transaction update : ");
+            simpleMailMessage.setFrom("arindamdutta1970@gmail.com");
+            simpleMailMessage.setText(senderMssg);
             javaMailSender.send(simpleMailMessage);
         }
 
-        String senderMsg = "Hi! Your transaction " + externalTxnId + " of amount " + amount + " has been " + transactionStatus;
-        simpleMailMessage.setTo("duttaarindam902@gmail.com");
-        simpleMailMessage.setSubject("your transaction update : ");
-        simpleMailMessage.setFrom("arindamdutta02082001@gmail.com");
+        // if txn is success both the sender & receiver gets notified
+        // for sender
+        String senderMsg = "Hi! Your transaction " + externalTxnId + " of amount " + amount + " is DEBITED has been " + transactionStatus;
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setTo(senderEmail);
+        simpleMailMessage.setSubject("Transaction update : ");
+        simpleMailMessage.setFrom("arindamdutta1970@gmail.com");
         simpleMailMessage.setText(senderMsg);
+        javaMailSender.send(simpleMailMessage);
+
+        // for receiver
+        String receiverMsg = "Hi! Your transaction " + externalTxnId + " of amount " + amount + " is CREDITED has been " + transactionStatus;
+        simpleMailMessage.setTo(receiverEmail);
+        simpleMailMessage.setSubject("Transaction update : ");
+        simpleMailMessage.setFrom("arindamdutta1970@gmail.com");
+        simpleMailMessage.setText(receiverMsg);
         javaMailSender.send(simpleMailMessage);
 
     }
