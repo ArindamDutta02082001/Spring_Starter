@@ -63,8 +63,8 @@ public class NotificationService {
     }
 
 
-    @KafkaListener(topics = "transaction-complete-and-notify", groupId = "random-id-it-is-needed-else-error")
-    public void sendNotif(String message) throws ParseException, JsonProcessingException {
+    @KafkaListener(topics = "wallet_updated", groupId = "random-id-it-is-needed-else-error")
+    public void sendNotification(String message) throws ParseException, JsonProcessingException {
 
         //TODO: SEND EMAILS
 
@@ -80,14 +80,14 @@ public class NotificationService {
         String receiver = String.valueOf(event.get("receiver"));
         String externalTxnId = String.valueOf(event.get("externalTxnId"));
         Double amount = (Double) event.get("amount");
-        String transactionStatus = String.valueOf(event.get("transactionStatus"));
-
+        String transactionStatus = String.valueOf(event.get("walletUpdateStatus"));
+        System.out.println(transactionStatus);
         // to get the emails of the sender and the receiver
         String senderEmail = getEmails(sender);
         String receiverEmail = getEmails(receiver);
         System.out.println(senderEmail + "&&" + receiverEmail);
 
-        if(!transactionStatus.equals("FAILED")){
+        if(transactionStatus.equals("FAILED")){
             // if txn fails the sender gets notifies
             String senderMssg = "Hi! Your account has been credited with amount " + amount + " was Unsuccessful ! ";
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -96,6 +96,7 @@ public class NotificationService {
             simpleMailMessage.setFrom("arindamdutta1970@gmail.com");
             simpleMailMessage.setText(senderMssg);
             javaMailSender.send(simpleMailMessage);
+            return ;
         }
 
         // if txn is success both the sender & receiver gets notified

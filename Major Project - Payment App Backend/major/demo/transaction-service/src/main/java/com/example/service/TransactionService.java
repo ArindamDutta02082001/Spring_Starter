@@ -92,7 +92,8 @@ public class TransactionService implements UserDetailsService {
 
         // TODO: Make an API call to user-service to fetch the email address of both sender and receiver
 
-        // pushing the transaction status to the transaction-complete-and notify topic
+        // pushing the transaction status to the transaction-complete-and-notify topic
+        // this topic is not consumed by any service
         Transaction transaction = this.transactionRepository.findByExternalTxnId(externalTxnId);
 
         System.out.println(transaction);
