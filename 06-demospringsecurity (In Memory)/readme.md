@@ -10,30 +10,36 @@ It is a spring framework that helps in authorization & authentication
 
 ### Integrate Spring Security with spring boot App [ In Memory ]
 - Install the necessary dependencies + spring security dependency `spring-boot-starter-security`
-- config : Create a `SecurityConfig.java file` to define the configurations of the **authentication** & **authorization** policy
-  > we haven`t created any service , dto for in-memory , we can if needed no issue
-- dto : We have to create a **User** entity which will implement the `UserDetails` builtin interface
-<pre>
-@Entity
-@Setter
-@AllArgsConstructor
-@Builder
+- config : Create a `SecurityConfig.java file` to define the configurations for the **authentication** & **authorization** policy
+- dto : For accepting the username , password , authorities in the endpoints
+- model : Create a **User** entity which will implement the `UserDetails` builtin interface
+```
+@Lombok-Annotations
 public class User implements UserDetails 
 { 
-// implement default methods isEnabled , isCredentialsNonExpired , isAccountNonLocked , isAccountNonExpired , getUsername , getPassword 
+// implement interface methods isEnabled , isCredentialsNonExpired , isAccountNonLocked , isAccountNonExpired , getUsername , getPassword 
 // - do -
 }
-</pre>
-- service : not req here as we are doing `in-memory` 
-- repository : We have to create a **UserRepository** class to store the `User` Entity
-<pre>
-@Repository
-public interface UserRepository extends JpaRepository <User ,Integer> {
+```
+- service : Since InMemory , so our service file don't implements `UserDetailsService`
+- repository : We have to create a **RepositoryClass.java** file to manage the `User` Entities . There exists a `InMemoryUserDetailManager` to manage them
+```dockerfile
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
+    
+    Contructor()
+    {
+        inMemoryUserDetailsManager.createUser(User.builder().username("arindam")
+                .password("$2a$10$P68A3Wf2H6nES9OkXWZoj.CakfPbEoh1VDNEueXDjBNsUNZysU43W")
+                .authorities("student")
+                .build());
+            -- pre defined users are hardcoded here -- 
+    }
 
-    @Query("select u from User u where u.username = :username")
-    public User findByUsername(String username) ;
-}
-</pre>
+    public InMemoryUserDetailsManager createInMemoryUserDetailManager()
+    {
+        return this.inMemoryUserDetailsManager;
+    }
+```
 - When you log in with Spring Security, it manages your authentication across multiple requests, despite
   HTTP being stateless . Thus you need to use the authenticated `JSESSIONID` to use the endpoints
 
@@ -54,51 +60,27 @@ public interface UserRepository extends JpaRepository <User ,Integer> {
 
 ##### Inside the SecurityConfig.java file
 - The config file class extends the `WebSecurityConfigurerAdapter` ( spring boot version 2.7.17 )
-  **now it has been obsolate , try new**
-<pre>
+  **now it has been out-dated , now we use SecurityFilterChain**
+```dockerfile
 @Configuration
 @EnableWebSecurity  ( optional annotation )
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter { }
+```
 
-// we have to define a `InMemoryUserDetailsManager` to manage the user details
- private final InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
-
- }
-</pre>
-
-- Now inside the class , we have to `@Override` : `2 configure methods` & provide a `password encoder Bean`. The **First configure()** is used to provide authentication to the user
- <pre>
-// this configure method is defined to authenticate the users
+- Now inside the class , we have to `@Override` : `2 configure methods` & provide a `password encoder Bean`
+```dockerfile
+// FIRST CONFIGURE METHOD IS DEFINED TO AUTHENTICATE THE USERS
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-      
-      // few hardcoded users defined
-        inMemoryUserDetailsManager.createUser(User.builder().username("arindam")
-                .password("$2a$10$P68A3Wf2H6nES9OkXWZoj.CakfPbEoh1VDNEueXDjBNsUNZysU43W")
-                .authorities("student")
-                .build());
-        inMemoryUserDetailsManager.createUser(User.builder().username("ram")
-                .password("$2a$10$b.6RmGDoZ6O12h8QRaShxeA9ckO6yuVMQJYZFHVt6fSzrC.Mo2gNq")
-                .authorities("faculty")
-                .build());
-        inMemoryUserDetailsManager.createUser(User.builder().username("ayush")
-                .password("$2a$10$s1Cp0dps2uDYG9SWXBdivOXyFqBmN4YmrNy70qrWlSqoh7v7.BWG6")
-                .authorities("admin")
-                .build());
 
+        auth.userDetailsService(inmemoryService.getInMemoryUserDetailManager());
     }
+```
 
-// new users will be saved by this method
-    public void saveEmployee(UserDetails userDetails)
-    {
-        inMemoryUserDetailsManager.createUser(userDetails);
-    }
-</pre>
-
-- The `Second configure()` method enables us to provide authorization to the authenticated users. we can use `hasAnyAuthority` or `hasAuthority` to provide authorization
-<pre>
-// this configure method is defined to authorize the users after they are authenticated 
+```dockerfile
+// SECOND CONFIGURE METHOD ENABLES US TO PROVIDE AUTHORIZATION TO THE AUTHENTICATED USERS BASED ON ROLE AND AUTHORITY.
+// WE USE `HASANYAUTHORITY` OR `HASAUTHORITY` TO PROVIDE AUTHORIZATION
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeHttpRequests()
@@ -115,7 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // most restricted --> least restricted
     }
-</pre>
+```
 
 > `.and()` : It means that the next methods that comes after .and() will be joined directly to the root ( HttpSecurity http ).
 >
@@ -127,23 +109,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 >
 > `.anyRequest().authenticated()` : user requesting for any other endpoint not matching to above rules (but defined in the controller) will have to get authenticated
 
-- we provide a `Password encoder` bean ( We can pass `new PasswordEncoder()` in the first configure()  )
-<pre>
-// the bean of the type of password encoder to be used is provided
+- we provide a `Password Encoder` bean
+```dockerfile
+// the bean of a password encoder bean to be used is provided
     @Bean
     PasswordEncoder encoderInstance(){
         return new BCryptPasswordEncoder();
 
     }
-</pre>
+```
 
 
 #### Disabling CSRF token
 - If you dont want to hardcode the user details instead you want to dynamically add user details from the endpoint , instead we want to POST request then
   **we have to disable the csrf token which is a security concern in prod level**
-- By default Spring Security doesnt allow to do UNSAFE methods like PUT POST DELETE PATCH etc , with csrf enabled . So we have to disable it before doing such requests
+- By default, Spring Security doesn't allow to do UNSAFE methods like PUT POST DELETE PATCH etc , with csrf enabled . So we have to disable it before doing such requests
 - Without disabling csrf ,only GET call is allowed to the endpoints ( after authentication + authorization )
-    <pre>
+    ```dockerfile
     // csrf token is disabled by csrf().disable(). 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -158,7 +140,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin();
     }
-    </pre>
+   ```
 
 > In the steps the MVC model is not followed but in the project you can see the MVC folder structure
 

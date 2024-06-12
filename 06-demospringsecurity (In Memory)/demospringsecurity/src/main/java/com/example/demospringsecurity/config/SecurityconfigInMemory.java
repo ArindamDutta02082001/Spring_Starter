@@ -1,6 +1,7 @@
 package com.example.demospringsecurity.config;
 
 import com.example.demospringsecurity.repository.RepositoryClass;
+import com.example.demospringsecurity.service.InmemoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,7 +51,7 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
     // after authentication the authorized personnel can use the endpoints
 
     @Autowired
-    RepositoryClass repositoryClass;
+    InmemoryService inmemoryService;
 
 //    -------------------------------------------------------------------------------------------------------------
     // method 1 and 2 are having there InMemory database in this file only and the endpoint are using directly from this file only
@@ -101,21 +102,9 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.userDetailsService(repositoryClass.getInMemoryUserDetailsManager());
+        auth.userDetailsService(inmemoryService.getInMemoryUserDetailManager());
     }
 
-    // to save a particular employee in the DB
-    public void saveUserDetailsInDB(UserDetails userDetails)
-    {
-        repositoryClass.saveUserDetails(userDetails);
-
-    }
-
-    // to get a particular employee information from the IN memory DB
-    public UserDetails getUserDetailInDB(String username)
-    {
-        return repositoryClass.getUserDetail(username);
-    }
 
     // Authorization related stuff - after the user is authenticated , we are authorizing
     // the user which endpoint he/she has the access
@@ -133,6 +122,7 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin();
+
 
         //                .and()   --> ensures that the functions coming after it are directly attached to the root , HttpClient
         //                .formLogin(); --> this ensure sto give 2 extra api endpoints for form login for authentication
@@ -167,16 +157,17 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
     /*
      B. BcryptEncoder - the passwords are hashed upto 10 rounds
 
+     useful site - https://bcrypt-generator.com/
+
      arindam@123 - $2a$10$P68A3Wf2H6nES9OkXWZoj.CakfPbEoh1VDNEueXDjBNsUNZysU43W
      ram@123 - $2a$10$b.6RmGDoZ6O12h8QRaShxeA9ckO6yuVMQJYZFHVt6fSzrC.Mo2gNq
      ayush@123 - $2a$10$s1Cp0dps2uDYG9SWXBdivOXyFqBmN4YmrNy70qrWlSqoh7v7.BWG6
 
-     useful site - https://bcrypt-generator.com/
+
     */
     @Bean
     PasswordEncoder encoderInstance(){
-        return new BCryptPasswordEncoder();
-        // by default the number of rounds are 10
+        return new BCryptPasswordEncoder();              // by default the number of rounds are 10
 
     }
 

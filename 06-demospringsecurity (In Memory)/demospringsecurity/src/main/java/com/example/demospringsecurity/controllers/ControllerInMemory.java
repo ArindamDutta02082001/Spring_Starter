@@ -3,6 +3,7 @@ package com.example.demospringsecurity.controllers;
 import com.example.demospringsecurity.config.SecurityconfigInMemory;
 import com.example.demospringsecurity.dto.createUserDto;
 import com.example.demospringsecurity.models.DemoUser;
+import com.example.demospringsecurity.service.InmemoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,7 +31,7 @@ public class ControllerInMemory {
 
 
     @Autowired
-    SecurityconfigInMemory securityconfigInMemory;
+    InmemoryService inmemoryService;
 
 
 
@@ -69,14 +70,14 @@ public class ControllerInMemory {
                 .isAccountNonExpired(true)
                 .isCredentialsNonExpired(true)
                 .build();
-        securityconfigInMemory.saveUserDetailsInDB(user);
+        inmemoryService.saveUserDetails(user);
         return  user;
     }
 
     @GetMapping("/credential")
     public UserDetails getAllCredentials(@RequestParam("username") String username)
     {
-        return securityconfigInMemory.getUserDetailInDB(username);
+        return inmemoryService.getUserDetails(username);
     }
 
 

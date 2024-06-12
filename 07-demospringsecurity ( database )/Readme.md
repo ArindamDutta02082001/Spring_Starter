@@ -10,23 +10,22 @@ It is a spring framework that helps in authorization & authentication
 
 ### Integrate Spring Security with spring boot App [ In Database ]
 - Install the necessary dependencies + spring security dependency `spring-boot-starter-security`
-- config : Create a `SecurityConfig.java file` to define the configurations of the **authentication** & **authorization** policy
-- dto : We have to create a **User** entity which will implement the `UserDetails` builtin interface
-<pre>
-@Entity
-@Setter
-@AllArgsConstructor
-@Builder
+- config : Create a `SecurityConfig.java file` to define the configurations for the **authentication** & **authorization** policy
+- dto : For accepting the username , password , authorities in the endpoints 
+- model : We have to create a **User** entity which will implement the `UserDetails` builtin interface
+```dockerfile
+@Lombok-annotations
 public class User implements UserDetails 
 { 
 // implement default methods isEnabled , isCredentialsNonExpired , isAccountNonLocked , isAccountNonExpired , getUsername , getPassword 
 // - do -
 }
-</pre>
-- service : We have to create a **UserService** class that implements `UserDetailsService` builtin interface. We have to override the `loadUserByUsername()` so that it returns a User. **Upon Login this function is responsible for returning the user which matches the user entered user details in UI**
-<pre>
+```
+- service : We have to create a **UserService** class that implements `UserDetailsService` builtin interface. We have to override the `loadUserByUsername()` so that it returns a User ( if present in DB ) when the `/login` endpoint is HIT
+```dockerfile
 @Service
 public class UserService implements UserDetailsService {
+    
     // implement default method loadUserByUsername
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -34,16 +33,17 @@ public class UserService implements UserDetailsService {
     }
 
     // other save , etc functions write as requirement
-</pre>
+```
 - repository : We have to create a **UserRepository** class to store the `User` Entity
-<pre>
+```dockerfile
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("select u from User u where u.username = :username")
     public User findByUsername(String username) ;
 }
-</pre>
+```
+
 - When you log in with Spring Security, it manages your authentication across multiple requests, despite
   HTTP being stateless . Thus you need to use the authenticated `JSESSIONID` to use the endpoints
 
@@ -64,8 +64,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 ##### Inside the SecurityConfig.java file
 - The config file class extends the `WebSecurityConfigurerAdapter` ( spring boot version 2.7.17 )
-  **now it has been obsolate , try new**
-<pre>
+  **now it has been outdated , we use SpringFilterChain**
+```dockerfile
+`
 @Configuration
 @EnableWebSecurity  ( optional annotation )
 public class SecurityConfig extends WebSecurityConfigurerAdapter { 
@@ -75,13 +76,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
    UserService userService;
 
 }
-</pre>
+```
 
-- Now inside the class , we have to `@Override` 2 `configure` methods & provide a `password encoder Bean`. The **First configure()** is used to provide authentication to the user
- <pre>
-
-// this configure method is defined to authenticate the users
-// Here we are using user service for DB auth so we aren`t hard coding the user credentials
+- Now inside the class , we have to `@Override` 2 `configure` methods & provide a `password encoder Bean`
+```dockerfile
+// FIRST CONFIGURE METHOD IS DEFINED TO AUTHENTICATE THE USERS
 
     @Autowired
     UserService userService;
@@ -92,11 +91,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // defines the type of authentication we want to have in app
         auth.userDetailsService(userService);
     }
-</pre>
-
-- The **Second configure()** method enables us to provide authorization to the authenticated users
-<pre>
-// this configure method is defined to authorize the users after they are authenticated 
+```
+```dockerfile
+// SECOND CONFIGURE METHOD ENABLES US TO PROVIDE AUTHORIZATION TO THE AUTHENTICATED USERS BASED ON ROLE AND AUTHORITY.
+// WE USE `HASANYAUTHORITY` OR `HASAUTHORITY` TO PROVIDE AUTHORIZATION
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeHttpRequests()
@@ -114,8 +112,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // most restricted --> least restricted
     }
-
-</pre>
+```
 
 > `.and()` : It means that the next methods that comes after .and() will be joined directly to the root ( HttpSecurity http ).
 >
@@ -127,22 +124,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 > 
 > `.anyRequest().authenticated()` : user requesting for any other endpoint not matching to above rules (but defined in the controller) will have to get authenticated
 
-- we provide a `Password encoder` bean ( We can pass `new PasswordEncoder()` in the first configure()  )
-<pre>
+- we provide a `Password encoder` bean
+```dockerfile
 // the bean of the type of password encoder to be used is provided
     @Bean
     PasswordEncoder encoderInstance(){
         return new BCryptPasswordEncoder();
 
     }
-</pre>
+```
 
 #### Disabling CSRF token
 - If you dont want to hardcode the user details instead you want to dynamically add user details from the endpoint , instead we want to POST request then
   **we have to disable the csrf token which is a security concern in prod level**
 - By default Spring Security doesnt allow to do UNSAFE methods like PUT POST DELETE PATCH etc , with csrf enabled . So we have to disable it before doing such requests
 - Without disabling csrf ,only GET call to the endpoints ( after authentication + authorization ) is allowed
-    <pre>
+    ```dockerfile
     // csrf token is disabled by csrf().disable(). 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -154,8 +151,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin();
     }
+  ```
 
-    </pre>
 > In the steps the MVC model is not followed but in the project you can see the MVC folder structure
 
 ### API endpoints are here

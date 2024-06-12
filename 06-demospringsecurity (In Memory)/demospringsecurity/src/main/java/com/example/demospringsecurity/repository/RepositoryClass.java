@@ -1,8 +1,6 @@
 package com.example.demospringsecurity.repository;
 
 
-import org.springframework.context.annotation.Configuration;
-
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -42,17 +40,17 @@ public class RepositoryClass {
 
     public InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
 
-    public InMemoryUserDetailsManager getInMemoryUserDetailsManager()
+    public InMemoryUserDetailsManager createInMemoryUserDetailManager()
     {
         return this.inMemoryUserDetailsManager;
     }
 
-    public void saveUserDetails(UserDetails userDetails)
+    public void saveUserDetailsinMemory(UserDetails userDetails)
     {
         this.inMemoryUserDetailsManager.createUser(userDetails);
     }
 
-    public UserDetails getUserDetail(String username)
+    public UserDetails getUserDetailinMemory(String username)
     {
         return this.inMemoryUserDetailsManager.loadUserByUsername(username);
     }

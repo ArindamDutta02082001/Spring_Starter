@@ -16,6 +16,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests(a -> a
                         .antMatchers("/", "/error", "/webjars/**").permitAll()
+                        .antMatchers("/token").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(e -> e
