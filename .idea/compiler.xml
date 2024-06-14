@@ -7,13 +7,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="transaction-service (1)" />
         <module name="demoredis" />
         <module name="book-management" />
         <module name="user-service" />
         <module name="restapi" />
         <module name="oauth2" />
+        <module name="eureka-server" />
         <module name="notification-service" />
         <module name="restapi (1)" />
+        <module name="notification-service (1)" />
+        <module name="user-service (1)" />
+        <module name="wallet-service (1)" />
         <module name="securitycacheproject" />
         <module name="transaction-service" />
         <module name="demo-security" />
@@ -24,6 +29,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="major" target="1.5" />
       <module name="online-library-management-system" target="17" />
       <module name="payment" target="17" />
       <module name="project" target="17" />
@@ -37,7 +43,9 @@
       <module name="demo-security" options="-parameters" />
       <module name="demo-spring" options="-parameters" />
       <module name="demoredis" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
       <module name="notification-service" options="-parameters" />
+      <module name="notification-service (1)" options="-parameters" />
       <module name="oauth2" options="-parameters" />
       <module name="online-library-management-system" options="-parameters" />
       <module name="payment" options="-parameters" />
@@ -46,8 +54,11 @@
       <module name="restapi (1)" options="-parameters" />
       <module name="securitycacheproject" options="-parameters" />
       <module name="transaction-service" options="-parameters" />
+      <module name="transaction-service (1)" options="-parameters" />
       <module name="user-service" options="-parameters" />
+      <module name="user-service (1)" options="-parameters" />
       <module name="wallet-service" options="-parameters" />
+      <module name="wallet-service (1)" options="-parameters" />
     </option>
   </component>
 </project>

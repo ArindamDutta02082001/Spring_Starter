@@ -27,7 +27,17 @@
         <option value="$PROJECT_DIR$/Major Project - Payment App Backend/pom.xml" />
         <option value="$PROJECT_DIR$/Major Project - Payment App Backend/major/demo/pom.xml" />
         <option value="$PROJECT_DIR$/05-Spring-demo-redis/demoredis/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Projectv2 - Payment App Backend/major/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project 2- Payment App Backend/major/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/project/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend - Copy/major/demo-micro/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/project/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/project/transaction-service/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">

@@ -18,7 +18,7 @@ public class IOCDILogic {
     Logger logger = LoggerFactory.getLogger(IOCDILogic.class);
 
 
-    // Dependency Injection
+    // Dependency Injection by Field Injection
     @Autowired
     @Qualifier(value = "firstBean")
     String string1;
