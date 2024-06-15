@@ -1,10 +1,9 @@
-package com.demo.oauth2.jwtTokenManager;
+package com.demo.oauth2.JWTTokenManager;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -17,7 +16,7 @@ import java.util.function.Function;
 public class JWTTokenManager {
 
     private String SECRET_KEY = "secrettttttttttttttttttttttttttttttttt";
-    private long JWT_TOKEN_VALIDITY = 5*60*60;
+    private long JWT_TOKEN_VALIDITY = 1000*60;
 
 
     // retrieve username from jwt token
@@ -48,7 +47,7 @@ public class JWTTokenManager {
     private String createToken(Map<String, Object> claims, String subject) {
 
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 

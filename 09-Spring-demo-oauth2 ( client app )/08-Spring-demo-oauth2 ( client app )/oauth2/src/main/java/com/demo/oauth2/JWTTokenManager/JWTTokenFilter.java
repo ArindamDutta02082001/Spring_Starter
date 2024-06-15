@@ -1,5 +1,7 @@
-package com.demo.oauth2.jwtTokenManager;
+package com.demo.oauth2.JWTTokenManager;
 
+import com.demo.oauth2.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
@@ -19,15 +21,17 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-// this will intercept the request that is incoming and check if it is has a valid bearer token or not
+// this will intercept the request that is incoming and check if it is having a valid bearer token or not
 @Component
 @RequiredArgsConstructor
 public class JWTTokenFilter extends OncePerRequestFilter {
 
     private final JWTTokenManager jwtService;
-    private final UserDetailsService userDetailsService;
 
-    // to filter the incoming request if it has a valid Bearer token ( access token )
+
+    private final UserService userService;
+
+    // to filter the incoming request if it has a valid jwt token ( access token ) or not
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -39,24 +43,26 @@ public class JWTTokenFilter extends OncePerRequestFilter {
 
         String requestHeader = request.getHeader("Authorization"); //Bearer 2352345235sdfrsfgsdfsdf
         logger.info(" Header : "+ requestHeader);
+
+
         String username = null;
         String token = null;
 
         // if user hits the /token api for the first time
-        if (requestHeader == null ||!requestHeader.startsWith("Bearer ")) {
+        if (requestHeader == null || !requestHeader.startsWith("Bearer ")) {
             logger.info(" User doesn't have any JWT token and is hitting the /token first time with credentials !! ");
             filterChain.doFilter(request, response);            // this routes the user request to the filter chain
             return;
         }
 
-        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
+        if (requestHeader.startsWith("Bearer ")) {
             //looking good
             token = requestHeader.substring(7);
-            try {
-
+            try
+            {
                 username = this.jwtService.extractUsername(token);
-
-            } catch (IllegalArgumentException e) {
+            }
+            catch (IllegalArgumentException e) {
                 logger.info("Illegal Argument while fetching the username !!");
                 e.printStackTrace();
             } catch (ExpiredJwtException e) {
@@ -70,17 +76,16 @@ public class JWTTokenFilter extends OncePerRequestFilter {
 
             }
 
-
         } else {
-            logger.info("Invalid Header Value !! ");
+            logger.info("Token is tampered !! ");
         }
 
 
         //
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null)
+        {
 
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            System.out.println(userDetails);
+            UserDetails userDetails = this.userService.loadUserByUsername(username);
 
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,

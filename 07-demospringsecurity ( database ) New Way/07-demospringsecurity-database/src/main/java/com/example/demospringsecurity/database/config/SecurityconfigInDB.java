@@ -77,16 +77,15 @@ public class SecurityconfigInDB{
                         .requestMatchers("/faculty/**").hasAuthority("faculty")
                         .requestMatchers("/student/**").hasAuthority("student")
                         .requestMatchers("/library/**").hasAnyAuthority("student", "faculty")
-                        .requestMatchers("/home").permitAll()
-                        .requestMatchers("/shop").permitAll()
-                        .requestMatchers("/usersignup").permitAll()
+                        .requestMatchers("/home","/shop","/usersignup" , "/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .permitAll()
                 )
-                .rememberMe(Customizer.withDefaults());
+                .authenticationProvider(configure());
+
 
         // most restricted --> least restricted
 

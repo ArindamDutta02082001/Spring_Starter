@@ -116,8 +116,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 > `.and()` : It means that the next methods that comes after .and() will be joined directly to the root ( HttpSecurity http ).
 >
-> `.formLogin()` : this ensures to give 2 extra api endpoints (/login , /logout) with a html basic form page for form login for authentication. We can provide our own login page by extending `.formLogin().loginPage("/custom-path")`
->
+> `.formLogin()` : this ensures to give 2 extra api endpoints (/login , /logout) with a html basic form page for form login for authentication. We can provide our own login page by extending `.formLogin().loginPage("/custom-path")` .
+instead of `.formLogin()` we can use `httpBasic() , No Auth , Bearer , OAuth2.0` mode of sending credentials
+> 
 > `.permitAll()` : it means that any type of user matching that endpoint can have access
 >
 > `.csrf().disable()` : By default Spring Security doesnt allow to do UNSAFE methods like PUT POST DELETE PATCH etc , with csrf enabled . So we have to disable it before doing such requests

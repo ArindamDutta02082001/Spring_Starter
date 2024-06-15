@@ -10,6 +10,7 @@ import lombok.*;
 @Builder
 public class responseDto {
 
+    String username;
     String token ;
 
 }

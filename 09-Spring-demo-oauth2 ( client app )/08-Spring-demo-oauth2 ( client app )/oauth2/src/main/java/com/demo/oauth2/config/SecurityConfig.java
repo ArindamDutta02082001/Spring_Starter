@@ -2,7 +2,7 @@ package com.demo.oauth2.config;
 
 
 
-import com.demo.oauth2.jwtTokenManager.JWTTokenFilter;
+import com.demo.oauth2.JWTTokenManager.JWTTokenFilter;
 import com.demo.oauth2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -44,12 +44,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/", "/error", "/token", "/webjars/**").permitAll()
-                        .requestMatchers("/user").authenticated()
+                        .requestMatchers("/" , "/token", "/register").permitAll()
                         .anyRequest().authenticated()
                 )
-                .csrf(csrf -> csrf.disable())
+
                 .logout(logout -> logout
                         .logoutSuccessUrl("/").permitAll()
                 )
@@ -57,10 +57,13 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 // adding a filter for jwt that intercepts the request
                 // for checking the incoming request they have the correct bearer to access resources
-                .addFilterBefore(jwtTokenFilter , UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtTokenFilter , UsernamePasswordAuthenticationFilter.class)
+                .authenticationProvider(configure());
+
 
         return http.build();
     }
+
 
     PasswordEncoder encoderInstance(){
         return new BCryptPasswordEncoder();

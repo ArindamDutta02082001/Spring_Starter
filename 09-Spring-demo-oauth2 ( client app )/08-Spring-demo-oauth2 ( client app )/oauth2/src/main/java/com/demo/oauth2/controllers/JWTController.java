@@ -2,7 +2,7 @@ package com.demo.oauth2.controllers;
 
 import com.demo.oauth2.dto.requestDto;
 import com.demo.oauth2.dto.responseDto;
-import com.demo.oauth2.jwtTokenManager.JWTTokenManager;
+import com.demo.oauth2.JWTTokenManager.JWTTokenManager;
 import com.demo.oauth2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,7 +43,7 @@ public class JWTController {
             String token = this.JWTTokenManager.generateToken(userDetails);
 
 
-            responseDto response = new responseDto(token);
+            responseDto response = new responseDto(userDetails.getUsername(),token);
 
             return response;
         }
@@ -56,7 +56,7 @@ public class JWTController {
             System.out.println(e);
         }
 
-        return new responseDto("Invalid ID or PWD");
+        return new responseDto("invalid username","Invalid ID or PWD");
 
     }
 

@@ -11,33 +11,32 @@ as these are deprecated after Spring 3.0 & Spring Security > 5.0
 
 ##### Modification needed in the SecurityConfig.java file
 - we introduce the concept of `SecurityFilterChain`
-<pre>
+```dockerfile
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(csrf -> csrf.disable())
+         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/faculty/attendance/**").hasAuthority("admin")
                         .requestMatchers("/credential/**").hasAnyAuthority("admin")
                         .requestMatchers("/faculty/**").hasAuthority("faculty")
                         .requestMatchers("/student/**").hasAuthority("student")
                         .requestMatchers("/library/**").hasAnyAuthority("student", "faculty")
-                        .requestMatchers("/home").permitAll()
-                        .requestMatchers("/shop").permitAll()
-                        .requestMatchers("/usersignup").permitAll()
+                        .requestMatchers("/home","/shop","/usersignup" , "/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .permitAll()
                 )
-                .rememberMe(Customizer.withDefaults());
+                .authenticationProvider(configure());
 
         // most restricted --> least restricted
 
         return http.build();
     }
-</pre>
+```
+
 ### API endpoints are here
 same endpoints like in previous 07 project
 
