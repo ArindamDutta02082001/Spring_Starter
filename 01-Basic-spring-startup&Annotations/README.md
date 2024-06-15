@@ -92,36 +92,6 @@ System.out.println(“Beans are : ” + s ); // all beans }
   by @Primary and @Qualifier
 
 ```dockerfile
-
-class IOCClass
-{
-
-    // normal bean              // creates the singleton object of return type of the function
-    @Autowired
-    @Qualifier(value = "thirdBean")
-    String string3;
-
-    // normal bean
-    @Autowired
-    @Qualifier(value = "thirdBean")
-    String string3;
-
-    // function with same return type are segregated by @Primary @Qualifier
-    @Autowired            
-    @Qualifier(value = "firstBean")
-    String string1;
-
-    @Autowired
-    @Qualifier(value = "secondBean")
-    String string2;
-
-    // bean attached with some functions
-    @Autowired
-    @Qualifier(value = "personBean")
-    Person person;
-
-}
-
 @Configuration
 class BeanClass
 {
@@ -185,45 +155,52 @@ public class Person {
 #### Dependency Injection
 - Any bean ( i.e object ) created by spring boot can be used anywhere anytime required
 - It is a Design Pattern that helps to eliminate the dependency to a class , and provides loose coupling
-- DI is implemented by 3 ways Constructor , Setter and Field injection  [medium_link](https://medium.com/@reetesh043/spring-boot-dependency-injection-137f85f84590)
+- DI is of 3 types Constructor , Setter and Field injection and is implemented by @Autowire [medium_link](https://medium.com/@reetesh043/spring-boot-dependency-injection-137f85f84590)
 
 
   In our projects we have used Field Injection , which is implemented by
+
   <br/></br>**@Autowired**
+
 1. @Autowired tell that use the singleton object that you created already present in bean and don't create
    a new object , please use that object here
-2. It helps in Setter and Field Injection 
+2. It helps in Dependency Injection
 3. @Autowire variables can’t be declared inside function and cannot be static so always use inside the class directly 
 4. make sure the class that you are Autowiring is already there in the IOC container i.e that class bean is created by using @Conainer or @Bean
 5. kitna bar kahi par bhi @Autowire kr lo of the same class, The same bean ( i.e object ) is referred to
 
 ```dockerfile
-
-class IOCClass
-{
-    // DI by field injection
-    @Autowired              // creates the singleton object of Person from bean
-    Person person;
-
-    // normal bean          // creates the singleton object of return type of the function
-    @Autowired
-    @Qualifier(value = "thirdBean")
-    String string3;
-
-}
-
 @Component
-class BeanClass        // A class for which a bean is created
+public class IOCDILogic 
 {
 
-    // normal bean
-    @Bean(name = "thirdBean")
-    public String inverseFunction3 ()
-    {
-        return "@Bean3 returned ";
-    }
+// Dependency Injection by Field Injection
+    @Autowired
+    @Qualifier(value = "firstBean")
+    String string1;
 
-}
+    @Autowired
+    @Qualifier(value = "personBean")
+    Person person;		
+** in other words we say , Person class is injected into this class & this class has a DI on Person
+
+
+    // Dependency Injection by setter Injection
+     String string2;
+     @Autowired
+     public void secondBean( @Qualifier(value = "secondBean") String secondBean)
+     {
+        this.string2 = secondBean;
+     }
+
+    // Dependency Injection by constructor Injection
+    String string3;
+    @Autowired
+    public IOCDILogic( @Qualifier(value = "thirdBean") String thirdBean , @Value("${name}") String name)
+    {
+        this.string3 = thirdBean;
+    }
+ }
 ```
 >in other words we say , Person class is injected into the Shared class or Shared class has a DI on Person
 

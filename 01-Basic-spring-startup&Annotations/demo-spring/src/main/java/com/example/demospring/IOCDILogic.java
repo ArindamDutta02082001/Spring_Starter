@@ -24,16 +24,30 @@ public class IOCDILogic {
     String string1;
 
     @Autowired
-    @Qualifier(value = "secondBean")
-    String string2;
-
-    @Autowired
-    @Qualifier(value = "thirdBean")
-    String string3;
-
-    @Autowired
     @Qualifier(value = "personBean")
     Person person;
+
+
+
+    // Dependency Injection by setter Injection
+        String string2;
+        @Autowired
+        public void secondBean( @Qualifier(value = "secondBean") String secondBean)
+        {
+            this.string2 = secondBean;
+        }
+
+    // Dependency Injection by constructor Injection
+    String string3;
+    @Autowired
+    public IOCDILogic( @Qualifier(value = "thirdBean") String thirdBean , @Value("${name}") String name)
+    {
+        this.string3 = thirdBean;
+
+        this.name=name;
+        logger.info("param constructor "+name);
+    }
+
 
 
     public void IOCFunction()
@@ -50,10 +64,6 @@ public class IOCDILogic {
         logger.info("default contructor");
     }
 
-    IOCDILogic(@Value("${name}") String name )
-    {
-        this.name=name;
-        logger.info("param contructor "+name);
-    }
+
 
 }
