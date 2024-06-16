@@ -22,7 +22,7 @@ public class UserController {
 
 
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String home()
     {
         return "welcome home";
@@ -31,7 +31,7 @@ public class UserController {
     @GetMapping("/current-user-profile")
     public Object getUser(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new responseDto("","","");
+        return new responseDto(userDetails.getUsername(), "access-token-asehi","refresh-token-asehi");
     }
 
     @PostMapping("/change-password")
