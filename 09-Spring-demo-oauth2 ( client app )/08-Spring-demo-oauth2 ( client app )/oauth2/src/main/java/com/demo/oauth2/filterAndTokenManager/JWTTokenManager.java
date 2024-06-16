@@ -1,4 +1,4 @@
-package com.demo.oauth2.JWTTokenManager;
+package com.demo.oauth2.filterAndTokenManager;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -16,7 +16,7 @@ import java.util.function.Function;
 public class JWTTokenManager {
 
     private String SECRET_KEY = "secrettttttttttttttttttttttttttttttttt";
-    private long JWT_TOKEN_VALIDITY = 1000*60;
+    private long JWT_TOKEN_VALIDITY = 1000*30;
 
 
     // retrieve username from jwt token
@@ -47,7 +47,7 @@ public class JWTTokenManager {
     private String createToken(Map<String, Object> claims, String subject) {
 
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY)).claim("scope" , "JWT")
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
@@ -61,7 +61,7 @@ public class JWTTokenManager {
 
 
     // validate the token
-    public Boolean validateToken(String token, UserDetails userDetails) {
+    public Boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }

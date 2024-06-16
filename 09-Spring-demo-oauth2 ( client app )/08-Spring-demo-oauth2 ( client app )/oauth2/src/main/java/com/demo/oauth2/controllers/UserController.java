@@ -1,8 +1,13 @@
 package com.demo.oauth2.controllers;
 
-import com.demo.oauth2.dto.createUserDto;
+import com.demo.oauth2.dto.changePasswordDto;
+import com.demo.oauth2.dto.responseDto;
+import com.demo.oauth2.models.DemoUser;
 import com.demo.oauth2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,23 +28,19 @@ public class UserController {
         return "welcome home";
     }
 
-    @GetMapping("/user")
-    public String getUser(){
-//    public Map<String, Object> getUser(){
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-//
-//
-//        return oAuth2User.getAttributes();
-return  "user";
+    @GetMapping("/current-user-profile")
+    public Object getUser(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return new responseDto("","","");
     }
 
-    @PostMapping("/register")
-    public String registerUser(@RequestBody createUserDto request)
+    @PostMapping("/change-password")
+    public Object changePassword(@RequestBody changePasswordDto changePasswordDto)
     {
-          userService.createUser(request);
-
-          return "user created";
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userService.changePassword(changePasswordDto.getNewPassword(), changePasswordDto.getConfirmNewPassword(), userDetails.getUsername());
     }
+
+
 
 }

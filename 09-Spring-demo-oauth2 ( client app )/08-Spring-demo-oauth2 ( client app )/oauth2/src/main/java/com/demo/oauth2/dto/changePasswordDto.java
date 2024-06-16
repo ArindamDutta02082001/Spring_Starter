@@ -1,6 +1,5 @@
 package com.demo.oauth2.dto;
 
-
 import lombok.*;
 
 @Getter
@@ -8,8 +7,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class requestDto {
-    String username;
-    String password;
+public class changePasswordDto {
+
+    String newPassword;
+    String confirmNewPassword;
 
 }

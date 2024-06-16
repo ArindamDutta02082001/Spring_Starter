@@ -12,5 +12,6 @@ public class responseDto {
 
     String username;
     String token ;
+    String refreshToken;
 
 }

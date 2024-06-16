@@ -1,22 +1,15 @@
 package com.demo.oauth2.service;
 
-import com.demo.oauth2.dto.createUserDto;
+
+import com.demo.oauth2.dto.registerDto;
 import com.demo.oauth2.models.DemoUser;
 import com.demo.oauth2.repository.UserRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -24,7 +17,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserRepository userRepository;
 
-    public void createUser(createUserDto createUserDto)
+    public DemoUser createUser(registerDto createUserDto)
     {
         DemoUser demoUser = DemoUser.builder()
             .name(createUserDto.getName())
@@ -34,6 +27,17 @@ public class UserService implements UserDetailsService {
             .authorities("user")
             .build();
         userRepository.save(demoUser);
+        return demoUser;
+    }
+
+    public String changePassword(String newPassword , String confirmNewPassword , String username)
+    {
+        if(newPassword != confirmNewPassword)
+            return "Password mismatch";
+        else
+            userRepository.changePassword(new BCryptPasswordEncoder().encode(newPassword) , username);
+
+        return "Password changed successfully";
     }
 
     @Override

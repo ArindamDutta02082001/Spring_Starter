@@ -1,7 +1,6 @@
-package com.demo.oauth2.JWTTokenManager;
+package com.demo.oauth2.filterAndTokenManager;
 
 import com.demo.oauth2.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
@@ -16,7 +15,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -57,6 +55,7 @@ public class JWTTokenFilter extends OncePerRequestFilter {
 
         if (requestHeader.startsWith("Bearer ")) {
             //looking good
+
             token = requestHeader.substring(7);
             try
             {
@@ -81,7 +80,7 @@ public class JWTTokenFilter extends OncePerRequestFilter {
         }
 
 
-        //
+        // setting the user detail in the context
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null)
         {
 

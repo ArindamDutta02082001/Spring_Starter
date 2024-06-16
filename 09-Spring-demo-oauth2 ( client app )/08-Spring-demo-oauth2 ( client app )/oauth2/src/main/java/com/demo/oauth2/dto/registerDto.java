@@ -1,5 +1,6 @@
 package com.demo.oauth2.dto;
 
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -8,8 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class createUserDto {
-
+public class registerDto {
     private String name;
 
     @NotBlank
