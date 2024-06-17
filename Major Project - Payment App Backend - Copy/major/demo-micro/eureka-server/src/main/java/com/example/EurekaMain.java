@@ -9,6 +9,6 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 public class EurekaMain {
     public static void main(String[] args) {
         SpringApplication.run(EurekaMain.class);
-        System.out.println("Eureka service running in 6000 ...");
+        System.out.println("Eureka service running in 8761 ...");
     }
 }
