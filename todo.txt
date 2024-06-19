@@ -6,3 +6,21 @@
 
 
 https://www.bezkoder.com/websecurityconfigureradapter-deprecated-spring-boot/  good resource to explore
+
+
+EPAM
+isolation layer in java and how many types are there /
+how you handle concurrency
+transaction management
+multi threading and locking
+
+FIVETRAN
+how hashmap works internally
+concurrency control in java
+how collision works
+memory management , threading works in java
+
+kotak
+indexing
+text jsustification qsnt leetcode
+island problem
