@@ -27,6 +27,9 @@
 		<!-- *********************************** -->
 	</properties>
 
+
+<!--	dependency common to all service : else in each pom.xml you have to add-->
+
 	<!--        cloud client -->
 	<dependencyManagement>
 		<dependencies>
@@ -40,6 +43,25 @@
 		</dependencies>
 	</dependencyManagement>
 	<!-- *********************************** -->
+
+	<dependencies>
+
+	<!--        zipkin and micrometer   -->
+	<!--         micrometer ko connect krta hai zipkin ke saath -->
+	<dependency>
+		<groupId>io.micrometer</groupId>
+		<artifactId>micrometer-tracing-bridge-brave</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>io.zipkin.reporter2</groupId>
+		<artifactId>zipkin-reporter-brave</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-actuator</artifactId>
+	</dependency>
+	<!--        ********************* -->
+	</dependencies>
 
 	<build>
 		<plugins>

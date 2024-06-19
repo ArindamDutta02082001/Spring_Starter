@@ -40,7 +40,6 @@ public class TransactionService implements UserDetailsService {
 
 
 
-
     // initiating a new transaction and pushing it to a kafka topic
     // it will be consumed by wallet-service to update specific amount to the sender & receiver wallet
 

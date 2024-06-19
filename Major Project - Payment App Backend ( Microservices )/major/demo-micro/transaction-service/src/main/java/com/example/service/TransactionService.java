@@ -38,7 +38,8 @@ public class TransactionService implements UserDetailsService {
     TransactionRepository transactionRepository;
 
 
-
+    @Autowired
+    RestTemplate restTemplate;
 
 
     // initiating a new transaction and pushing it to a kafka topic
@@ -111,14 +112,15 @@ public class TransactionService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String mainmobile) throws UsernameNotFoundException {
 
-        String url = "http://localhost:4000/user/mobile/"+mainmobile;
+        // we cannot
+        String url = "http://user-service:4000/user/mobile/"+mainmobile;
 
 
         HttpHeaders headers = new HttpHeaders();
 //        headers.add("Authorization", "Basic " + base64Creds);
         HttpEntity<String> request = new HttpEntity<>(headers);
 
-        RestTemplate restTemplate = new RestTemplate();
+//        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseUser = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
