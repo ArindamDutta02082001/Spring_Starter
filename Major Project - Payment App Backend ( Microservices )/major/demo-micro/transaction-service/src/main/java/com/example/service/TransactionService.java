@@ -1,34 +1,28 @@
 package com.example.service;
 
-import com.example.dto.createTransactionDto;
+
+import com.example.dto.response.userResponseDto;
 import com.example.models.Transaction;
+import com.example.dto.request.createTransactionDto;
 import com.example.models.TransactionSecuredUser;
 import com.example.models.enums.TransactionStatusEnums;
 import com.example.repository.TransactionRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.DataInput;
-import java.io.IOException;
 import java.text.ParseException;
-import java.util.stream.Collectors;
+
 
 @Service
 public class TransactionService implements UserDetailsService {
@@ -117,42 +111,34 @@ public class TransactionService implements UserDetailsService {
 
 
         HttpHeaders headers = new HttpHeaders();
-//        headers.add("Authorization", "Basic " + base64Creds);
         HttpEntity<String> request = new HttpEntity<>(headers);
 
-//        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseUser = restTemplate.exchange(
+        userResponseDto responseUser = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 request,
-                String.class
-        );
-        System.out.println("info2"+responseUser.getBody());
-        ObjectMapper objectMapper = new ObjectMapper();
+                userResponseDto.class
+        ).getBody();
 
         if(responseUser == null)
             return null;
 
-
-        Map<String, Object>   userData = null;
-        try {
-            userData = objectMapper.readValue(responseUser.getBody(), Map.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
-        List<GrantedAuthority> authorities = ((List<Map<String, String>>) userData.get("authorities")).stream()
-                .map(authorityMap -> new SimpleGrantedAuthority(authorityMap.get("authority")))
-                .collect(Collectors.toList());
+        System.out.println(responseUser.getAuthorities());
 
         TransactionSecuredUser transactionSecuredUser = TransactionSecuredUser.builder()
-                .username((String)userData.get("mobile"))
-                .password((String) userData.get("password"))
-                .authorities(authorities)
+                .username(responseUser.getName())
+                .password(responseUser.getPassword())
+                .authorities(responseUser.getAuthorities().toString())
                 .build();
 
         return transactionSecuredUser;
 
 
+    }
+
+    // getting all the transaction from a phone number
+    public List<Transaction> getAllTransaction(String mobile)
+    {
+        return transactionRepository.getAllTransactionFromDb(mobile);
     }
 }

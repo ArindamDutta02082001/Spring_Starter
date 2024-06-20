@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dto.response.transactionResponseDto;
 import com.example.models.Wallet;
 import com.example.repository.WalletRepository;
 import com.example.utils.Constants;
@@ -7,12 +8,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -20,6 +27,9 @@ public class WalletService {
 
     @Autowired
     WalletRepository walletRepository;
+
+    @Autowired
+    RestTemplate restTemplate;
 
 
 
@@ -95,5 +105,28 @@ public class WalletService {
         }
 
 
+    }
+
+
+    // calling the transaction service to fetch the txn history
+    public List<transactionResponseDto> getTransactionHistory(String mobile)
+    {
+        String url = "http://transaction-service:7000/txn/txn-history/"+mobile;
+
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> request = new HttpEntity<>(headers);
+        List<transactionResponseDto> transactions = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                request,
+                new ParameterizedTypeReference<List<transactionResponseDto>>(){}
+        ).getBody();
+
+        return transactions;
+    }
+
+    public String getBalance(String mobile)
+    {
+        return walletRepository.getBalanceFromDB(mobile);
     }
 }

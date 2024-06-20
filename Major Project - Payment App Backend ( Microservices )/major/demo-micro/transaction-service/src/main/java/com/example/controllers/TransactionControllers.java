@@ -1,21 +1,17 @@
 package com.example.controllers;
 
-import com.example.dto.createTransactionDto;
+import com.example.dto.request.createTransactionDto;
 import com.example.models.TransactionSecuredUser;
 import com.example.service.TransactionService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
 @RestController
+@RequestMapping("/txn")
 public class TransactionControllers {
     @Autowired
     TransactionService transactionService;

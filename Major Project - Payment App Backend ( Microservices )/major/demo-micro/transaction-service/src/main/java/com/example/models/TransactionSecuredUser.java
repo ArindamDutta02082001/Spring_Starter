@@ -2,9 +2,11 @@ package com.example.models;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -20,11 +22,12 @@ public class TransactionSecuredUser implements UserDetails {
     private String username;
     private String password;
 
-    private List<GrantedAuthority> authorities;
+    private String authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
+        String[] authorityList = this.authorities.split(":");
+        return Arrays.stream(authorityList).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override
