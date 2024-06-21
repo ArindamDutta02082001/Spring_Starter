@@ -31,18 +31,18 @@ public class NotificationService {
     @Autowired
     JavaMailSender javaMailSender;
 
+    @Autowired
+    RestTemplate restTemplate;
+
 
     // get mails of the sender and the receiver
     public String getEmails(String mobile)
     {
-        String url = "http://localhost:4000/user/mobile/"+mobile;
+        String url = "http://user-service:4000/user/mobile/"+mobile;
 
 
         HttpHeaders headers = new HttpHeaders();
-//        headers.add("Authorization", "Basic " + base64Creds);
         HttpEntity<String> request = new HttpEntity<>(headers);
-
-        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseUser = restTemplate.exchange(
                 url,
                 HttpMethod.GET,

@@ -1,9 +1,7 @@
-package com.example.dto;
+package com.example.dto.request;
 
 
 
-import com.example.models.User;
-import com.example.utils.Constants;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 

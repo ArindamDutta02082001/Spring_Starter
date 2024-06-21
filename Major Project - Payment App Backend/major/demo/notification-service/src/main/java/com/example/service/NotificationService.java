@@ -39,7 +39,6 @@ public class NotificationService {
 
 
         HttpHeaders headers = new HttpHeaders();
-//        headers.add("Authorization", "Basic " + base64Creds);
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -66,7 +65,6 @@ public class NotificationService {
     @KafkaListener(topics = "wallet_updated", groupId = "random-id-it-is-needed-else-error")
     public void sendNotification(String message) throws ParseException, JsonProcessingException {
 
-        //TODO: SEND EMAILS
 
         System.out.println("Message from topic : " + message);
 
@@ -82,12 +80,15 @@ public class NotificationService {
         Double amount = (Double) event.get("amount");
         String transactionStatus = String.valueOf(event.get("walletUpdateStatus"));
         System.out.println(transactionStatus);
+
         // to get the emails of the sender and the receiver
         String senderEmail = getEmails(sender);
         String receiverEmail = getEmails(receiver);
         System.out.println(senderEmail + "&&" + receiverEmail);
 
-        if(transactionStatus.equals("FAILED")){
+        if(transactionStatus.equals("FAILED"))
+        {
+
             // if txn fails the sender gets notifies
             String senderMssg = "Hi! Your account has been credited with amount " + amount + " was Unsuccessful ! ";
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -100,6 +101,7 @@ public class NotificationService {
         }
 
         // if txn is success both the sender & receiver gets notified
+
         // for sender
         String senderMsg = "Hi! Your transaction " + externalTxnId + " of amount " + amount + " is DEBITED has been " + transactionStatus;
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();

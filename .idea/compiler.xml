@@ -25,6 +25,7 @@
         <module name="07-demospringsecurity-database" />
         <module name="demo-spring" />
         <module name="07-demospringsecurity-database (1)" />
+        <module name="config" />
         <module name="wallet-service" />
       </profile>
     </annotationProcessing>
@@ -32,6 +33,7 @@
       <module name="demo (1)" target="1.5" />
       <module name="eureka-server" target="17" />
       <module name="major" target="1.5" />
+      <module name="notify-service" target="17" />
       <module name="online-library-management-system" target="17" />
       <module name="payment" target="17" />
       <module name="project" target="17" />
@@ -42,6 +44,7 @@
       <module name="07-demospringsecurity-database" options="-parameters" />
       <module name="07-demospringsecurity-database (1)" options="-parameters" />
       <module name="book-management" options="-parameters" />
+      <module name="config" options="-parameters" />
       <module name="demo-security" options="-parameters" />
       <module name="demo-spring" options="-parameters" />
       <module name="demoredis" options="-parameters" />
@@ -49,6 +52,7 @@
       <module name="eureka-server" options="-parameters" />
       <module name="notification-service" options="-parameters" />
       <module name="notification-service (1)" options="-parameters" />
+      <module name="notify-service" options="-parameters" />
       <module name="oauth2" options="-parameters" />
       <module name="online-library-management-system" options="-parameters" />
       <module name="payment" options="-parameters" />

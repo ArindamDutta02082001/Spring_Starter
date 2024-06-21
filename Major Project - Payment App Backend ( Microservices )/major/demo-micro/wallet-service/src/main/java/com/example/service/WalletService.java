@@ -3,7 +3,7 @@ package com.example.service;
 import com.example.dto.response.transactionResponseDto;
 import com.example.models.Wallet;
 import com.example.repository.WalletRepository;
-import com.example.utils.Constants;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -125,6 +125,7 @@ public class WalletService {
         return transactions;
     }
 
+    // to get the balance of a user
     public String getBalance(String mobile)
     {
         return walletRepository.getBalanceFromDB(mobile);

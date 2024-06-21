@@ -39,10 +39,13 @@
         <option value="$PROJECT_DIR$/09-Spring-Jwt-Oauth2-Auth/oauth2/pom.xml" />
         <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/eureka/pom.xml" />
         <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/config/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/notify-service/pom.xml" />
         <option value="$PROJECT_DIR$/Major Project - Payment App Backend - Copy/major/demo-micro/eureka-server/pom.xml" />
         <option value="$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/project/pom.xml" />
         <option value="$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/project/transaction-service/pom.xml" />

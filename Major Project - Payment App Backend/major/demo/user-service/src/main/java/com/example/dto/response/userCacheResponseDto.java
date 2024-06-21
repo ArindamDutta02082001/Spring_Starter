@@ -1,4 +1,4 @@
-package com.example.cacheResponseObject;
+package com.example.dto.response;
 
 import lombok.*;
 import java.io.Serializable;
@@ -9,7 +9,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserCache implements Serializable {
+public class userCacheResponseDto implements Serializable {
 
     private int userId;
 

@@ -1,7 +1,8 @@
 package com.example.service;
 
-import com.example.cacheResponseObject.UserCache;
-import com.example.dto.createUserDto;
+
+import com.example.dto.request.createUserDto;
+import com.example.dto.response.userCacheResponseDto;
 import com.example.models.User;
 import com.example.repository.UserCacheRepository;
 import com.example.repository.UserRepository;
@@ -52,17 +53,17 @@ public class UserService implements UserDetailsService {
         // Serialize the User object to JSON Object String
         ObjectMapper objectMapper = new ObjectMapper();
         String userJson = objectMapper.writeValueAsString(user);
-        kafkaTemplate.send(Constants.USER_CREATED_TOPIC, userJson);
+        kafkaTemplate.send("user_created", userJson);
     return user;
     }
 
-    public UserCache getUserByUserId(int userId) {
-        UserCache user = (UserCache) this.userCacheRepository.getFromCache(userId);
+    public userCacheResponseDto getUserByUserId(int userId) {
+        userCacheResponseDto user = (userCacheResponseDto) this.userCacheRepository.getFromCache(userId);
         if(user == null)
         {
            User user1 = this.userRepository.findById(userId).orElse(null);
            if(user1 != null) {
-               UserCache userCache = UserCache.builder()
+               userCacheResponseDto userCache = userCacheResponseDto.builder()
                        .updatedOn(user1.getUpdatedOn())
                        .createdOn(user1.getCreatedOn())
                        .authorities(user1.getAuthorities().toString())

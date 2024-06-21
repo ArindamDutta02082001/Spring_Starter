@@ -1,6 +1,6 @@
 package com.example.repository;
 
-import com.example.cacheResponseObject.UserCache;
+import com.example.dto.response.userCacheResponseDto;
 import com.example.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,7 +14,7 @@ public class UserCacheRepository {
     RedisTemplate<String, Object> redisTemplate;
 
     // to save object in cache
-    public void saveInCache(UserCache user){
+    public void saveInCache(userCacheResponseDto user){
         this.redisTemplate.opsForValue().set(getKey(user.getUserId()), user, Constants.USER_REDIS_KEY_EXPIRY, TimeUnit.SECONDS);
     }
 

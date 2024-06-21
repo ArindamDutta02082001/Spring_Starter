@@ -19,6 +19,7 @@ public interface WalletRepository extends JpaRepository<Wallet, Integer> {
     @Query("update Wallet w set w.balance = w.balance + :amount where w.mobile = :mobile")
     void updateWallet(String mobile, Double amount);
 
-    @Query("select w.balance from Wallet w where w.sender = :mobile")
+    // to get the balance of a particular phone number
+    @Query("select w.balance from Wallet w where w.mobile = :mobile")
     String getBalanceFromDB(String mobile);
 }

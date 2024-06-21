@@ -1,7 +1,7 @@
 package com.example.controller;
 
-import com.example.cacheResponseObject.UserCache;
-import com.example.dto.createUserDto;
+import com.example.dto.response.userCacheResponseDto;
+import com.example.dto.request.createUserDto;
 import com.example.models.User;
 import com.example.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,7 +23,7 @@ public class UserController {
 
     // This is called by anyone who is a user
     @GetMapping("/details")
-    public UserCache getUserDetailsByUserID(@RequestParam("id") int userId){
+    public userCacheResponseDto getUserDetailsByUserID(@RequestParam("id") int userId){
         System.out.println("called");
         return this.userService.getUserByUserId(userId);
     }

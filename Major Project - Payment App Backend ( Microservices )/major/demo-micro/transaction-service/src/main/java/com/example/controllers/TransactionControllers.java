@@ -1,6 +1,7 @@
 package com.example.controllers;
 
 import com.example.dto.request.createTransactionDto;
+import com.example.models.Transaction;
 import com.example.models.TransactionSecuredUser;
 import com.example.service.TransactionService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -28,5 +30,10 @@ public class TransactionControllers {
         return transactionService.initiate(mobile, request);
     }
 
+    @GetMapping("/txn-history/{sender-mobile}")
+    public List<Transaction> allTransactionDone(@PathVariable("sender-mobile") String mobile)
+    {
+        return transactionService.getAllTransaction(mobile);
+    }
 
 }

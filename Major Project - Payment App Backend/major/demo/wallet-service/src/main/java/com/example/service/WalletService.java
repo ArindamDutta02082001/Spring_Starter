@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dtos.response.transactionResponseDto;
 import com.example.models.Wallet;
 import com.example.repository.WalletRepository;
 import com.example.utils.Constants;
@@ -7,12 +8,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -87,6 +94,8 @@ public class WalletService {
             walletRepository.updateWallet(receiver, amount);
 
 
+            // pushing the status of wallet updation in the wallet_updated topic
+            // it will be consumed by the transaction-service to finally update the Status of the transaction as SUCCESS or FAILED
             responseMessage.put("walletUpdateStatus", "SUCCESS");
             kafkaTemplate.send("wallet_updated", objectMapper.writeValueAsString(responseMessage));
         }catch (Exception e){
@@ -95,5 +104,30 @@ public class WalletService {
         }
 
 
+    }
+
+
+    // calling the transaction service to fetch the txn history
+    public List<transactionResponseDto> getTransactionHistory(String mobile)
+    {
+        String url = "http://localhost:7000/txn/txn-history/"+mobile;
+
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        List<transactionResponseDto> transactions = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                request,
+                new ParameterizedTypeReference<List<transactionResponseDto>>(){}
+        ).getBody();
+
+        return transactions;
+    }
+
+    public String getBalance(String mobile)
+    {
+        return walletRepository.getBalanceFromDB(mobile);
     }
 }

@@ -19,7 +19,8 @@
 		<module>transaction-service</module>
 		<module>user-service</module>
 		<module>wallet-service</module>
-	</modules>
+        <module>notify-service</module>
+    </modules>
 	<properties>
 		<java.version>17</java.version>
 		<!--        cloud client -->
