@@ -6,7 +6,7 @@
 
 
 https://www.bezkoder.com/websecurityconfigureradapter-deprecated-spring-boot/  good resource to explore
-
+https://www.javaguides.net/2022/10/spring-boot-microservices-spring-cloud-api-gateway.html  good resource on anything by pic by pic steps
 
 EPAM
 isolation layer in java and how many types are there /

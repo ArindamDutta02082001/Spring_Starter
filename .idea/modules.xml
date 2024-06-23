@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Spring_01.iml" filepath="$PROJECT_DIR$/.idea/Spring_01.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/notification-service/notification-service (1).iml" filepath="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/notification-service/notification-service (1).iml" />
       <module fileurl="file://$PROJECT_DIR$/MP2-Online-library-managmt + Spring security + Redis Cache/MP2-project/project.iml" filepath="$PROJECT_DIR$/MP2-Online-library-managmt + Spring security + Redis Cache/MP2-project/project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/wallet-service/wallet-service (1).iml" filepath="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/wallet-service/wallet-service (1).iml" />
     </modules>
   </component>
 </project>

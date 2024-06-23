@@ -27,6 +27,7 @@
         <module name="07-demospringsecurity-database (1)" />
         <module name="config" />
         <module name="wallet-service" />
+        <module name="gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -50,6 +51,7 @@
       <module name="demoredis" options="-parameters" />
       <module name="eureka" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="gateway" options="-parameters" />
       <module name="notification-service" options="-parameters" />
       <module name="notification-service (1)" options="-parameters" />
       <module name="notify-service" options="-parameters" />

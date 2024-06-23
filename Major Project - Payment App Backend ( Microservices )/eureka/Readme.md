@@ -2,6 +2,9 @@
 Eureka serve ris basically is a service registry which registers all the services inside a
 microservice architecture project
 
+you have to install 2 depedency for a eurea server service eureka-server 
+and for each clients another dedency eureka-discoery-client + change application.properties
+
 ![img.png](img.png)
 The micro service will send periodic signal to the eureka server and
 tell that service is alive
@@ -26,3 +29,12 @@ the performance is traced by the trace id and the span id
 
 Micrometer is a tool that provides a unified way to collect and report application metrics. It has a concept called an “Observation” which lets you see what has happened during a key operation, such as a web request or a database access.
 
+
+# Api Gateway  [official_website](https://spring.io/projects/spring-cloud-gateway)
+- It encapsulates the internal system architecture
+- Handle cross-cutting concerns like security, 
+- load balancing, rate limiting, and  analytics 
+- proper request routing , authenticating & authorizing valid request
+- Can aggregate responses from different microservices and merge their response as one
+
+depedency = gateway + eureka-discoery-client
