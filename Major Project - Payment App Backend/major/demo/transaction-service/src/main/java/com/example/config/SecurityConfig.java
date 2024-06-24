@@ -30,20 +30,6 @@ public class SecurityConfig  {
         return daoAuthenticationProvider;
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.
-//                httpBasic()
-//                .and()
-//                .csrf()
-//                .disable()
-//                .authorizeRequests()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin();
-//    }
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -55,8 +41,6 @@ public class SecurityConfig  {
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
-
-
 
 
 

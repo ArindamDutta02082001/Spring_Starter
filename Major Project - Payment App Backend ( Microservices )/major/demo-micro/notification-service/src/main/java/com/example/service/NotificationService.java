@@ -66,8 +66,6 @@ public class NotificationService {
     @KafkaListener(topics = "wallet_updated", groupId = "random-id-it-is-needed-else-error")
     public void sendNotification(String message) throws ParseException, JsonProcessingException {
 
-        //TODO: SEND EMAILS
-
         System.out.println("Message from topic : " + message);
 
 
@@ -85,7 +83,7 @@ public class NotificationService {
         // to get the emails of the sender and the receiver
         String senderEmail = getEmails(sender);
         String receiverEmail = getEmails(receiver);
-        System.out.println(senderEmail + "&&" + receiverEmail);
+        System.out.println("Emails : "+senderEmail + "&&" + receiverEmail);
 
         if(transactionStatus.equals("FAILED")){
             // if txn fails the sender gets notifies

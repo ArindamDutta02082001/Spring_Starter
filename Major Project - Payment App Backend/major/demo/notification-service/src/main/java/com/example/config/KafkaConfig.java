@@ -12,6 +12,7 @@ import java.util.Properties;
 @Configuration
 public class KafkaConfig {
 
+    // creating the consumer factory : start a consumer line to the kafka server for consuming messages
     @Bean
     ConsumerFactory getConsumerFactory(){
         Properties properties = new Properties();

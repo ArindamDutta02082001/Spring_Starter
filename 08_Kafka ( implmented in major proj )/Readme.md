@@ -93,15 +93,15 @@ yes we can provide th partition-id while creation of the consumer
 
 1. Install the dependencies `spring-kafka` & `spring-kafka-test` in pom.xml
 2. create a **KafkaConfig.java** file which defines the configuration of Kafka Producer or Consumer on the basis of which is needed
+- For **Consumer Service** , we create `ConsumerFactory` Bean and a `@KafkaListener` function
 ```
-
 // copy paste
 
+Creating the ConsumerFactory Bean : start a consumer line to the kafka server for consuming messages
+
 @Configuration
-public class KafkaProducerConsumerConfig {
+public class KafkaConsumerConfig {
 
-
-    // creating the consumer factory : start a consumer line to the kafka server for consuming messages
     @Bean
     ConsumerFactory getConsumerFactory() {
         Map<String, Object> properties = new HashMap<>();
@@ -112,48 +112,7 @@ public class KafkaProducerConsumerConfig {
         return new DefaultKafkaConsumerFactory(properties);
     }
 
-
-
-    // creating the producer factory : start a producer line to the kafka server for producing messages
-    @Bean
-    ProducerFactory getProducerFactory(){
-        Map<String, Object> properties = new HashMap<>();
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-
-        return new DefaultKafkaProducerFactory(properties);
-    }
-
-    @Bean
-    KafkaTemplate <String , String> getKafkaTemplate(){
-        return new KafkaTemplate<>(getProducerFactory());
-    }
-
 }
-```
-3. Create a Producer or a Consumer for the service . **We have to Serialize the object before and after consuming the message form kafka-topic**
-
-```
-    Create a Producer function in the Service file
-
-    // create & publish the new User in the topic
-    public User create(createUserDto createUserDto) throws JsonProcessingException {
-        
-        User user = new User("a" , 3 , "ass");
-        userRepository.save(user);
-
-
-        // Serialize the User object to JSON Object String
-        ObjectMapper objectMapper = new ObjectMapper();
-        String userJson = objectMapper.writeValueAsString(user);
-        
-        // publishing the string into the user_created topic
-        kafkaTemplate.send(Constants.USER_CREATED_TOPIC, userJson);                 // main line
-        
-        
-    return user;
-    }
 
     Create a Consumer function in the Service file
 
@@ -178,6 +137,52 @@ public class KafkaProducerConsumerConfig {
         }
 ```
 
+- For **Producer Service** , we create `ProducerFactory` Bean and a `KafkaTemplate` template
+```
+// copy paste
+
+   Creating the producer factory : start a producer line to the kafka server for producing messages
+   
+    @Bean
+    ProducerFactory getProducerFactory(){
+        Map<String, Object> properties = new HashMap<>();
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+
+        return new DefaultKafkaProducerFactory(properties);
+    }
+
+    @Bean
+    KafkaTemplate <String , String> getKafkaTemplate(){
+        return new KafkaTemplate<>(getProducerFactory());
+    }
+
+}
+
+   Create a Producer function in the Service file
+
+    // create & publish the new User in the topic
+    public User create(createUserDto createUserDto) throws JsonProcessingException {
+        
+        User user = new User("a" , 3 , "ass");
+        userRepository.save(user);
+
+
+        // Serialize the User object to JSON Object String
+        ObjectMapper objectMapper = new ObjectMapper();
+        String userJson = objectMapper.writeValueAsString(user);
+        
+        // publishing the string into the user_created topic
+        kafkaTemplate.send(Constants.USER_CREATED_TOPIC, userJson);                 // main line
+        
+        
+    return user;
+    }
+```
+> We have to Serialize the object before and after consuming the message form kafka-topic
+
+> Any service that is producing as well consuming messages from kafka , put both the configuration
 
 
  
