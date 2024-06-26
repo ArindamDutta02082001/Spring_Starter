@@ -7,37 +7,42 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="transaction-service (1)" />
         <module name="demoredis" />
         <module name="book-management" />
         <module name="eureka" />
         <module name="user-service" />
-        <module name="restapi" />
         <module name="oauth2" />
         <module name="notification-service" />
-        <module name="restapi (1)" />
-        <module name="notification-service (1)" />
-        <module name="wallet-service (1)" />
-        <module name="user-service (1)" />
+        <module name="notification" />
         <module name="securitycacheproject" />
         <module name="transaction-service" />
-        <module name="demo-security" />
         <module name="07-demospringsecurity-database" />
         <module name="demo-spring" />
+        <module name="wallet-service" />
+        <module name="wallet" />
+        <module name="restapi" />
+        <module name="restapi (1)" />
+        <module name="demo-security" />
         <module name="07-demospringsecurity-database (1)" />
         <module name="config" />
-        <module name="wallet-service" />
+        <module name="user" />
         <module name="gateway" />
+        <module name="transaction" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="demo (1)" target="1.5" />
+      <module name="demo-micro" target="1.5" />
       <module name="eureka-server" target="17" />
       <module name="major" target="1.5" />
+      <module name="notification-service (1)" target="17" />
       <module name="notify-service" target="17" />
       <module name="online-library-management-system" target="17" />
       <module name="payment" target="17" />
       <module name="project" target="17" />
+      <module name="transaction-service (1)" target="17" />
+      <module name="user-service (1)" target="17" />
+      <module name="wallet-service (1)" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -52,6 +57,7 @@
       <module name="eureka" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="notification" options="-parameters" />
       <module name="notification-service" options="-parameters" />
       <module name="notification-service (1)" options="-parameters" />
       <module name="notify-service" options="-parameters" />
@@ -62,10 +68,13 @@
       <module name="restapi" options="-parameters" />
       <module name="restapi (1)" options="-parameters" />
       <module name="securitycacheproject" options="-parameters" />
+      <module name="transaction" options="-parameters" />
       <module name="transaction-service" options="-parameters" />
       <module name="transaction-service (1)" options="-parameters" />
+      <module name="user" options="-parameters" />
       <module name="user-service" options="-parameters" />
       <module name="user-service (1)" options="-parameters" />
+      <module name="wallet" options="-parameters" />
       <module name="wallet-service" options="-parameters" />
       <module name="wallet-service (1)" options="-parameters" />
     </option>

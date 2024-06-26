@@ -8,7 +8,7 @@ public class ApiGatewayServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiGatewayServiceApplication.class, args);
-		System.out.println("Gateway service started in 6000 ...");
+		System.out.println("Gateway service started in 8001 ...");
 	}
 
 }

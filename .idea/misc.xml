@@ -42,6 +42,10 @@
         <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/config-server/pom.xml" />
         <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/config/pom.xml" />
         <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/user/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/wallet/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/transaction/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/notification/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
