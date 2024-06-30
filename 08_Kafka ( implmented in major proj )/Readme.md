@@ -16,9 +16,18 @@
 **Kafka Terminologies**
 1. brokers - handles all requests from client ( producer , consume , metadata) and keeps data replicated within the cluster
    **one or more broker = cluster**
+> no of brokers are defined by the RF ( replication factor ) = n , during the topic creation
+![img.png](img.png)
 2. topics - durable system of collection of logs | microservices talk to each other using kafka-topics |  actual queue that are managed by the server or broker
-> partition of a topic : topics are partitioned into n partitions | usually there are same no of brokers as there are partitions
+> partition of a topic : topics are divided into n partitions | usually there are same no of brokers as there are partitions | same events are kept in all the partitions i.e all partitions are identical
+
+**Why is partition important ?**
+This ensures the high availability of the events to the consumers. i.e if a partition p1 of a topic fails then that event can be consumed from other partition p2
 i.e no of broker = no of partitions
+
+> messages in one partition can be consumed by only and only 1 consumer of a consumer-group
+
+>min-insync-replica factor : this factor indicates that our event is to be copied in how many partitions of that topic
 3. events - each topic contains the events | basically message
 4. kafka-producer : send records or events to a topic in a broker
 5. kafka-consumer : consume records or events from a topic in a broker
