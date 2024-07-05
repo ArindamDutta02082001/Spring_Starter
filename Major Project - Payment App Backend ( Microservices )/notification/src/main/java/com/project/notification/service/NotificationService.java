@@ -74,12 +74,15 @@ public class NotificationService {
         Double amount = (Double) event.get("amount");
         String transactionStatus = String.valueOf(event.get("walletUpdateStatus"));
         System.out.println(transactionStatus);
+
         // to get the emails of the sender and the receiver
         String senderEmail = getEmails(sender);
         String receiverEmail = getEmails(receiver);
         System.out.println("Emails : "+senderEmail + "&&" + receiverEmail);
 
-        if(transactionStatus.equals("FAILED")){
+        if(transactionStatus.equals("FAILED"))
+        {
+
             // if txn fails the sender gets notifies
             String senderMssg = "Hi! Your account has been credited with amount " + amount + " was Unsuccessful ! ";
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
