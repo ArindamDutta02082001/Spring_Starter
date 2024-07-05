@@ -67,9 +67,10 @@ yes we can provide th partition-id while creation of the consumer
 
 1. java jdk is required for kafka
 2. to start a kafka we need a zookeeper running first
-3. install the .tgz ( kind of zip file for linux specially ) in windows
-4. unzip the .tgz and rename the folder to kafka , move inside and run the commands in sequence
+3. download the .tgz ( kind of zip file for linux specially ) & unzip the .tgz and rename the folder to kafka , in windows
+4. move inside and run the commands in sequence
    start kafka in cli [medium link](https://medium.com/@beheradebananda000/how-i-installed-apache-kafka-in-windows-11-75f67aa25def)
+5. follow the commands in sequence
 
 <pre>
 
@@ -100,8 +101,9 @@ yes we can provide th partition-id while creation of the consumer
 
 ### Kafka in Spring Boot
 
-1. Install the dependencies `spring-kafka` & `spring-kafka-test` in pom.xml
-2. create a **KafkaConfig.java** file which defines the configuration of Kafka Producer or Consumer on the basis of which is needed
+1. Download and unzip the .tgz file & run the zookeeper and kafka server 
+2. Install the dependencies `spring-kafka` & `spring-kafka-test` in pom.xml
+3. create a **KafkaConfig.java** file which defines the configuration of Kafka Producer or Consumer on the basis of which is needed
 - For **Consumer Service** , we create `ConsumerFactory` Bean and a `@KafkaListener` function
 ```
 // copy paste
