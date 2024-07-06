@@ -218,3 +218,8 @@ spring.jpa.hibernate.ddl-auto=update
 logging.level.root=debug
 server.PORT = 9000
 </pre>
+
+
+### multi-module project 
+this has 2 modules `src-main` & `src-mod-2`. The SampleDto of `src-mod-2` is used in the other module 
+see how the dependency is updated and check the pom.xml
