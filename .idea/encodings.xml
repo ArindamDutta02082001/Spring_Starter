@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src-main/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src-mod-2/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/02-Spring-Library-restapi ( Employee Management InMemory)/restapi/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/03-Spring-Library-restapi-lombok&amp;validation&amp;JDBC ( Employee Management JDBC)/restapi/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/04-Spring-book-management ( JPA-Hibernate )/book-management/src/main/java" charset="UTF-8" />

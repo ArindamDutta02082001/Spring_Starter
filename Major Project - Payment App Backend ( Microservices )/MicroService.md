@@ -115,3 +115,27 @@ we can define a time X , after that time interval again A tries 5 time , if some
 then again after X time 5 time if again response came then full open
 
 
+we have to implement in each service these things
+
+
+# ********** for actuator endpoint ***********************
+management.endpoints.web.exposure.include = health
+management.endpoint.health.show-details = always
+management.health.circuitbreakers.enabled = true
+
+
+# ********** for circuit breakers ***********************
+resilience4j.circuitbreaker.instances.transactionBreaker.minimumNumberOfCalls=10
+resilience4j.circuitbreaker.instances.transactionBreaker.slidingWindowSize=10
+resilience4j.circuitbreaker.instances.transactionBreaker.permittedNumberOfCallsInHalfOpenState=5
+resilience4j.circuitbreaker.instances.transactionBreaker.waitDurationInOpenState=10s
+resilience4j.circuitbreaker.instances.transactionBreaker.failureRateThreshold=50
+
+resilience4j.circuitbreaker.instances.transactionBreaker.register-health-indicator=true
+resilience4j.circuitbreaker.instances.transactionBreaker.automatic-transition-from-open-to-half-open-enabled=true
+resilience4j.circuitbreaker.instances.transactionBreaker.sliding-window-type=count_based
+
+http://localhost:5000/actuator/health  - in this link we can see the state of that service in which we configure the resiliance 
+if its state is open , clse , half close
+
+

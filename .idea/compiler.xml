@@ -8,24 +8,25 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="demoredis" />
+        <module name="wallet" />
         <module name="book-management" />
         <module name="eureka" />
+        <module name="src-main" />
         <module name="user-service" />
         <module name="oauth2" />
+        <module name="restapi" />
         <module name="notification-service" />
+        <module name="restapi (1)" />
         <module name="notification" />
+        <module name="src-mod-2" />
         <module name="securitycacheproject" />
         <module name="transaction-service" />
         <module name="07-demospringsecurity-database" />
-        <module name="demo-spring" />
-        <module name="wallet-service" />
-        <module name="wallet" />
-        <module name="restapi" />
-        <module name="restapi (1)" />
         <module name="demo-security" />
         <module name="07-demospringsecurity-database (1)" />
         <module name="config" />
         <module name="user" />
+        <module name="wallet-service" />
         <module name="gateway" />
         <module name="transaction" />
       </profile>
@@ -52,7 +53,7 @@
       <module name="book-management" options="-parameters" />
       <module name="config" options="-parameters" />
       <module name="demo-security" options="-parameters" />
-      <module name="demo-spring" options="-parameters" />
+      <module name="demo-spring" options="" />
       <module name="demoredis" options="-parameters" />
       <module name="eureka" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
@@ -68,6 +69,8 @@
       <module name="restapi" options="-parameters" />
       <module name="restapi (1)" options="-parameters" />
       <module name="securitycacheproject" options="-parameters" />
+      <module name="src-main" options="-parameters" />
+      <module name="src-mod-2" options="-parameters" />
       <module name="transaction" options="-parameters" />
       <module name="transaction-service" options="-parameters" />
       <module name="transaction-service (1)" options="-parameters" />

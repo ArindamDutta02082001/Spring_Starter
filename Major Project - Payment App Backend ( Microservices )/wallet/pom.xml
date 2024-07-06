@@ -28,14 +28,14 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
-		<!--        cloud version to be mentioned for all the cloud dependency -->
+		<!-- ******** cloud version to be mentioned for all the cloud dependency  ******* -->
 		<spring-cloud.version>2023.0.2</spring-cloud.version>
-		<!-- *********************************** -->
+		<!-- **************************************************************************** -->
 	</properties>
 
 	<!--	dependency common to all micro services -->
 
-	<!--        cloud client -->
+	<!-- ********************** common cloud client ***************************  -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -47,17 +47,17 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	<!-- *********************************** -->
+	<!-- ************************************************************************ -->
 
 
 
 	<dependencies>
-		<!--        cloud client -->
+		<!-- ************************ common cloud client *********************** -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-		<!-- *********************************** -->
+		<!-- ******************************************************************** -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -129,19 +129,18 @@
 		</dependency>
 		<!--   **************************************************************** -->
 
-		<!-- ********************* common resilience and fault tolerance ***********************     -->
+		<!-- ********************* common resilience and fault tolerance dependency ***********************     -->
 
-		<!--	actuator dependency is already included above	-->
+		<!--	include actuator dependency ( already included above )	-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/io.github.resilience4j/resilience4j-spring-boot2 -->
 		<dependency>
-			<groupId>io.github.resilience4j</groupId>
-			<artifactId>resilience4j-spring-boot2</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
 		</dependency>
 
 		<!--   *************************************************************** -->
