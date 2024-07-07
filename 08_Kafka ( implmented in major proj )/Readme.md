@@ -1,15 +1,19 @@
-# Kafka
+# Message Queue
+An Asynchronous service-to-service communication used in a serverless or microservice architecture
+
+**Benefits of Kafka or RabbitMQ or any message queues**
+1. high throughput due to its distributed nature
+2. auto-scaling feature inbuilt in kafka
+3. data are replicated in kafka so no loss anyway fault tolerance or single point of failure
+4. highly distributed system as msg`s are kept in more than 1 server
+5. Provides Async Communication thus helps in decoupling services
+
+## Kafka
 
 - Open source streaming system used in stream processing , real time data in pipelines at scale
 - kafka is used not only in push notification service but also in linkedin connection recommendation system ,
   movie recommendation by netflix etc , live location in delivery or cab system, async publisher publish events / message`s in the queue and subscriber subscribes to the queue
 - kafka works based on log based system , the logs are maintained by the zookeeper
-
-**Benefits of Kafka**
-1. high throughput due to its distributed nature
-2. auto-scaling feature inbuilt in kafka
-3. data are replicated in kafka so no loss anyway fault tolerance or single point of failure
-4. highly distributed system as msg`s are kept in more than 1 server
 
 **Drawback** : Kafka cannot be used in real time as there can be latency , where we need instant consumption of the messages fom the queue as soon as it is delivered like graviton, stake or like trading systems . Kafka consumers consumes the messages from the queue asynchronously
 

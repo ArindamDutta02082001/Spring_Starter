@@ -9,6 +9,8 @@ import com.project.wallet.dto.response.transactionResponseDto;
 import com.project.wallet.models.Wallet;
 import com.project.wallet.repository.WalletRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,15 +112,17 @@ public class WalletService {
 
     }
 
-        /*
+    /*
          here the wallet service is calling the transaction service
         so we are using the circuit breaker here i.e if there is no reponse upon a certain threshold then
-        dont call i.e open the circuit
+        dont call i.e open the circuit and call the fallback function transactionBreakerFallback()
      */
 
 
     // calling the transaction service to fetch the txn history
-    @CircuitBreaker(name = "transactionBreaker")
+    //    @CircuitBreaker(name = "transactionBreaker" , fallbackMethod = "transactionBreakerFallback")
+//    @Retry(name = "transactionBreaker" , fallbackMethod = "transactionBreakerFallback")
+    @RateLimiter(name = "transactionBreaker" , fallbackMethod = "transactionBreakerFallback")
     public List<transactionResponseDto> getTransactionHistory(String mobile)
     {
         String url = "http://transaction-service:7000/txn/txn-history/"+mobile;
@@ -132,6 +137,11 @@ public class WalletService {
         ).getBody();
 
         return transactions;
+    }
+
+    public String transactionBreakerFallback(Exception e)
+    {
+        return "Error in transaction service : "+ e.getMessage();
     }
 
     // to get the balance of a user

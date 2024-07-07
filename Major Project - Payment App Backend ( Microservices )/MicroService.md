@@ -135,7 +135,22 @@ resilience4j.circuitbreaker.instances.transactionBreaker.register-health-indicat
 resilience4j.circuitbreaker.instances.transactionBreaker.automatic-transition-from-open-to-half-open-enabled=true
 resilience4j.circuitbreaker.instances.transactionBreaker.sliding-window-type=count_based
 
+# ********** for retry mechanism ***********************
+resilience4j.retry.instances.transactionBreaker.max-attempts=5
+resilience4j.retry.instances.transactionBreaker.wait-duration = 2s
+
+# ************ rate limiter mechanism ********************************
+resilience4j.ratelimiter.instances.transactionBreaker.timeout-duration = 2
+# it will allow 2 calls for every 4s
+resilience4j.ratelimiter.instances.transactionBreaker.limit-refresh-period = 4s
+resilience4j.ratelimiter.instances.transactionBreaker.limit-for-period = 2
+
+
 http://localhost:5000/actuator/health  - in this link we can see the state of that service in which we configure the resiliance 
 if its state is open , clse , half close
 
+
+# Packaging of the microservices
+A package - bytecode of service files + dependent libraries + configuration
+we create a package into a jar file . Other packaing types are docker image , war 
 
