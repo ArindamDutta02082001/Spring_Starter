@@ -152,5 +152,15 @@ if its state is open , clse , half close
 
 # Packaging of the microservices
 A package - bytecode of service files + dependent libraries + configuration
-we create a package into a jar file . Other packaing types are docker image , war 
+we create a package into a jar file . Other packing types are docker image , war 
+
+make sure java.exe and jar.exe are given in the env path
+then to convert a service to a jar is either in power shell 
+jar -tf service-path
+or in ide you can mvn package
+
+# Dockerized our microservice
+in this case we will be requiring the help of Spring profiles
+i.e having different application.properties in case of different env
+
 

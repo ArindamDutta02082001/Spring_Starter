@@ -16,7 +16,7 @@ public class CacheConfig {
     public LettuceConnectionFactory getConnectionFactory(){
 
         LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(
-                new RedisStandaloneConfiguration("localhost", 6379)
+                new RedisStandaloneConfiguration("redis", 6379)
         );
         return lettuceConnectionFactory;
     }
