@@ -119,38 +119,38 @@
 				<scope>test</scope>
 			</dependency>
 
-		<!-- ************* common zipkin and micrometer ********************  -->
-		<!--         micrometer ko connect krta hai zipkin ke saath -->
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-tracing-bridge-brave</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.zipkin.reporter2</groupId>
-			<artifactId>zipkin-reporter-brave</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<!--   **************************************************************** -->
+<!--		&lt;!&ndash; ************* common zipkin and micrometer ********************  &ndash;&gt;-->
+<!--		&lt;!&ndash;         micrometer ko connect krta hai zipkin ke saath &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>io.micrometer</groupId>-->
+<!--			<artifactId>micrometer-tracing-bridge-brave</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>io.zipkin.reporter2</groupId>-->
+<!--			<artifactId>zipkin-reporter-brave</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-actuator</artifactId>-->
+<!--		</dependency>-->
+<!--		&lt;!&ndash;   **************************************************************** &ndash;&gt;-->
 
-		<!-- ********************* resilience and fault tolerance ***********************     -->
+<!--		&lt;!&ndash; ********************* resilience and fault tolerance ***********************     &ndash;&gt;-->
 
-		<!--	actuator dependency is already included above	-->
+<!--		&lt;!&ndash;	actuator dependency is already included above	&ndash;&gt;-->
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-aop</artifactId>-->
+<!--		</dependency>-->
 
-		<!-- https://mvnrepository.com/artifact/io.github.resilience4j/resilience4j-spring-boot2 -->
-		<dependency>
-			<groupId>io.github.resilience4j</groupId>
-			<artifactId>resilience4j-spring-boot2</artifactId>
-		</dependency>
+<!--		&lt;!&ndash; https://mvnrepository.com/artifact/io.github.resilience4j/resilience4j-spring-boot2 &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>io.github.resilience4j</groupId>-->
+<!--			<artifactId>resilience4j-spring-boot2</artifactId>-->
+<!--		</dependency>-->
 
-		<!--   *************************************************************** -->
+<!--		&lt;!&ndash;   *************************************************************** &ndash;&gt;-->
 
 	</dependencies>
 
