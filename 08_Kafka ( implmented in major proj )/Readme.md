@@ -74,12 +74,12 @@ yes we can provide th partition-id while creation of the consumer
 3. download the .tgz ( kind of zip file for linux specially ) & unzip the .tgz and rename the folder to kafka , in windows
 4. move inside and run the commands in sequence
    start kafka in cli [medium link](https://medium.com/@beheradebananda000/how-i-installed-apache-kafka-in-windows-11-75f67aa25def)
-5. follow the commands in sequence
+5. follow the commands in sequence , after you reach the folder where kafka was unzipped
 
 <pre>
 
 // you can configure the server.properties and the zookeeper.properties file for the PORT no and saving the logs 
-// default port is 9092 for kafka server to run , 2181 for zookeeper
+// default port is 9092 for kafka server , 2181 for zookeeper to run
 // default kafka-logs (managed by zookeeper) are saved in the tmp folder
 
 // start zookeeper server
@@ -94,10 +94,13 @@ yes we can provide th partition-id while creation of the consumer
 // Describing topic
  .\bin\windows\kafka-topics.bat --describe --topic medium-events --bootstrap-server localhost:9092
 
+// listing all the topics present
+./bin/windows/kafka-topics.bat --list --bootstrap-server localhost:9092
+
 // Producer Command - it will open a cli to enter messages for this topic
 .\bin\windows\kafka-console-producer.bat --topic medium-events --bootstrap-server localhost:9092
 
-// Consumer Command - t will open a cli which will show messages when producer hits enter
+// Consumer Command - it will open a cli which will show messages when producer hits enter
  ./bin/windows/kafka-console-consumer.bat --topic medium-events --from-beginning --bootstrap-server localhost:9092
 
 </pre>

@@ -1,5 +1,6 @@
 package com.project.user.configs;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -11,12 +12,17 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class CacheConfig {
 
+    @Value("${redis-host}")
+    private String redisHost;
+
+    @Value("${redis-port}")
+    private int redisPort;
 
     @Bean
     public LettuceConnectionFactory getConnectionFactory(){
 
         LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(
-                new RedisStandaloneConfiguration("localhost", 6379)
+                new RedisStandaloneConfiguration(redisHost, redisPort)
         );
         return lettuceConnectionFactory;
     }

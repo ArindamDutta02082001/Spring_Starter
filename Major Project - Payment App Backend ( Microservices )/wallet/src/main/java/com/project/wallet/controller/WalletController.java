@@ -25,7 +25,6 @@ public class WalletController {
     @GetMapping("/balance/{sender-mobile}")
     public String getAmountLeft(@PathVariable("sender-mobile") String mobile)
     {
-        System.out.println("asdasd");
         return walletService.getBalance(mobile);
     }
 

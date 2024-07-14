@@ -4,10 +4,11 @@ We follow the MVC model
 
 ### Integrate redis with spring boot
 - **make sure you start your redis in your localhost ( port 6379 )**
+``` redis-cli ```
 - **install necessary dependencies + spring data redis ( access + driver )** . It installs the lettuce driver needed for the connection of your app to the redis driver . ( we can use other drivers like Jedis )
   - Config : **Create a CacheConfig.java file , inside it**
       - **Create a connection factory** . It will initiate the connection from the app to redis server
-          <pre>
+          ```dockerfile
                 // START A CONNECTION TO THE REDIS SERVER
                 public  LettuceConnectionFactory connectionFactory()
                 {
@@ -20,10 +21,10 @@ We follow the MVC model
                     return lettuceConnectionFactory;
         
                 }
-        </pre>
+        ```
       - **Create a redis template** to handle the redis functions for set , hashmap, list , sorted set & other data structures
 
-
+        ```dockerfile
         // DEFINE A REDIS TEMPLATE TO USE DIFFERENT REDIS DATA STRUCTURES
         public  RedisTemplate<String, Object> getTemplate()
         {
@@ -43,7 +44,8 @@ We follow the MVC model
         return redisTemplate;
 
         }
-  
+        ```
+        
 - Entity : Serialize the entity object by implementing **Serializable** in the entity class as we store serialized object into the redis server. **Always use the serializer for storing the keys and values in the redis server as we have to serialize the key & value to String before storing**
 - dto : here we are using same class as Entity
 <pre>
@@ -101,7 +103,7 @@ a. Sorted set
 - UPDATE : `localhost:9000/person/zupdate?score=0` + person payload
 - DELETE : `localhost:9000/person/zremove` + person payload
 
-<pre>
+```
 payload of a Person :
     {
         "id": 1,
@@ -126,12 +128,11 @@ payload of an array of multiple Person :
         "isNRI": false,
         "creditScore": 750.0
 } ]
-
-</pre>
+```
 
 
 ### application.properties file
-<pre>
+```dockerfile
 spring.application.name=demoredis
 SERVER.port = 9000
-</pre>
+```
