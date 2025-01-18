@@ -1,0 +1,107 @@
+version: '3.7'
+
+services:
+
+#  mysql image
+  mysql:
+    image: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: userdb
+    ports:
+      - "3307:3306"
+#    networks:
+#      - my-network
+    network_mode: bridge
+
+# wurstmeister/zookeeper image
+  zoo:
+    image: wurstmeister/zookeeper
+    container_name: zoo
+    ports:
+      - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+#    networks:
+#      - my-network
+    network_mode: bridge
+
+# wurstmeister/kafka image
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zoo
+    environment:
+      HOSTNAME_COMMAND : "ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $$1}'"
+      KAFKA_ZOOKEEPER_CONNECT: 172.17.0.5:2181
+      KAFKA_CREATE_TOPICS: "user_created:1:1 , transaction_initiated:1:1 , wallet_updated:1:1 , transaction-complete-and-notify:1:1"
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://172.17.0.6:29092,OUTSIDE://localhost:9092
+#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+#    networks:
+#      - my-network
+    network_mode: bridge
+    restart: unless-stopped
+
+# redis image
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+#    networks:
+#      - my-network
+    network_mode: bridge
+    restart: unless-stopped
+
+
+# eurekams:1 image created from the Dockerile :  docker build -t eurekams:1 .(dot)
+  eureka:
+    image: eurekams:1
+    container_name: eureka
+    ports:
+      - "8761:8761"
+#    networks:
+#      - my-network
+    network_mode: bridge
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+
+
+## TODO : userms:1 image created from the Dockerile :  docker build -t userms:1 .(dot)
+#  user-service:
+#    image: userms:1
+#    container_name: user-service
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/userdb?createDatabaseIfNotExist=true
+#      SPRING_DATASOURCE_USERNAME: root
+#      SPRING_DATASOURCE_PASSWORD: admin
+#      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+#      SPRING.JPA.HIBERNATE.DDL-AUTO : create
+#      #      SPRING_JPA_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
+#    ports:
+#      - "4000:4000"
+#    depends_on:
+#      - mysql
+#      - kafka
+#      - redis
+##    networks:
+##      - my-network
+#    network_mode: bridge
+
+#networks:
+#  my-network:
+#    driver: bridge

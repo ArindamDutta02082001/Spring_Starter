@@ -1,0 +1,14 @@
+modules - itself can contain differernt pkg es insde and can run in a standalone manner
+
+
+spring-data-jpa 
+gives us the annotations that we use to store in the DB @Entitiy , @Id , @GeneratedValue
+
+
+
+actatotors
+1. has predeined actuators endpoints
+2. customizable
+3. we can monitor app in prod
+
+https://www.geeksforgeeks.org/junit-5-test-lifecycle/?ref=lbp   junit

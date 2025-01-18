@@ -1,0 +1,19 @@
+ewallet
+1. user should send money to another user
+2. on successfull txn the wallets should be updated . concurrency control should be applied
+3. notification to user on suxccessful txn
+
+requirements
+1. when a new user is onboarded , we will credit their wallet with a promotional 10 rs balance
+2. 
+
+
+
+Q HOW spring security works
+https://medium.com/geekculture/spring-security-authentication-process-authentication-flow-behind-the-scenes-d56da63f04fa
+
+
+user service - 
+transaction service
+wallet services
+notification service
