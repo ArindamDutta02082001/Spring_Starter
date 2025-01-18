@@ -1,0 +1,31 @@
+1. covering notes once
+2. in 04 project add @MAnytoOne / @OneToOne as it is very normal
+3. junit labelling
+4. upload postman payload
+
+
+youtube videos to watch
+1. optimistic and pesimistic lock by java tech solutions
+2. oauth like google and github with full login page angular by durgesh or some other
+3. Angular: implementing role based and token based authenticating using JWT | Authguard and INtercetor by Loarining Programming yourself black bg logo
+
+
+https://www.bezkoder.com/websecurityconfigureradapter-deprecated-spring-boot/  good resource to explore
+https://www.javaguides.net/2022/10/spring-boot-microservices-spring-cloud-api-gateway.html  good resource on anything by pic by pic steps
+
+EPAM
+isolation layer in java and how many types are there /
+how you handle concurrency
+transaction management
+multi threading and locking
+
+FIVETRAN
+how hashmap works internally
+concurrency control in java
+how collision works
+memory management , threading works in java
+
+kotak
+indexing
+text jsustification qsnt leetcode
+island problem

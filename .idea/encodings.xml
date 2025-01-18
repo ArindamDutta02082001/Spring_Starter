@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src-main/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src-mod-2/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/02-Spring-Library-restapi ( Employee Management InMemory)/restapi/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/03-Spring-Library-restapi-lombok&amp;validation&amp;JDBC ( Employee Management JDBC)/restapi/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/04-Spring-book-management ( JPA-Hibernate )/book-management/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/05-Spring-demo-redis/demoredis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/05-Spring-demoredis/demoredis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/06-demospringsecurity (In Memory)/demospringsecurity/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/07-demospringsecurity ( database ) New Way/07-demospringsecurity-database/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/07-demospringsecurity ( database )/07-demospringsecurity-database/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/08-Spring-demo-oauth2 ( client app )/oauth2/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/09-Spring-Jwt-Oauth2-Auth/08-Spring-demo-oauth2 ( client app )/oauth2/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/09-Spring-Jwt-Oauth2-Auth/oauth2/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MP2-Online-library-managmt + Spring security + Redis Cache/MP2-Online-library-managt + Spring security/MP2-project/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MP2-Online-library-managmt + Spring security + Redis Cache/MP2-project/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/config/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/eureka/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/notification-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/notify-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/transaction-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/user-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/wallet-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/notification/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/transaction/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/user/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/wallet/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend - Copy/major/demo-micro/eureka-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend - Copy/major/demo-micro/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend - Copy/major/demo-micro/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend/major/demo/notification-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend/major/demo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend/major/demo/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend/major/demo/transaction-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend/major/demo/user-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend/major/demo/wallet-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/demo/notification-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/demo/notification-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/demo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/demo/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/demo/transaction-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/demo/transaction-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/demo/user-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/demo/user-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend/major/demo/notification-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend/major/demo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend/major/demo/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend/major/demo/transaction-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend/major/demo/user-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Project 2- Payment App Backend/major/demo/wallet-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Projectv2 - Payment App Backend/major/demo/notification-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Projectv2 - Payment App Backend/major/demo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Projectv2 - Payment App Backend/major/demo/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Projectv2 - Payment App Backend/major/demo/transaction-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Projectv2 - Payment App Backend/major/demo/user-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Major Projectv2 - Payment App Backend/major/demo/wallet-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Online-library-management-system (project 1)/online-library-management-system/src/main/java" charset="UTF-8" />
+  </component>
+</project>

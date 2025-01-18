@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/02-Spring-Library-restapi/restapi/pom.xml" />
+        <option value="$PROJECT_DIR$/online-library-management-system/online-library-management-system/pom.xml" />
+        <option value="$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/pom.xml" />
+        <option value="$PROJECT_DIR$/04-Spring-book-management-JPA-Hibernate/book-management/pom.xml" />
+        <option value="$PROJECT_DIR$/03-Spring-Library-restapi-lombok&amp;validation&amp;DB/restapi/pom.xml" />
+        <option value="$PROJECT_DIR$/03-Spring-Library-restapi-lombok&amp;validation&amp;JDBC ( Employee Management JDBC)/restapi/pom.xml" />
+        <option value="$PROJECT_DIR$/02-Spring-Library-restapi ( Employee Management InMemory)/restapi/pom.xml" />
+        <option value="$PROJECT_DIR$/04-Spring-book-management ( JPA-Hibernate )/book-management/pom.xml" />
+        <option value="$PROJECT_DIR$/Online-library-management-system (project 1)/online-library-management-system/pom.xml" />
+        <option value="$PROJECT_DIR$/06-demospringsecurity/demospringsecurity/pom.xml" />
+        <option value="$PROJECT_DIR$/06-demospringsecurity ( database )/06-demospringsecurity-database/pom.xml" />
+        <option value="$PROJECT_DIR$/06-demospringsecurity (In Memory)/demospringsecurity/pom.xml" />
+        <option value="$PROJECT_DIR$/07-demospringsecurity ( database )/07-demospringsecurity-database/pom.xml" />
+        <option value="$PROJECT_DIR$/05-Spring-demoredis/demoredis/pom.xml" />
+        <option value="$PROJECT_DIR$/MP2-Online-library-managt + Spring security/MP2-project/pom.xml" />
+        <option value="$PROJECT_DIR$/MP2-Online-library-managt + Spring security/MP2-Online-library-managt + Spring security/MP2-project/pom.xml" />
+        <option value="$PROJECT_DIR$/MP2-Online-library-managmt + Spring security + Redis Cache/MP2-Online-library-managt + Spring security/MP2-project/pom.xml" />
+        <option value="$PROJECT_DIR$/08-Spring-demo-oauth2/oauth2/pom.xml" />
+        <option value="$PROJECT_DIR$/08-Spring-demo-oauth2 ( client app )/oauth2/pom.xml" />
+        <option value="$PROJECT_DIR$/07-demospringsecurity ( database ) New Way/07-demospringsecurity-database/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend/major/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/05-Spring-demo-redis/demoredis/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Projectv2 - Payment App Backend/major/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project 2- Payment App Backend/major/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/project/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend - Copy/major/demo-micro/pom.xml" />
+        <option value="$PROJECT_DIR$/09-Spring-demo-oauth2 ( client app )/08-Spring-demo-oauth2 ( client app )/oauth2/pom.xml" />
+        <option value="$PROJECT_DIR$/09-Spring-demo-oauth2 ( client app )/oauth2/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend - Copy/eureka/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/wallet-service/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/notification-service/pom.xml" />
+        <option value="$PROJECT_DIR$/09-Spring-Jwt-Oauth2-Auth/oauth2/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/eureka/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/config/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/user/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/wallet/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/transaction/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/notification/pom.xml" />
+        <option value="$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src-mod-2/pom.xml" />
+        <option value="$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/major/demo-micro/notify-service/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project - Payment App Backend - Copy/major/demo-micro/eureka-server/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/project/pom.xml" />
+        <option value="$PROJECT_DIR$/Major Project 2- Payment App Backend - Copy/major/project/transaction-service/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
