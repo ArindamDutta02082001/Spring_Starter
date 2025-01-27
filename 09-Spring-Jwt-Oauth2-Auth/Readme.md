@@ -4,7 +4,10 @@ This are the 4 types in which we provide authorization , authentication in our a
 - Spring Security - The inbuilt security feature by Spring Boot
 - LDAP - out of scope
 - JWT - Authentication and authorization is handled by the token based system
-- OAUTH2 - Authentication & authorization handled by token system or some 3rd party intregrators like Google , FB etc
+- OAUTH2 - Authentication & authorization handled by token system or some 3rd party integrators like Google , FB etc
+
+# JWT Architecture
+![img.png](img.png)
 
 # JWT Authentication with Spring boot
 1. Install the dependency in pom.xml

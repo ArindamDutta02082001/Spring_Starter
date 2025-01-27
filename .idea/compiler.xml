@@ -8,41 +8,42 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="demoredis" />
-        <module name="wallet" />
-        <module name="book-management" />
-        <module name="eureka" />
         <module name="src-main" />
-        <module name="user-service" />
         <module name="oauth2" />
-        <module name="restapi" />
-        <module name="notification-service" />
-        <module name="restapi (1)" />
-        <module name="notification" />
         <module name="src-mod-2" />
-        <module name="securitycacheproject" />
-        <module name="transaction-service" />
-        <module name="07-demospringsecurity-database" />
-        <module name="demo-security" />
         <module name="07-demospringsecurity-database (1)" />
-        <module name="config" />
-        <module name="user" />
-        <module name="wallet-service" />
-        <module name="gateway" />
-        <module name="transaction" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="07-demospringsecurity-database" target="17" />
+      <module name="book-management" target="17" />
+      <module name="config" target="17" />
+      <module name="demo" target="1.5" />
       <module name="demo (1)" target="1.5" />
       <module name="demo-micro" target="1.5" />
+      <module name="demo-security" target="1.8" />
+      <module name="eureka" target="17" />
       <module name="eureka-server" target="17" />
+      <module name="gateway" target="17" />
       <module name="major" target="1.5" />
+      <module name="notification" target="17" />
+      <module name="notification-service" target="17" />
       <module name="notification-service (1)" target="17" />
       <module name="notify-service" target="17" />
       <module name="online-library-management-system" target="17" />
       <module name="payment" target="17" />
       <module name="project" target="17" />
+      <module name="restapi" target="17" />
+      <module name="restapi (1)" target="17" />
+      <module name="securitycacheproject" target="17" />
+      <module name="transaction" target="17" />
+      <module name="transaction-service" target="17" />
       <module name="transaction-service (1)" target="17" />
+      <module name="user" target="17" />
+      <module name="user-service" target="17" />
       <module name="user-service (1)" target="17" />
+      <module name="wallet" target="17" />
+      <module name="wallet-service" target="17" />
       <module name="wallet-service (1)" target="17" />
     </bytecodeTargetLevel>
   </component>
