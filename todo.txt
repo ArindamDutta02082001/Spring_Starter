@@ -4,8 +4,6 @@
 4. upload postman payload
 
 
-# testing line of code
-
 youtube videos to watch
 1. optimistic and pesimistic lock by java tech solutions
 2. oauth like google and github with full login page angular by durgesh or some other

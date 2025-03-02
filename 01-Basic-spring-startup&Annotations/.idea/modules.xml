@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/01-Basic-spring-startup&amp;Annotations.iml" filepath="$PROJECT_DIR$/.idea/01-Basic-spring-startup&amp;Annotations.iml" />
-      <module fileurl="file://$PROJECT_DIR$/demo-spring/demo-spring.iml" filepath="$PROJECT_DIR$/demo-spring/demo-spring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/demo-spring.iml" filepath="$PROJECT_DIR$/.idea/demo-spring.iml" />
     </modules>
   </component>
 </project>
