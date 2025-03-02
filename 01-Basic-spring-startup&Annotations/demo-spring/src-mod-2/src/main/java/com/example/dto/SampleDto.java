@@ -3,8 +3,8 @@ package com.example.dto;
 
 import lombok.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
+// @AllArgsConstructor
+// @NoArgsConstructor
 public class SampleDto {
 
     public static String lConnectFEmail = "demoemail@gmail.com";

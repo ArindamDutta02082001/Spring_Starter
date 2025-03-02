@@ -220,6 +220,32 @@ server.PORT = 9000
 </pre>
 
 
-### multi-module project 
-this has 2 modules `src-main` & `src-mod-2`. The SampleDto of `src-mod-2` is used in the other module 
-see how the dependency is updated and check the pom.xml
+### multi-package project 
+- this has 2 modules `src-main` & `src-mod-2`.  `src-main` is the main one and `src-mod-2` is a module that contains utility
+- The SampleDto of `src-mod-2` is used in the other module i.e `src-main`
+- See how the `SampleDto` is injected in the `MainClass` of `src-main` module
+- See how the config changes are there in pom.xml of both  
+
+*in parent pom.xml (here src-main) :*  
+1. we have to give the dependency of the child module in the parent pom.xml
+``` <dependencies>
+        <dependency>
+            <groupId>version-module-src-2</groupId>
+            <artifactId>src-mod-2</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+      </dependencies>
+```
+
+2. we have to make the parent packaging as pom
+  ```<packaging>pom</packaging> ```
+
+3. we have to refer to the master pom as we are inheriting the depedency of the master pom here
+```
+    <parent>
+        <groupId>com.example.demospring</groupId>
+        <artifactId>demo-spring</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+```
