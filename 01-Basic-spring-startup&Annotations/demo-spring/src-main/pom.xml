@@ -3,14 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <!--    This is the identity of this project -->
+    <!-- through this gId and aId we will use this module in other module -->
+    <groupId>version-module-src-1</groupId>
+    <artifactId>src-main</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+<!-- referring to the parent pom.xml -->
     <parent>
-        <groupId>com.example</groupId>
+        <groupId>com.example.demospring</groupId>
         <artifactId>demo-spring</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
-    <groupId>version-module-src-1</groupId>
-    <artifactId>src-main</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -27,5 +33,18 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <mainClass>com.example.DemoSpringApplication</mainClass>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+
 
 </project>

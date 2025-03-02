@@ -4,16 +4,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-<!-- referring to the parent pom.xml -->
+    <!--    This is the identity of this project -->
+    <!-- through this gId and aId we will use this module in other module -->
+    <groupId>version-module-src-2</groupId>
+    <artifactId>src-mod-2</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+
+    <!-- referring to the parent pom.xml -->
     <parent>
-        <groupId>com.example</groupId>
+        <groupId>com.example.demospring</groupId>
         <artifactId>demo-spring</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
-<!-- through this gId and aId we will us this module in other module -->
-    <groupId>version-module-src-2</groupId>
-    <artifactId>src-mod-2</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
