@@ -12,6 +12,7 @@
     <packaging>jar</packaging>
 
 <!-- referring to the MASTER pom.xml -->
+
     <parent>
         <groupId>com.example.demospring</groupId>
         <artifactId>demo-spring</artifactId>
