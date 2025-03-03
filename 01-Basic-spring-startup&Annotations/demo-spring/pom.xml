@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- specifies the xml schema starting | must be the start line i.e no line on top -->
 
-<!--  ============================ This is the MASTER POM.xml   =============================-->
+<!--  ============================ This is the PARENT POM   =============================-->
 
 <!-- it defines a xml schema , so that pom must adders to this schema -->
 <!-- any random text cannot be written -->
@@ -26,8 +26,7 @@
 	<name>demo-spring</name>
 	<description>Demo project for Spring Boot Initial Project</description>
 
-<!-- storing the reference of the child modules that are created using this pom.xml (optional)-->
-
+<!-- storing the reference of the child modules that are created using this pom.xml -->
 <!--	<modules>-->
 <!--		<module>src-mod-2</module>-->
 <!--		<module>src-main</module>-->
