@@ -11,7 +11,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-<!-- referring to the parent pom.xml -->
+<!-- referring to the MASTER pom.xml -->
+
     <parent>
         <groupId>com.example.demospring</groupId>
         <artifactId>demo-spring</artifactId>
@@ -46,5 +47,5 @@
     </plugins>
 </build>
 
-
 </project>
+
