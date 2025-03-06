@@ -1,6 +1,6 @@
 package com.example.demospring;
 
-import com.example.demospring.entity.Person;
+import com.example.demospring.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

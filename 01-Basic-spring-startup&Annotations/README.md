@@ -1,8 +1,8 @@
-# Spring boot basics
+# Springboot basics + features (IOC , DI) + pom.xml + @Annotations
 
 ### Default starter code
-Default initial code in **DemoSpringAplication.java** we will have a
-<pre>
+Default initial code inside src/main/java/com/example **DemoSpringApplication.java** we will have a
+```
 @SpringBootApplication
 or
 @SpringBootConfiguration
@@ -15,12 +15,13 @@ public static void main(String[] args)
 SpringApplication.run(ClassName.class, args);
 }
 }
-</pre>
+```
 - **@SpringBootApplication** is an annotation that is the gist of other annotations include
   @SpringBootConfiguration , @EnableAutoConfiguration , @ComponentScan
   which scans the entire application for the beans and other things
 - **SpringApplication** provides a convenient way to bootstrap a Spring application and run it by
   the run(). It returns all the beans in the IOC Container
+<hr/>
 
 ### Necessary dependencies
 how to add dependency → go to https://start.spring.io/ , add dependencies
@@ -31,16 +32,18 @@ how to add dependency → go to https://start.spring.io/ , add dependencies
 * SQL manager/driver , Oracle driver , JDBC → for the sql and jdbc connection
 * JUNIT → for execution of the junit test cases
 * spring-data-jpa → for using the Hibernate & Jpa in project
+<hr/>
 
 ### Logger
-- logger is just like System.out.print () . but gives the details of when & what class is logged .
+- logger is just like System.out.println() . but gives the details of when & what class is logged .
   logger can be of different types error , warn , info, debug , trace ( less priority ) .
-  <br/></br>in a class file ,
-<pre>
+   
+in a class file ,
+```dockerfile
+
 public class LoggingController 
 {
 static Logger logger = LoggerFactory.getLogger(LoggingController.class)
-
 public static void main( String args[] )
     {
         logger.trace("A TRACE Message");
@@ -50,9 +53,10 @@ public static void main( String args[] )
         logger.error("An ERROR Message");
     }
 }
-</pre>
+```
 - in the **application.properties** , we can choose to show only info , error , debug , warn
-  logging.level.root = info / error / debug / warn
+  `logging.level.root = info / error / debug / warn`
+<hr/>
 
 ### Properties of spring boot
 #### Inversion of Control
@@ -204,6 +208,7 @@ public class IOCDILogic
 ```
 >in other words we say , Person class is injected into the Shared class or Shared class has a DI on Person
 
+<hr/>
 
 ### application.properties file
 - this file contains the properties like url , port no , DB user name , DB pwd, etc that are needed to run the application
@@ -219,16 +224,26 @@ logging.level.root=debug
 server.PORT = 9000
 </pre>
 
+<hr/>
 
-### multi-package project 
+### Multi-module project 
 - this has 2 modules `src-main` & `src-mod-2`.  `src-main` is the main one and `src-mod-2` is a module that contains utility
 - The SampleDto of `src-mod-2` is used in the other module i.e `src-main`
 - See how the `SampleDto` is injected in the `MainClass` of `src-main` module
 - See how the config changes are there in pom.xml of both  
 
+*There is a master pom.xml in the demo-spring folder only :*
+  
+It has a identity
+```
+<groupId>com.example.demospring</groupId>
+<artifactId>demo-spring</artifactId>
+<version>0.0.1-SNAPSHOT</version>
+```
 *in parent pom.xml (here src-main) :*  
-1. we have to give the dependency of the child module in the parent pom.xml
-``` <dependencies>
+1. we have to give the dependency of the child module (src-mod-2) in the parent pom.xml
+``` 
+      <dependencies>
         <dependency>
             <groupId>version-module-src-2</groupId>
             <artifactId>src-mod-2</artifactId>
@@ -241,7 +256,16 @@ server.PORT = 9000
 2. we have to make the parent packaging as pom
   ```<packaging>pom</packaging> ```
 
-3. we have to refer to the master pom as we are inheriting the depedency of the master pom here
+3. we have to refer to the master pom as we are inheriting the dependencies of the master pom here
+```
+    <parent>
+        <groupId>com.example.demospring</groupId>
+        <artifactId>demo-spring</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+```
+*in child pom.xml (here src-mod-2) :*  
+1. Since here also we are inheriting the dependencies of the master pom here , instead of mentioning each dependencies
 ```
     <parent>
         <groupId>com.example.demospring</groupId>
