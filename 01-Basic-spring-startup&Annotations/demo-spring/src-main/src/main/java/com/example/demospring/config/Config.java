@@ -1,7 +1,8 @@
-package com.example.demospring;
+package com.example.demospring.config;
 
 
-import com.example.demospring.entity.Person;
+import com.example.demospring.IOCDILogic;
+import com.example.demospring.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -10,20 +11,23 @@ import org.springframework.context.annotation.Primary;
 
 
 /**
- *  1. The classes , that have @Component annotation written over the class ,
- *  the springboot will create a singleton object of that class upon application start
- *  2. the object that is created by the springboot for the @Component annotation class is called as a bean
+ *  1. The classes , that have @Component annotation written over the class , the springboot will create a singleton object of that class upon application start
+ *  but the above will happen when we have a default constructor inside that class
+ *  as JVM uses default constructor to create bean  new CLassname()
+ *
+ *  if no default constructor is defined inside that class then , we have to create a config class like this
+ *  to tell which constructor to be used by JVM to create the class object by using @Bean
  */
 
-
+// This class will have no usages  it will be used by default by JVM during bean creation
 @Configuration
-public class Beans {
+public class Config {
 
 
     Logger logger = LoggerFactory.getLogger(IOCDILogic.class);
 
     /**
-     * when we ue @Bean over a function , that function return type is created and stored in the IOCDILogic Container
+     * when we ue @Bean over a function , that function return type is created and stored in the ApplicationContext Container
      * when the springboot application starts
      */
 

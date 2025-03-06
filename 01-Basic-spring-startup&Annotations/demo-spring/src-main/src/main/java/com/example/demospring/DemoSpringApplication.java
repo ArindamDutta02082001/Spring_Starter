@@ -49,9 +49,10 @@ public class DemoSpringApplication {
 		ApplicationContext apc = SpringApplication.run(DemoSpringApplication.class, args);
 
 		// this will show all the beans in the IOCDILogic Container
+		System.out.println("BEANS PRESENT IN THE WEB APPLICATION CONTEXT ARE : ");
 		for(String s : apc.getBeanDefinitionNames())
 		{
-			System.out.println("Beans are : "+s);
+			System.out.println(s);
 		}
 		System.out.println("Server Started at 9000 ");
 

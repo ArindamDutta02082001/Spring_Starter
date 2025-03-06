@@ -1,5 +1,23 @@
-package com.example.demospring.entity;
+package com.example.demospring.model;
 
+
+import org.springframework.stereotype.Component;
+
+//@Component
+/**
+ * here we cannot use @Component as here we dont have default constructor and JVM cant create its object so we need
+ * to create a @Bean of it and explicitly give a Person object which it will store in application context
+
+
+ @Bean
+ public Person generatePerson()
+ {
+ // custom logic can be applied during bean creation
+ return new Person("Sourav",67);
+ }
+
+
+ */
 public class Person {
     String name ;
     Integer age;

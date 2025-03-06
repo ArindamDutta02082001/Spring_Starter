@@ -23,7 +23,6 @@
         <option value="$PROJECT_DIR$/MP2-Online-library-managmt + Spring security + Redis Cache/MP2-Online-library-managt + Spring security/MP2-project/pom.xml" />
         <option value="$PROJECT_DIR$/08-Spring-demo-oauth2/oauth2/pom.xml" />
         <option value="$PROJECT_DIR$/08-Spring-demo-oauth2 ( client app )/oauth2/pom.xml" />
-        <option value="$PROJECT_DIR$/07-demospringsecurity ( database ) New Way/07-demospringsecurity-database/pom.xml" />
         <option value="$PROJECT_DIR$/Major Project - Payment App Backend/pom.xml" />
         <option value="$PROJECT_DIR$/Major Project - Payment App Backend/major/demo/pom.xml" />
         <option value="$PROJECT_DIR$/05-Spring-demo-redis/demoredis/pom.xml" />
@@ -49,6 +48,8 @@
         <option value="$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src-mod-2/pom.xml" />
         <option value="$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src/pom.xml" />
         <option value="$PROJECT_DIR$/02-Spring-Library-Restapi(Employee_Management_InMemory)/restapi/pom.xml" />
+        <option value="$PROJECT_DIR$/07-demospringsecurity ( database ) New Way/07-demospringsecurity-database/pom.xml" />
+        <option value="$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src-main/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

@@ -44,12 +44,15 @@
 		<java.version>17</java.version>
 	</properties>
 
-
 <!-- we can mention dependencies that are to be included in our project -->
 	<dependencies>
 
 <!-- we can specify these properties as variable in the -->
 <!--
+		<properties>
+   <java.version>17</java.version>
+</properties>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
