@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
  return new Person("Sourav",67);
  }
 
-
  */
 public class Person {
     String name ;

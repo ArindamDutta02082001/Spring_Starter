@@ -56,6 +56,7 @@ public static void main( String args[] )
 ```
 - in the **application.properties** , we can choose to show only info , error , debug , warn
   `logging.level.root = info / error / debug / warn`
+
 <hr/>
 
 ### Properties of spring boot
@@ -87,45 +88,60 @@ System.out.println(“Beans are : ” + s ); // all beans }
 ```
 
 <br/></br>**@Bean**
-- we can create a singleton object of a function return type using @Bean code
-- function inside @Bean can never return void
+
+- we can create a singleton object of a class and return in the function as the return type 
+- A function return type is generally a class object that we give to JVM to store as a bean in the container . function inside @Bean can never return void 
 - @Configuration is to be used in the class in which @Bean is used
-- the @Bean will create a object of the function return type in the IOC container which can be used
-  when required
-- when multiple function have the same return type then the ambiguity is resolved
-  by @Primary and @Qualifier
+- the @Bean will tell the JVM to create a object/bean of the class , for which we are returning the object into the IOC container ( or Application Context ) which can be used when required using @Autowired
+- if there is the same return type of Beans and there is some ambiguity then we use @Primary or @Qualifier to solve it
+
 
 ```dockerfile
 @Configuration
-class BeanClass
-{
-    // normal bean
-    @Bean(name = "thirdBean")
-    public String inverseFunction3 ()
+public class Config {
+
+
+    Logger logger = LoggerFactory.getLogger(DILogic.class);
+
+    /**
+     * when we ue @Bean over a function , that function return an object of a particular class as that class
+     * dont have a default constructor and springboot fails to create its bean thus uses
+     * the bean function we create below
+     */
+
+    // we can create beans of primitive types also like this
+    @Bean(name = "primitiveBean")
+    public String generateString ()
     {
-        return "@Bean3 returned ";
+        logger.info("This is a Beanof String class inside the Beans Class");
+
+        // @Bean method cannot return void
+        return "String @Bean returned ";
     }
 
-    // function with same return type are segregated by @Primary @Qualifier
-    @Bean(name = "firstBean")
-    @Primary
-    public String inverseFunction ()
-    {
-        Syso ("This is a Bean function inside the Beans Class");
-        return "@Bean1 returned ";
+    // person class mei default constructor hoga , thus spring fails to create bean of it and thus bean of person class
+    // is created by using this function on application start
+
+    // creating same type of beans by using and resolving ambiguity by @Qualifier or @Primary
+    @Bean(name = "firstPersonBean" )
+    @Primary         // --> if we dont use qualifier explicitly then this bean will be used
+    public Person generatePerson1()       {
+        logger.info("This is a first person Bean function inside the Beans Class");
+            return new Person("Ankul",34);
     }
 
-    @Bean(name = "secondBean")
-    public String inverseFunction2 ()
-    {
-        Syso ("This is a Bean function inside the Beans Class");
-        return "@Bean2 returned ";
+    @Bean(name = "secondPersonBean")
+    public Person generatePerson2()       {
+        logger.info("This is a second person Bean function inside the Beans Class");
+            return new Person("Sanal",67);
     }
 
-    // init & destroy funtions are attached to the bean
+
+    // bean creation ke time e we can attach some methods that has to occur before and after
+    // bean creation is completed
+
     @Bean(name = "personBean" , initMethod = "start" , destroyMethod = "destroy")
-    public Person generatePerson()
-    {
+    public Person generatePersonP()       {
         // custom logic can be applied during bean creation
         boolean flag = false;
 
@@ -133,16 +149,22 @@ class BeanClass
              return new Person("Arindam",34);
         else
             return new Person("Sourav",67);
-
     }
 }
 
-
-
+// here if you try to use @Component here it will throw error as no default constructor can be created
+// so for this Person class we need to use @Bean to create a bean of it
 public class Person {
     String name ;
     Integer age;
 
+  public Person(String name, Integer age)
+   {
+       this.name = name;
+       this.age = age;
+
+   }
+   
     // runs before the bean is created
     public void start() {
         System.out.println("Init method for the bean started...");
@@ -157,56 +179,59 @@ public class Person {
 ```
 
 #### Dependency Injection
-- Any bean ( i.e object ) created by spring boot can be used anywhere anytime required
-- It is a Design Pattern that helps to eliminate the dependency to a class , and provides loose coupling
-- DI is of 3 types Constructor , Setter and Field injection and is implemented by @Autowire [medium_link](https://medium.com/@reetesh043/spring-boot-dependency-injection-137f85f84590)
-
-
-  In our projects we have used Field Injection , which is implemented by
+- Any bean ( i.e object ) present in IOC Container can be used anywhere anytime required using @Autowire
+- It is a Design Pattern that helps to eliminate the dependency to a class , and provides loose coupling and also eliminate to use new() every tie to create a new object
+- DI is of 3 types Constructor , Setter and Field injection and is implemented by @Autowire
 
   <br/></br>**@Autowired**
 
-1. @Autowired tell that use the singleton object that you created already present in bean and don't create
-   a new object , please use that object here
-2. It helps in Dependency Injection
-3. @Autowire variables can’t be declared inside function and cannot be static so always use inside the class directly 
-4. make sure the class that you are Autowiring is already there in the IOC container i.e that class bean is created by using @Conainer or @Bean
-5. kitna bar kahi par bhi @Autowire kr lo of the same class, The same bean ( i.e object ) is referred to
+1. It  tell that use the singleton object that you created already present in bean and don't create a new object , please use that object here
+2. It helps in Dependency Injection . Also kitna bar kahi par bhi @Autowire kr lo of the same class, The same bean ( i.e object ) is referred to
+3. @Autowire variables can’t be declared inside function ( class loading ke time pe woh load hota hai ) so always use inside the class directly
+4. @Autowire fields cannot be final in case of field & setter injection but you can use in case of constructor or setter injection
+5. make sure the class that you are Autowiring is already there in the IOC container i.e that class bean is created by using @Conainer or @Bean
+
+>in other words we say , Person class is injected into the Shared class or Shared class has a DI on Person
 
 ```dockerfile
 @Component
-public class IOCDILogic 
-{
+public class DILogic {
 
-// Dependency Injection by Field Injection
+    /** types of Dependency Injection */
+
+
+    // Dependency Injection by Field Injection
     @Autowired
-    @Qualifier(value = "firstBean")
-    String string1;
+    @Qualifier(value = "firstPersonBean")
+    Person person1;
 
     @Autowired
-    @Qualifier(value = "personBean")
-    Person person;		
-** in other words we say , Person class is injected into this class & this class has a DI on Person
+    @Qualifier(value = "secondPersonBean")
+    Person person2;
+
 
 
     // Dependency Injection by setter Injection
-     String string2;
+     String string1;
      @Autowired
-     public void secondBean( @Qualifier(value = "secondBean") String secondBean)
+     public void setterBeanConstructor( @Qualifier(value = "primitiveBean") String stringBean)
      {
-        this.string2 = secondBean;
+           this.string1 = stringBean;
      }
 
+
+
     // Dependency Injection by constructor Injection
-    String string3;
+    Person person;
     @Autowired
-    public IOCDILogic( @Qualifier(value = "thirdBean") String thirdBean , @Value("${name}") String name)
+    public DILogic( @Qualifier(value = "personBean") Person pBean , @Value("${name}") String name)
     {
-        this.string3 = thirdBean;
+        this.person = pBean;       //  here we are injecting the bean
+
+        System.out.println("param constructor used for constructor injection ");
     }
- }
+}
 ```
->in other words we say , Person class is injected into the Shared class or Shared class has a DI on Person
 
 <hr/>
 
