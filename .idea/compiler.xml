@@ -7,16 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="07-demospringsecurity-database-new" />
         <module name="src-main" />
         <module name="demoredis" />
         <module name="oauth2" />
         <module name="src-mod-2" />
         <module name="restapi" />
-        <module name="07-demospringsecurity-database (1)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="07-demospringsecurity-database" target="17" />
+      <module name="07-demospringsecurity-database (1)" target="17" />
       <module name="book-management" target="17" />
       <module name="config" target="17" />
       <module name="demo" target="1.5" />
@@ -51,6 +52,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="07-demospringsecurity-database" options="-parameters" />
       <module name="07-demospringsecurity-database (1)" options="-parameters" />
+      <module name="07-demospringsecurity-database-new" options="-parameters" />
       <module name="book-management" options="-parameters" />
       <module name="config" options="-parameters" />
       <module name="demo-security" options="-parameters" />

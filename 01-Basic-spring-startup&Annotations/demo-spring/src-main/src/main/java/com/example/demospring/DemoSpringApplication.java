@@ -14,15 +14,31 @@ import org.springframework.context.ApplicationContext;
 public class DemoSpringApplication {
 
 	/**
-	 * @Autowired tell that use the singleton object that you created already present in bean and dont create a
-	 * new object
+	 * @Autowired tell that use the singleton object that you created already during application start
+	 * and is present in application context and dont create a new object
 	 */
 
 //	@Autowired
 //	String inverseFunction;
 //
-	@Autowired
-	IOCDILogic ic;
+
+
+		//	Field injection
+		//	@Autowired
+		//	DILogic ic;
+
+
+	// setter injection , here you can use static
+	DILogic ic ;
+
+		@Autowired
+		public void setterInjection( DILogic ic )
+		{
+			this.ic = ic;
+		}
+
+
+
 
 	private static String name;
 
@@ -42,34 +58,43 @@ public class DemoSpringApplication {
 	/**
 	 * Logger --> used to show error , trace , warn , debug , info messages
 	 */
-	Logger logger = LoggerFactory.getLogger(DemoSpringApplication.class);
+	static Logger logger = LoggerFactory.getLogger(DemoSpringApplication.class);
 
 	public static void main(String[] args) {
 
 		ApplicationContext apc = SpringApplication.run(DemoSpringApplication.class, args);
 
-		// this will show all the beans in the IOCDILogic Container
+		// this will show all the beans in the IOC Container or the Application Context
+		System.out.println("BEANS PRESENT IN THE WEB APPLICATION CONTEXT ARE : ");
 		for(String s : apc.getBeanDefinitionNames())
 		{
-			System.out.println("Beans are : "+s);
+			System.out.println(s);
 		}
 		System.out.println("Server Started at 9000 ");
 
-		// to access then @Bean
-		// .getBean is used here as we are accessing the non-static object from static function
+		System.out.println("********* ****************************************** *****************");
+
+
+
+		// to access a particular bean  we use .getBean() here
 		DemoSpringApplication app = apc.getBean(DemoSpringApplication.class);
-//		System.out.println("Bean function called: " + app.inverseFunction);
-
-		// to access the @Component
-		// .getBean is used here as we are accessing the non-static object from static function
-		app.ic.IOCFunction();
+		System.out.println("Bean of DILogic class is called particularly " );
+		// now we can use the DILogic class members by this bean we got
+		app.ic.CustomFunction();
 
 
+		System.out.println("********* ****************************************** *****************");
 
 		// **********************  Accessing the other module`s item here *********************************
 		System.out.println("Data from other module ");
-		System.out.println("Email : " +SampleDto.lConnectFEmail);
-		System.out.println("Password : " +SampleDto.lConnectFPassword);
+		System.out.println("Email : " + SampleDto.lConnectFEmail);
+		System.out.println("Password : " + SampleDto.lConnectFPassword);
+
+
+
+		System.out.println("********* ****************************************** *****************");
+		// ************************** Logger usage ******************************************8
+		logger.info(" This line is printed y logger and ENDD.........................");
 
 	}
 

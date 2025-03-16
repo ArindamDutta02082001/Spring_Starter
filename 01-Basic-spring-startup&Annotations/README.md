@@ -1,8 +1,8 @@
-# Spring boot basics
+# Springboot basics + features (IOC , DI) + pom.xml + @Annotations
 
 ### Default starter code
-Default initial code in **DemoSpringAplication.java** we will have a
-<pre>
+Default initial code inside src/main/java/com/example **DemoSpringApplication.java** we will have a
+```
 @SpringBootApplication
 or
 @SpringBootConfiguration
@@ -15,12 +15,13 @@ public static void main(String[] args)
 SpringApplication.run(ClassName.class, args);
 }
 }
-</pre>
+```
 - **@SpringBootApplication** is an annotation that is the gist of other annotations include
   @SpringBootConfiguration , @EnableAutoConfiguration , @ComponentScan
   which scans the entire application for the beans and other things
 - **SpringApplication** provides a convenient way to bootstrap a Spring application and run it by
   the run(). It returns all the beans in the IOC Container
+<hr/>
 
 ### Necessary dependencies
 how to add dependency → go to https://start.spring.io/ , add dependencies
@@ -31,16 +32,18 @@ how to add dependency → go to https://start.spring.io/ , add dependencies
 * SQL manager/driver , Oracle driver , JDBC → for the sql and jdbc connection
 * JUNIT → for execution of the junit test cases
 * spring-data-jpa → for using the Hibernate & Jpa in project
+<hr/>
 
 ### Logger
-- logger is just like System.out.print () . but gives the details of when & what class is logged .
+- logger is just like System.out.println() . but gives the details of when & what class is logged .
   logger can be of different types error , warn , info, debug , trace ( less priority ) .
-  <br/></br>in a class file ,
-<pre>
+   
+in a class file ,
+```dockerfile
+
 public class LoggingController 
 {
 static Logger logger = LoggerFactory.getLogger(LoggingController.class)
-
 public static void main( String args[] )
     {
         logger.trace("A TRACE Message");
@@ -50,9 +53,11 @@ public static void main( String args[] )
         logger.error("An ERROR Message");
     }
 }
-</pre>
+```
 - in the **application.properties** , we can choose to show only info , error , debug , warn
-  logging.level.root = info / error / debug / warn
+  `logging.level.root = info / error / debug / warn`
+
+<hr/>
 
 ### Properties of spring boot
 #### Inversion of Control
@@ -83,45 +88,60 @@ System.out.println(“Beans are : ” + s ); // all beans }
 ```
 
 <br/></br>**@Bean**
-- we can create a singleton object of a function return type using @Bean code
-- function inside @Bean can never return void
+
+- we can create a singleton object of a class and return in the function as the return type 
+- A function return type is generally a class object that we give to JVM to store as a bean in the container . function inside @Bean can never return void 
 - @Configuration is to be used in the class in which @Bean is used
-- the @Bean will create a object of the function return type in the IOC container which can be used
-  when required
-- when multiple function have the same return type then the ambiguity is resolved
-  by @Primary and @Qualifier
+- the @Bean will tell the JVM to create a object/bean of the class , for which we are returning the object into the IOC container ( or Application Context ) which can be used when required using @Autowired
+- if there is the same return type of Beans and there is some ambiguity then we use @Primary or @Qualifier to solve it
+
 
 ```dockerfile
 @Configuration
-class BeanClass
-{
-    // normal bean
-    @Bean(name = "thirdBean")
-    public String inverseFunction3 ()
+public class Config {
+
+
+    Logger logger = LoggerFactory.getLogger(DILogic.class);
+
+    /**
+     * when we ue @Bean over a function , that function return an object of a particular class as that class
+     * dont have a default constructor and springboot fails to create its bean thus uses
+     * the bean function we create below
+     */
+
+    // we can create beans of primitive types also like this
+    @Bean(name = "primitiveBean")
+    public String generateString ()
     {
-        return "@Bean3 returned ";
+        logger.info("This is a Beanof String class inside the Beans Class");
+
+        // @Bean method cannot return void
+        return "String @Bean returned ";
     }
 
-    // function with same return type are segregated by @Primary @Qualifier
-    @Bean(name = "firstBean")
-    @Primary
-    public String inverseFunction ()
-    {
-        Syso ("This is a Bean function inside the Beans Class");
-        return "@Bean1 returned ";
+    // person class mei default constructor hoga , thus spring fails to create bean of it and thus bean of person class
+    // is created by using this function on application start
+
+    // creating same type of beans by using and resolving ambiguity by @Qualifier or @Primary
+    @Bean(name = "firstPersonBean" )
+    @Primary         // --> if we dont use qualifier explicitly then this bean will be used
+    public Person generatePerson1()       {
+        logger.info("This is a first person Bean function inside the Beans Class");
+            return new Person("Ankul",34);
     }
 
-    @Bean(name = "secondBean")
-    public String inverseFunction2 ()
-    {
-        Syso ("This is a Bean function inside the Beans Class");
-        return "@Bean2 returned ";
+    @Bean(name = "secondPersonBean")
+    public Person generatePerson2()       {
+        logger.info("This is a second person Bean function inside the Beans Class");
+            return new Person("Sanal",67);
     }
 
-    // init & destroy funtions are attached to the bean
+
+    // bean creation ke time e we can attach some methods that has to occur before and after
+    // bean creation is completed
+
     @Bean(name = "personBean" , initMethod = "start" , destroyMethod = "destroy")
-    public Person generatePerson()
-    {
+    public Person generatePersonP()       {
         // custom logic can be applied during bean creation
         boolean flag = false;
 
@@ -129,16 +149,22 @@ class BeanClass
              return new Person("Arindam",34);
         else
             return new Person("Sourav",67);
-
     }
 }
 
-
-
+// here if you try to use @Component here it will throw error as no default constructor can be created
+// so for this Person class we need to use @Bean to create a bean of it
 public class Person {
     String name ;
     Integer age;
 
+  public Person(String name, Integer age)
+   {
+       this.name = name;
+       this.age = age;
+
+   }
+   
     // runs before the bean is created
     public void start() {
         System.out.println("Init method for the bean started...");
@@ -153,57 +179,61 @@ public class Person {
 ```
 
 #### Dependency Injection
-- Any bean ( i.e object ) created by spring boot can be used anywhere anytime required
-- It is a Design Pattern that helps to eliminate the dependency to a class , and provides loose coupling
-- DI is of 3 types Constructor , Setter and Field injection and is implemented by @Autowire [medium_link](https://medium.com/@reetesh043/spring-boot-dependency-injection-137f85f84590)
-
-
-  In our projects we have used Field Injection , which is implemented by
+- Any bean ( i.e object ) present in IOC Container can be used anywhere anytime required using @Autowire
+- It is a Design Pattern that helps to eliminate the dependency to a class , and provides loose coupling and also eliminate to use new() every tie to create a new object
+- DI is of 3 types Constructor , Setter and Field injection and is implemented by @Autowire
 
   <br/></br>**@Autowired**
 
-1. @Autowired tell that use the singleton object that you created already present in bean and don't create
-   a new object , please use that object here
-2. It helps in Dependency Injection
-3. @Autowire variables can’t be declared inside function and cannot be static so always use inside the class directly 
-4. make sure the class that you are Autowiring is already there in the IOC container i.e that class bean is created by using @Conainer or @Bean
-5. kitna bar kahi par bhi @Autowire kr lo of the same class, The same bean ( i.e object ) is referred to
+1. It  tell that use the singleton object that you created already present in bean and don't create a new object , please use that object here
+2. It helps in Dependency Injection . Also kitna bar kahi par bhi @Autowire kr lo of the same class, The same bean ( i.e object ) is referred to
+3. @Autowire variables can’t be declared inside function ( class loading ke time pe woh load hota hai ) so always use inside the class directly
+4. @Autowire fields cannot be final in case of field & setter injection but you can use in case of constructor or setter injection
+5. make sure the class that you are Autowiring is already there in the IOC container i.e that class bean is created by using @Conainer or @Bean
+
+>in other words we say , Person class is injected into the Shared class or Shared class has a DI on Person
 
 ```dockerfile
 @Component
-public class IOCDILogic 
-{
+public class DILogic {
 
-// Dependency Injection by Field Injection
+    /** types of Dependency Injection */
+
+
+    // Dependency Injection by Field Injection
     @Autowired
-    @Qualifier(value = "firstBean")
-    String string1;
+    @Qualifier(value = "firstPersonBean")
+    Person person1;
 
     @Autowired
-    @Qualifier(value = "personBean")
-    Person person;		
-** in other words we say , Person class is injected into this class & this class has a DI on Person
+    @Qualifier(value = "secondPersonBean")
+    Person person2;
+
 
 
     // Dependency Injection by setter Injection
-     String string2;
+     String string1;
      @Autowired
-     public void secondBean( @Qualifier(value = "secondBean") String secondBean)
+     public void setterBeanConstructor( @Qualifier(value = "primitiveBean") String stringBean)
      {
-        this.string2 = secondBean;
+           this.string1 = stringBean;
      }
 
-    // Dependency Injection by constructor Injection
-    String string3;
-    @Autowired
-    public IOCDILogic( @Qualifier(value = "thirdBean") String thirdBean , @Value("${name}") String name)
-    {
-        this.string3 = thirdBean;
-    }
- }
-```
->in other words we say , Person class is injected into the Shared class or Shared class has a DI on Person
 
+
+    // Dependency Injection by constructor Injection
+    Person person;
+    @Autowired
+    public DILogic( @Qualifier(value = "personBean") Person pBean , @Value("${name}") String name)
+    {
+        this.person = pBean;       //  here we are injecting the bean
+
+        System.out.println("param constructor used for constructor injection ");
+    }
+}
+```
+
+<hr/>
 
 ### application.properties file
 - this file contains the properties like url , port no , DB user name , DB pwd, etc that are needed to run the application
@@ -219,16 +249,26 @@ logging.level.root=debug
 server.PORT = 9000
 </pre>
 
+<hr/>
 
-### multi-package project 
+### Multi-module project 
 - this has 2 modules `src-main` & `src-mod-2`.  `src-main` is the main one and `src-mod-2` is a module that contains utility
 - The SampleDto of `src-mod-2` is used in the other module i.e `src-main`
 - See how the `SampleDto` is injected in the `MainClass` of `src-main` module
 - See how the config changes are there in pom.xml of both  
 
+*There is a master pom.xml in the demo-spring folder only :*
+  
+It has a identity
+```
+<groupId>com.example.demospring</groupId>
+<artifactId>demo-spring</artifactId>
+<version>0.0.1-SNAPSHOT</version>
+```
 *in parent pom.xml (here src-main) :*  
-1. we have to give the dependency of the child module in the parent pom.xml
-``` <dependencies>
+1. we have to give the dependency of the child module (src-mod-2) in the parent pom.xml
+``` 
+      <dependencies>
         <dependency>
             <groupId>version-module-src-2</groupId>
             <artifactId>src-mod-2</artifactId>
@@ -241,7 +281,16 @@ server.PORT = 9000
 2. we have to make the parent packaging as pom
   ```<packaging>pom</packaging> ```
 
-3. we have to refer to the master pom as we are inheriting the depedency of the master pom here
+3. we have to refer to the master pom as we are inheriting the dependencies of the master pom here
+```
+    <parent>
+        <groupId>com.example.demospring</groupId>
+        <artifactId>demo-spring</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+```
+*in child pom.xml (here src-mod-2) :*  
+1. Since here also we are inheriting the dependencies of the master pom here , instead of mentioning each dependencies
 ```
     <parent>
         <groupId>com.example.demospring</groupId>
