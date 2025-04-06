@@ -50,6 +50,7 @@
         <option value="$PROJECT_DIR$/02-Spring-Library-Restapi(Employee_Management_InMemory)/restapi/pom.xml" />
         <option value="$PROJECT_DIR$/07-demospringsecurity ( database ) New Way/07-demospringsecurity-database/pom.xml" />
         <option value="$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src-main/pom.xml" />
+        <option value="$PROJECT_DIR$/01-Basic-spring-startup&amp;scope/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
