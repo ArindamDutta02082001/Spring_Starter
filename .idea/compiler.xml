@@ -11,6 +11,7 @@
         <module name="demoredis" />
         <module name="src-mod-2" />
         <module name="src-main" />
+        <module name="spring-transaction-example" />
         <module name="oauth2" />
         <module name="restapi" />
         <module name="demo" />
@@ -73,6 +74,7 @@
       <module name="restapi" options="-parameters" />
       <module name="restapi (1)" options="-parameters" />
       <module name="securitycacheproject" options="-parameters" />
+      <module name="spring-transaction-example" options="-parameters" />
       <module name="src-main" options="-parameters" />
       <module name="src-mod-2" options="-parameters" />
       <module name="transaction" options="-parameters" />
