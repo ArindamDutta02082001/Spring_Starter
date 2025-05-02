@@ -7,6 +7,7 @@
     <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;Annotations/demo-spring/src/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01-Basic-spring-startup&amp;scope/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/02-Spring-Library-Restapi(Employee_Management_InMemory)/restapi/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/02-Spring-Library-restapi ( Employee Management InMemory)/restapi/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/03-Spring-Library-restapi-lombok&amp;validation&amp;JDBC ( Employee Management JDBC)/restapi/src/main/java" charset="UTF-8" />
@@ -14,11 +15,13 @@
     <file url="file://$PROJECT_DIR$/05-Spring-demo-redis/demoredis/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/05-Spring-demoredis/demoredis/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/06-demospringsecurity (In Memory)/demospringsecurity/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/06-demospringsecurity_(In_Memory)/demospringsecurity/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/07-demospringsecurity ( database ) New Way/07-demospringsecurity-database/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/07-demospringsecurity ( database )/07-demospringsecurity-database/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/08-Spring-demo-oauth2 ( client app )/oauth2/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/09-Spring-Jwt-Oauth2-Auth/08-Spring-demo-oauth2 ( client app )/oauth2/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/09-Spring-Jwt-Oauth2-Auth/oauth2/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/10-Spring-Transaction-JT/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/MP2-Online-library-managmt + Spring security + Redis Cache/MP2-Online-library-managt + Spring security/MP2-project/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/MP2-Online-library-managmt + Spring security + Redis Cache/MP2-project/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Major Project - Payment App Backend ( Microservices )/config/src/main/java" charset="UTF-8" />

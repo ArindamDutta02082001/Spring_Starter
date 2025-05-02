@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Scope(value = "request")
+@Scope(value = "singleton")
 public class Restcontroller {
 
     @Autowired
@@ -21,7 +21,6 @@ public class Restcontroller {
 
     public Restcontroller() {
         System.out.println("initialization started in rest class");
-        System.out.println("Student constructor class hashcode2 : "+student.hashCode());
     }
 
 

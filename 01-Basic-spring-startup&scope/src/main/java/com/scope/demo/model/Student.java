@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 @Component
-@Scope(value = "request")
+//@Scope(value = "request")
 
 public class Student {
 
