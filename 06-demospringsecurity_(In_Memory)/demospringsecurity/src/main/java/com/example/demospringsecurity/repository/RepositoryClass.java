@@ -1,9 +1,12 @@
 package com.example.demospringsecurity.repository;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 
@@ -13,6 +16,8 @@ public class RepositoryClass {
     /**
      * the repository file contains the code of DB connection and data storage
      */
+
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
 
     /*
      you need to make sure that the data present in memory should be in this format
@@ -24,6 +29,7 @@ public class RepositoryClass {
      */
     RepositoryClass()
     {
+
         inMemoryUserDetailsManager.createUser(User.builder().username("arindam")
                 .password("$2a$10$P68A3Wf2H6nES9OkXWZoj.CakfPbEoh1VDNEueXDjBNsUNZysU43W")
                 .authorities("student")
@@ -38,7 +44,6 @@ public class RepositoryClass {
                 .build());
     }
 
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
 
     public InMemoryUserDetailsManager createInMemoryUserDetailManager()
     {

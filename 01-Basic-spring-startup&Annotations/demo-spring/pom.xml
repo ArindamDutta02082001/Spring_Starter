@@ -9,7 +9,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-<!--  to inherit the configuration from the starter-pom.xml ( ye interet se aata hai)  -->
+<!--  to inherit the configuration from the starter-pom.xml ( ye internet se aata hai)  -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -22,7 +22,11 @@
 	<groupId>com.example.demospring</groupId>
 	<artifactId>demo-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
+	<!--	we are packing this as the pom so that other projects can use include n their poms by above artifactId , group id , version -->
 	<packaging>pom</packaging>
+
+
 	<name>demo-spring</name>
 	<description>Demo project for Spring Boot Initial Project</description>
 
@@ -34,32 +38,34 @@
 <!--	</modules>-->
 
 	<!-- we specify what version of java , spring cloud and other we use in out project -->
-<!--
 	<properties>
 		<java.version>17</java.version>
-		<spring-cloud.version>2023.0.2</spring-cloud.version>
+<!--		<spring-cloud.version>2023.0.2</spring-cloud.version>-->
 	</properties>
--->
-	<properties>
-		<java.version>17</java.version>
-	</properties>
+
+	<!-- we can use these properties as variable in the -->
+	<!--
+            <properties>
+       		<java.version>17</java.version>
+    		</properties>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <scope>runtime</scope>
+                <version>{java.version}</version>
+            </dependency>
+    -->
+
+<!--	we link the other modules in the master pom , so that the same dependencies are not rewritten inside the child poms
+  also to synchronize the MVN commands  i.e when this is build the sub-modules are also built -->
+	<modules>
+		<module>src-main</module>
+		<module>src-mod-2</module>
+	</modules>
 
 <!-- we can mention dependencies that are to be included in our project -->
 	<dependencies>
-
-<!-- we can specify these properties as variable in the -->
-<!--
-		<properties>
-   <java.version>17</java.version>
-</properties>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<version>{java.version}</version>
-		</dependency>
--->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -82,11 +88,11 @@
 			<optional>true</optional>
 		</dependency>
 
+<!--		helps your server to auto start on changes just like nodemon -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
-			<optional>true</optional>
 		</dependency>
 
 	</dependencies>

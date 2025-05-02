@@ -17,6 +17,13 @@ public class OAuthController {
 
     }
 
+    @GetMapping("/test")
+    public String getTest() {
+
+        return "Hi Welcome dutta";
+
+    }
+
 
     @GetMapping("/user")
     public Principal showUser(Principal p) {

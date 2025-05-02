@@ -11,8 +11,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-<!-- referring to the MASTER pom.xml -->
-
+    <!-- referring to the MASTER pom.xml -->
+    <!--    see here you are not using any explicit dependencies instead all dependencies of parent are used -->
     <parent>
         <groupId>com.example.demospring</groupId>
         <artifactId>demo-spring</artifactId>

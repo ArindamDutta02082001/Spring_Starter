@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 /*
 
-     @EnableWebSecurity  is deprecated so we will use FilterChain
+     WebSecurityConfigurerAdapter  is deprecated so we will use FilterChain
 
  */
 

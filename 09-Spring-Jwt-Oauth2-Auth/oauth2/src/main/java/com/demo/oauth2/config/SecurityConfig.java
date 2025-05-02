@@ -72,8 +72,10 @@ public class SecurityConfig {
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 )
                 //for using oauth2.0
-                .oauth2Login(Customizer.withDefaults());
-
+                .oauth2Login(Customizer.withDefaults());   // it will redirect to "/"
+//        .oauth2Login(oauth2 -> oauth2
+//                .successHandler(new CustomAuthenticationSuccessHandler()) // Add your custom handler here
+//        );
 
         return http.build();
     }

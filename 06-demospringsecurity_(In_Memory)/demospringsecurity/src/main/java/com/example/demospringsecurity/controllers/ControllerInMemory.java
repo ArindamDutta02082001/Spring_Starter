@@ -1,13 +1,11 @@
 package com.example.demospringsecurity.controllers;
 
-import com.example.demospringsecurity.config.SecurityconfigInMemory;
 import com.example.demospringsecurity.dto.createUserDto;
 import com.example.demospringsecurity.models.DemoUser;
 import com.example.demospringsecurity.service.InmemoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -58,9 +56,16 @@ public class ControllerInMemory {
     /* to register new user and get credential of a person ( student , faculty , admin) */
     // for admins
 
-    @PostMapping("/signup")
-    public DemoUser userSignup(@RequestBody createUserDto createUserdto )
+    @GetMapping("/")
+    public String defaultEndpoint()
     {
+        return "authenticated";
+    }
+
+    @PostMapping("/signup")
+    public UserDetails userSignup(@RequestBody createUserDto createUserdto )
+    {
+        // mapping of the user dto from user to a UserDetails object for Spring security
         DemoUser user =  DemoUser.builder()
                 .username(createUserdto.getUsername())
                 .password(new BCryptPasswordEncoder().encode(createUserdto.getPassword()))
@@ -83,20 +88,16 @@ public class ControllerInMemory {
 
     /* below are the endpoints for authorized student , faculty , admin */
 
-
-    // for faculty
     @GetMapping("/faculty")
     public String sayHelloToFaculty(){
         return "Hello faculty";
     }
 
-    // for student
     @GetMapping("/student")
     public String sayHelloToStudent(){
         return "Hello student";
     }
 
-    // for student / faculty
     @GetMapping("/library")
     public String welcomeToLibrary(){
         return "Welcome to library!!";
@@ -104,8 +105,7 @@ public class ControllerInMemory {
 
 
     /* Spring Security Context
-     *  just like IOC container / application context , it is also a container that holds the object details
-     *
+     *  just like IOC container / application context , it is also a container that holds the authentication object details
      */
 
 

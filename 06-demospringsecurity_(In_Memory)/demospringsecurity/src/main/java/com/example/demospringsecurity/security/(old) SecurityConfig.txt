@@ -1,4 +1,4 @@
-package com.example.demospringsecurity.config;
+package com.example.demospringsecurity.security;
 
 import com.example.demospringsecurity.repository.RepositoryClass;
 import com.example.demospringsecurity.service.InmemoryService;
@@ -21,42 +21,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-for some reason WebSecurityConfigurerAdapter was not coming here ,
-if same issue persists then copy this pom.xml file
 
-     if anything is not supporting like the interface or the methods
+WebSecurityConfigurerAdapter is a old way to define configs in Spring 2xx and Java 1.8
+see the pom.xml , and is obsolete
+
+note :
+
+     if anything is not supporting like the interface WebSecurityConfigurerAdapter or the methods
      then downgrade the application to this project version
-     2.7.4
+     or copy this pom.xml simply
+     Spring - 2.7.4
+     JDK - 1.8
 
-@EnableWebSecurity  - optional
+  we have to
+          - @Override 2 configure methods ( one for the authentication manager and the other is for the path mapping and authorities )
+            we configure the AuthenticationManager in the first configure function and authorization in the 2nd configure function
+            after authentication the authorized personnel can use the endpoints
+          - provide one password encoder bean ( optional , can pass its object into the first configure() )
+
+ the AuthenticationManagerBuilder decides what type of authentication is to be provided
+ In memory authentication
+ In this , there is a inMemoryUserDetailsManager that manages the user details entered into it
 
  */
 
 
+//@EnableWebSecurity  - optional
 @Configuration
 @EnableWebSecurity
 public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
 
 
-    // we have to
-    //          - @Override 2 configure methods
-    //          - provide one password encoder function ( optional , can pass its object into the first configure() )
-
-    // the AuthenticationManagerBuilder decides what type of authentication is to be provided
-    // In memory authentication
-    // In this , there is a inMemoryUserDetailsManager that manages the user details entered into it
-
-
-    // we provide the authentication in the first configure function and authorization in the 2nd configure function
-    // after authentication the authorized personnel can use the endpoints
-
     @Autowired
     InmemoryService inmemoryService;
 
-//    -------------------------------------------------------------------------------------------------------------
-    // method 1 and 2 are having there InMemory database in this file only and the endpoint are using directly from this file only
 
-    // method 1
+    /* method 1 and 2 are having there InMemory database in this file only and on coming request we cant create new users
+     so we need to hardcode the user details from previously */
+
+    // method 1 : Hardcode the user details ( no scope to add new users )
 
 //    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -73,7 +76,10 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
 //
 //    }
 
-    // method 2
+    //------------------------------------------------------------------------------------------------------------
+
+    // method 2 : create a separate InMemoryUserDetailsManager ( Authentication Manager) ad letting it to handle all
+
 //    private final InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
 //
 //    @Override
@@ -91,23 +97,25 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
 //
 //    public void saveEmployee(UserDetails userDetails)
 //    {
-//
 //        inMemoryUserDetailsManager.createUser(userDetails);
 //    }
 
-//------------------------------------------------------------------------------------------------------------
+
     // in method 3 the  InMemory database is there in the repository file and the endpoints are using it through this config file
 
     // method 3
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
         auth.userDetailsService(inmemoryService.getInMemoryUserDetailManager());
     }
 
 
-    // Authorization related stuff - after the user is authenticated , we are authorizing
-    // the user which endpoint he/she has the access
+/*
+     Authorization related stuff - after the user is authenticated , we are authorizing based on roles
+     i.e the user which endpoint he/she has the access
+     also the path mapping should be from : most restricted --> least restricted
+
+ */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeHttpRequests()
@@ -131,31 +139,16 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
         //                 .antMatchers("/**").permitAll() --> any user hitting this endpoint will be permitted i.e no auth req
 
 
-
-
-        // most restricted --> least restricted
     }
 
 
 
 
-
-
-    // spring security Encoder instance - The passwords that are passed from UI are to be encoded and matched,
-    // you need to make sure that the data present in Storage should be in this format
-
     /*
-    A. a normal noOpsEncoder instance - passwords are compared in raw string format
-    */
 
-//    @Bean
-//    PasswordEncoder encoderInstance()
-//    {
-//        return NoOpPasswordEncoder.getInstance();
-//    }
+    We have to create a PasswordEncoder Instance
 
-    /*
-     B. BcryptEncoder - the passwords are hashed upto 10 rounds
+     we made , a bean of BcryptEncoder - the passwords are hashed upto 10 rounds like below when matched or when stored in DB
 
      useful site - https://bcrypt-generator.com/
 
@@ -171,7 +164,17 @@ public class SecurityconfigInMemory extends WebSecurityConfigurerAdapter {
 
     }
 
+    /*
 
+     a normal noOpsEncoder instance - passwords are compared in raw string format
+
+    @Bean
+    PasswordEncoder encoderInstance()
+    {
+        return NoOpPasswordEncoder.getInstance();
+    }
+
+     */
 
 
 

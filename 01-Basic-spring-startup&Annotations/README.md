@@ -1,4 +1,4 @@
-# Springboot basics + features (IOC , DI) + pom.xml + @Annotations
+# Springboot basics + features (IOC , DI) + pom.xml + @Annotations + Multi-modules
 
 ### Default starter code
 Default initial code inside src/main/java/com/example **DemoSpringApplication.java** we will have a
@@ -179,9 +179,13 @@ public class Person {
 ```
 
 #### Dependency Injection
-- Any bean ( i.e object ) present in IOC Container can be used anywhere anytime required using @Autowire
-- It is a Design Pattern that helps to eliminate the dependency to a class , and provides loose coupling and also eliminate to use new() every tie to create a new object
-- DI is of 3 types Constructor , Setter and Field injection and is implemented by @Autowire
+- It happens automatically in step3 in the bean lifecycle where ever we use @Autowired 
+- Any bean ( i.e object ) present in IOC Container can be used anywhere anytime required using @Autowired 
+- It is a Design Pattern that helps to eliminate the dependency to a class , and provides loose coupling and also eliminate to use new() every tie to create a new object 
+- It helps us to use the already created beans in the IOC container 
+- DI is of 3 types Constructor , Setter and Field injection and is implemented by @Autowire 
+- DI help us to follow Dependency Inversion in SOLID principle
+  Dependency Inversion → My class should not dependent on any class directly (avoid tight coupling) rather depend on the abstractions ( like interface and all )
 
   <br/></br>**@Autowired**
 
@@ -251,13 +255,24 @@ server.PORT = 9000
 
 <hr/>
 
-### Multi-module project 
-- this has 2 modules `src-main` & `src-mod-2`.  `src-main` is the main one and `src-mod-2` is a module that contains utility
+### Multi-module project and pom.xml explanations
+- this has 2 modules `src-main` & `src-mod-2`.  
+- `demo-spring` is the main project that contains multiple modules .`src-main` is the main module and `src-mod-2` is a module that contains utility
 - The SampleDto of `src-mod-2` is used in the other module i.e `src-main`
 - See how the `SampleDto` is injected in the `MainClass` of `src-main` module
 - See how the config changes are there in pom.xml of both  
 
-*There is a master pom.xml in the demo-spring folder only :*
+```parent-project/
+│
+├── pom.xml               <-- Master POM
+├── src-main/
+│   └── pom.xml           <-- Submodule 1
+└── src-mod-2/
+└── pom.xml           <-- Submodule 2
+```
+
+
+1. *There is a master pom.xml in the `demo-spring` folder only :*
   
 It has a identity
 ```
@@ -265,8 +280,9 @@ It has a identity
 <artifactId>demo-spring</artifactId>
 <version>0.0.1-SNAPSHOT</version>
 ```
-*in parent pom.xml (here src-main) :*  
-1. we have to give the dependency of the child module (src-mod-2) in the parent pom.xml
+
+2. *in the modules pom we need to include the other module`s pom if we are depending on them :*  
+
 ``` 
       <dependencies>
         <dependency>
@@ -278,10 +294,19 @@ It has a identity
       </dependencies>
 ```
 
-2. we have to make the parent packaging as pom
+3. we include the submodules inside the parent pom . so that the same dependencies are not rewritten inside the child poms
+   also to synchronize the MVN commands  i.e when this is build the sub-modules are also built. If you dont do this build and other stuffs will happen part by part else err
+```dockerfile
+	<modules>
+		<module>src-main</module>
+		<module>src-mod-2</module>
+	</modules>
+```
+we have to make the parent pom `demo-spring` packaging as pom , so that other modules can include in their poms
   ```<packaging>pom</packaging> ```
 
-3. we have to refer to the master pom as we are inheriting the dependencies of the master pom here
+4. we have to refer to the master pom inside sub-modules as we are inheriting the dependencies of the master pom and not rewriting them
+*in child pom.xml (here src-mod) :*
 ```
     <parent>
         <groupId>com.example.demospring</groupId>
@@ -289,8 +314,7 @@ It has a identity
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 ```
-*in child pom.xml (here src-mod-2) :*  
-1. Since here also we are inheriting the dependencies of the master pom here , instead of mentioning each dependencies
+*in child pom.xml (here src-mod-2) :*
 ```
     <parent>
         <groupId>com.example.demospring</groupId>
