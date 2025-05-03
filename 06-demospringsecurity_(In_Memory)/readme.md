@@ -14,6 +14,8 @@ It is a spring framework that helps in authorization & authentication
 - dto : For accepting the username , password , authorities in the endpoints
 - model : Create a **User** entity which will implement the `UserDetails` builtin interface
 ```
+
+// tewat
 @Lombok-Annotations
 public class User implements UserDetails 
 { 
