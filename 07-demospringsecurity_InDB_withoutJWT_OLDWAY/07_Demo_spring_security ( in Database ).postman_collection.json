@@ -1,0 +1,430 @@
+{
+	"info": {
+		"_postman_id": "40d80657-7930-472b-8214-5e461a72a052",
+		"name": "07_Demo_spring_security ( in Database )",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Tests\" tab**\n\nTests help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/b5f280a7-4b09-48ec-857f-0a7ed99d7ef8/U2NyZWVuc2hvdCAyMDIzLTAzLTI3IGF0IDkuNDcuMjggUE0ucG5n\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) in \"Tests\" to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14352987"
+	},
+	"item": [
+		{
+			"name": "create new user ( any type , public api )",
+			"item": [
+				{
+					"name": "/usersignup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"ram\" , \r\n  \"password\": \"ram@123\",\r\n  \"authorities\": \"faculty\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9000/usersignup",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"usersignup"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "can be accessed without any authentication and authorization . just server neeeds to be running"
+		},
+		{
+			"name": "general public apis",
+			"item": [
+				{
+					"name": "/home",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/home",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"home"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/shop",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/shop",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"shop"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "can be accessed without any authentication and authorization . just server neeeds to be running"
+		},
+		{
+			"name": "apis for admin only",
+			"item": [
+				{
+					"name": "/login ( admin=createit )",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/login?username=<create_it>&password=<create_it>",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "<create_it>"
+								},
+								{
+									"key": "password",
+									"value": "<create_it>"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/credential",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/credential?username=arindam",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"credential"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "arindam"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/credential/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/credential/all",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"credential",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "can be accessed without any authentication and authorization . just server neeeds to be running"
+		},
+		{
+			"name": "apis for student only",
+			"item": [
+				{
+					"name": "/login ( student = create_it )",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/login?username=<create_it>&password=<create_it>",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "<create_it>"
+								},
+								{
+									"key": "password",
+									"value": "<create_it>"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/student",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/library",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/library",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "can be accessed without any authentication and authorization . just server neeeds to be running"
+		},
+		{
+			"name": "apis for faculty only",
+			"item": [
+				{
+					"name": "/login ( faculty = create_it )",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/login?username=<create_it>&password=<create_it>",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "<create_it>"
+								},
+								{
+									"key": "password",
+									"value": "<create_it>"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/faculty",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/faculty",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"faculty"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/library",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/library",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "can be accessed without any authentication and authorization . just server neeeds to be running"
+		},
+		{
+			"name": "SPRING SECURITY CONTEXT",
+			"item": [
+				{
+					"name": "/login ( anyone )",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/login?username=ram&password=ram@123",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "ram"
+								},
+								{
+									"key": "password",
+									"value": "ram@123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/my-detail ( logged in user )",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/my-detail",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"my-detail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/update-password ( logged in user )",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"password\": \"arindam@1234\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9000/update-password",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"update-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/delete-detail ( logged in user ) Copy 2",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/delete-detail",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"delete-detail"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "can be accessed without any authentication and authorization . just server neeeds to be running"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}

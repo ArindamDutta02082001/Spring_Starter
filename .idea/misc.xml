@@ -53,6 +53,12 @@
         <option value="$PROJECT_DIR$/01-Basic-spring-startup&amp;scope/pom.xml" />
         <option value="$PROJECT_DIR$/10-Spring-Transaction-JT/pom.xml" />
         <option value="$PROJECT_DIR$/06-demospringsecurity_(In_Memory)/demospringsecurity/pom.xml" />
+        <option value="$PROJECT_DIR$/06-demospringsecurity_In_Memory/demospringsecurity/pom.xml" />
+        <option value="$PROJECT_DIR$/07-demospringsecurity_(Database)/07-demospringsecurity-database/pom.xml" />
+        <option value="$PROJECT_DIR$/07-demospringsecurity_InDB_withJWT/07-demospringsecurity-database/pom.xml" />
+        <option value="$PROJECT_DIR$/07-demospringsecurity_InDB_withJWT_OLDWAY/07-demospringsecurity-database/pom.xml" />
+        <option value="$PROJECT_DIR$/07-demospringsecurity_InDB_withoutJWT/07-demospringsecurity-database/pom.xml" />
+        <option value="$PROJECT_DIR$/07-demospringsecurity_InDB_withoutJWT_OLDWAY/07-demospringsecurity-database/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

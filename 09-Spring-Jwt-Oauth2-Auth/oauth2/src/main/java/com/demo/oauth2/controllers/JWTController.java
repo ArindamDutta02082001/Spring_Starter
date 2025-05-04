@@ -1,10 +1,10 @@
 package com.demo.oauth2.controllers;
 
-import com.demo.oauth2.filterAndTokenManager.RefreshTokenManager;
+import com.demo.oauth2.security.JWTUtils.RefreshTokenManager;
 import com.demo.oauth2.dto.authenticateDto;
 import com.demo.oauth2.dto.registerDto;
 import com.demo.oauth2.dto.responseDto;
-import com.demo.oauth2.filterAndTokenManager.JWTTokenManager;
+import com.demo.oauth2.security.JWTUtils.JWTTokenManager;
 import com.demo.oauth2.models.DemoUser;
 import com.demo.oauth2.repository.UserRepository;
 import com.demo.oauth2.service.UserService;
