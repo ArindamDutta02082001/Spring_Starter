@@ -4,6 +4,7 @@ package com.example.demospringsecurity.database.security.filters;
 
 import com.example.demospringsecurity.database.security.JWTUtils.JWTTokenManager;
 import com.example.demospringsecurity.database.service.UserService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,18 +40,15 @@ public class CustomJWTFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
 
-        //Authorization of the
+        //Authorization of the sent JWT token via header
 
         String requestHeader = request.getHeader("Authorization");
-        logger.info(" Header : "+ requestHeader);
-
-
         String username = null;
         String token = null;
 
         // if user hits the /token api for the first time
         if (requestHeader == null || !requestHeader.startsWith("Bearer ")) {
-            logger.info(" User doesn't have any JWT token and is hitting the /token first time with credentials !! ");
+            logger.info(" User didnt sent any JWT token and is hitting the api first time with credentials .PLease register !! ");
             filterChain.doFilter(request, response);            // this routes the user request to the filter chain
             return;
         }
@@ -63,8 +61,13 @@ public class CustomJWTFilter extends OncePerRequestFilter {
             {
                 username = this.jwtTokenManager.extractUsername(token);
             }
-            catch (Exception e) {
+            catch (ExpiredJwtException e)
+            {
                 logger.info("Given jwt token is expired !!");
+                e.printStackTrace();
+            }
+            catch (Exception e) {
+                logger.info("Given jwt token is malformed !!");
                 e.printStackTrace();
             }
 
@@ -76,7 +79,7 @@ public class CustomJWTFilter extends OncePerRequestFilter {
         // setting the user detail in the context
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null)
         {
-
+            // it will be different for different DB or use cases
             UserDetails userDetails = this.userService.loadUserByUsername(username);
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

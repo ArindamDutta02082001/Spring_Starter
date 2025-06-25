@@ -1,6 +1,7 @@
 package com.example.demospringsecurity.database.security;
 
 
+
 import com.example.demospringsecurity.database.security.filters.CustomJSONAuthFilter;
 import com.example.demospringsecurity.database.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -44,10 +46,11 @@ public class SecurityconfigInDB{
     UserService userService;
 
     @Bean
+//    protected SecurityFilterChain filterChain(HttpSecurity http , AuthenticationManager auth) throws Exception {
     protected SecurityFilterChain filterChain(HttpSecurity http ) throws Exception {
 
         // you have to create the custom filters objects here
-//        CustomJSONAuthFilter customJSONAuthFilter = new CustomJSONAuthFilter(authenticationManager(http));
+//        CustomJSONAuthFilter customJSONAuthFilter = new CustomJSONAuthFilter(auth);
 
         http
                 .csrf(csrf -> csrf.disable())
@@ -55,17 +58,23 @@ public class SecurityconfigInDB{
                 // for GET endpoint csrf token from frontend is not required . since we don`t have the frontend which will not generate a csrf token
                 // we are disabling it here (very very UNSAFE method don`t do it)
                 // disabling csrf doesn`t mean that we don`t have to provide username and password in login
-                .cors(Customizer.withDefaults())
+//                .cors(Customizer.withDefaults())
+
+                // we have to enable the session for filter auth, so that on authentication the authentication object gets stored in context
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/home","/shop","/usersignup" , "/error" , "/login" ).permitAll()
                         .requestMatchers("/faculty/attendance/**").hasAuthority("admin")
                         .requestMatchers("/credential/**").hasAnyAuthority("admin")
                         .requestMatchers("/faculty/**").hasAuthority("faculty")
                         .requestMatchers("/student/**").hasAuthority("student")
                         .requestMatchers("/library/**").hasAnyAuthority("student", "faculty")
+                        .requestMatchers("/home","/shop","/usersignup" , "/error" , "/login" , "/" ).permitAll()
                         .anyRequest().authenticated()
                 )
 //                .addFilterBefore(customJSONAuthFilter, UsernamePasswordAuthenticationFilter.class)
+
             // enabling filter JSON body based
 
 
@@ -83,7 +92,7 @@ public class SecurityconfigInDB{
     }
 
 
-    /** enabling these beans as if you comment out line line 50 & 68 , our custom filter will get activated
+    /** enabling these beans as if you comment out line 49 , 53 & 76 , our custom filter will get activated
     // enabling passing username and password in JSON body
     //{
     //    "username": "ram",
@@ -94,7 +103,9 @@ public class SecurityconfigInDB{
 //    @Bean
 //    public DaoAuthenticationProvider authenticationProvider() {
 //        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//
 //        authProvider.setUserDetailsService(userService);
+//
 //        authProvider.setPasswordEncoder(encoderInstance());
 //        return authProvider;
 //    }
@@ -102,6 +113,7 @@ public class SecurityconfigInDB{
 //    @Bean
 //    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
 //        return new ProviderManager(Arrays.asList(authenticationProvider()));
+//        return null;
 //    }
 
     // selecting the password encoder instance

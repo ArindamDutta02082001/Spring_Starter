@@ -1,6 +1,5 @@
 package com.example.demospringsecurity.database.security.filters;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -10,18 +9,16 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Map;
 
-//@Component
 public class CustomJSONAuthFilter extends UsernamePasswordAuthenticationFilter {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    // you have to set the authentication manager here
     public CustomJSONAuthFilter(AuthenticationManager authenticationManager) {
         setAuthenticationManager(authenticationManager);
     }
@@ -30,7 +27,6 @@ public class CustomJSONAuthFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
         try {
-            // Read JSON as Map<String, String>
             Map<String, String> authRequest = objectMapper.readValue(request.getInputStream(), Map.class);
             String username = authRequest.get("username");
             String password = authRequest.get("password");
@@ -39,8 +35,7 @@ public class CustomJSONAuthFilter extends UsernamePasswordAuthenticationFilter {
                     new UsernamePasswordAuthenticationToken(username, password);
 
             setDetails(request, authToken);
-//            return this.getAuthenticationManager().authenticate(authToken);
-            return authToken;
+            return this.getAuthenticationManager().authenticate(authToken);
 
         } catch (IOException e) {
             throw new RuntimeException("Failed to parse authentication request body", e);
@@ -51,9 +46,16 @@ public class CustomJSONAuthFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain chain, Authentication authResult)
             throws IOException, ServletException {
+        SecurityContextHolder.getContext().setAuthentication(authResult);
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write("{\"message\":\"Login successful\"}");
+
+        // Redirect to the home page ("/")
+        response.sendRedirect("/");
+
+        // Do not continue with the filter chain since we're handling the redirect above
+        //        chain.doFilter(request, response);
     }
 
     @Override
