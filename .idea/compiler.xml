@@ -11,6 +11,8 @@
         <module name="demoredis" />
         <module name="jwtnoauth" />
         <module name="src-mod-2" />
+        <module name="07-demospringsecurity-database-jwt-old" />
+        <module name="07-demospringsecurity-database-without-jwt" />
         <module name="src-main" />
         <module name="spring-transaction-example" />
         <module name="restapi" />
@@ -21,6 +23,7 @@
     <bytecodeTargetLevel>
       <module name="07-demospringsecurity-database" target="17" />
       <module name="07-demospringsecurity-database (1)" target="17" />
+      <module name="07-demospringsecurity-database-new (1)" target="17" />
       <module name="book-management" target="17" />
       <module name="config" target="17" />
       <module name="demo (1)" target="1.5" />
@@ -53,7 +56,10 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="07-demospringsecurity-database" options="-parameters" />
       <module name="07-demospringsecurity-database (1)" options="-parameters" />
+      <module name="07-demospringsecurity-database-jwt-old" options="-parameters" />
       <module name="07-demospringsecurity-database-new" options="-parameters" />
+      <module name="07-demospringsecurity-database-new (1)" options="-parameters" />
+      <module name="07-demospringsecurity-database-without-jwt" options="-parameters" />
       <module name="book-management" options="-parameters" />
       <module name="config" options="-parameters" />
       <module name="demo" options="-parameters" />
